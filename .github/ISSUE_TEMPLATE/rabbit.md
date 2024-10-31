@@ -24,5 +24,5 @@ Defina quem será o coelho para estudar o conceito ou tecnologia.
 - [ ] Tópico 2
 - [ ] ...
 
-**Notion de estudo:**
-Insira o link da página do Notion que será utilizada para o estudo.
+**Estudo:**
+Todas as anotações dos estudos estão na pasta /coelhos.
