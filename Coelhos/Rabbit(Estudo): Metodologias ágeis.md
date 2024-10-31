@@ -38,7 +38,7 @@ O Scrum é um **framework ágil** utilizado para a entrega de produtos em projet
 - O principal objetivo do Scrum é oferecer um framework ágil para o desenvolvimento, entrega e sustentação de produtos complexos. Ele busca otimizar a colaboração e a comunicação entre as equipes, otimizando assim a produtividade e entrega.
 - O Scrum é composto por atribuições/papéis, eventos e artefatos. Os papéis incluem o Scrum Master, o Product Owner e o time de desenvolvimento. Os eventos incluem a sprint, a reunião diária, a revisão da sprint e a retrospectiva da sprint. Os artefatos incluem a lista do produto, a lista da sprint e o incremento do produto. A Figura abaixo ilustra o Scrum, no qual as cores distiguem os papéis, dos Cerimônias (reuniões) e artefatos.
 
-![scrum.png](Desenvolvimento%20e%20Difusa%CC%83o%20da%20Cultura%20de%20Inovac%CC%A7a%CC%83%2012935f46816581c2b548e2013ef03f84/scrum.png)
+![scrum.png](https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F89d5c770-4af8-4189-a1f3-eee71f3cedf0%2F406a4875-3ba3-4776-8f5b-c25606d5ecd2%2Fscrum.png?table=block&id=12935f46-8165-8054-a7b7-d60e6746fa49&spaceId=89d5c770-4af8-4189-a1f3-eee71f3cedf0&name=scrum.png&userId=617e2f4b-928c-4801-bbaa-c4b2ab7a5bde&cache=v2)
 
 ## Equipe
 
@@ -72,9 +72,8 @@ A metodologia da disciplina é baseada nesses fundamentos descritos acima. Falem
 
 As etapas do projeto serão divididas em sprints, isto é, ciclos com um tempo pré-determinado e fixo, que guiarão o projeto de acordo com as etapas necessárias. Funcionará assim:
 
-![image.png](Desenvolvimento%20e%20Difusa%CC%83o%20da%20Cultura%20de%20Inovac%CC%A7a%CC%83%2012935f46816581c2b548e2013ef03f84/image.png)
+![image.png](https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F89d5c770-4af8-4189-a1f3-eee71f3cedf0%2F46a23b3e-e86a-491b-8d65-5aa83bb9e556%2Fimage.png?table=block&id=12b35f46-8165-80bd-8774-f51a68257602&spaceId=89d5c770-4af8-4189-a1f3-eee71f3cedf0&name=image.png&userId=617e2f4b-928c-4801-bbaa-c4b2ab7a5bde&cache=v2)
 
-[https://www.notion.so](https://www.notion.so)
 
 Perceba que temos duas entregas a serem feitas.
 
@@ -110,7 +109,7 @@ Quanto às cerimônias, fizemos uma adaptação ao nosso contexto de tempo enqua
 
 O backlog é a listas tarefas a fazer que a equipe possui. Ele pode ser gigante! Muitas empresas utilizam o backlog plano. Veja a diferença a baixo:
 
-![image.png](Desenvolvimento%20e%20Difusa%CC%83o%20da%20Cultura%20de%20Inovac%CC%A7a%CC%83%2012935f46816581c2b548e2013ef03f84/image%201.png)
+![image.png](https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F89d5c770-4af8-4189-a1f3-eee71f3cedf0%2Ff7455cc8-9dbd-48e1-a22f-226b8515a46f%2Fimage.png?table=block&id=12b35f46-8165-809d-8b40-ed4b8e7a3bca&spaceId=89d5c770-4af8-4189-a1f3-eee71f3cedf0&name=image.png&userId=617e2f4b-928c-4801-bbaa-c4b2ab7a5bde&cache=v2)
 
 Mas, pensando em possuir uma visão ampla do caminho do projeto e um foco maior no primeiro princípio do manifesto ágil: 
 
@@ -129,7 +128,7 @@ A ideia é pensar na utilização do produto pelo usuário como uma história, i
 
 Na prática, o quadro fica tal qual a imagem:
 
-![image.png](Desenvolvimento%20e%20Difusa%CC%83o%20da%20Cultura%20de%20Inovac%CC%A7a%CC%83%2012935f46816581c2b548e2013ef03f84/image%202.png)
+![image.png](https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F89d5c770-4af8-4189-a1f3-eee71f3cedf0%2F3148aca3-f023-439c-ab3d-6dd2684e6402%2Fimage.png?table=block&id=12b35f46-8165-800e-a7c9-d9280485063b&spaceId=89d5c770-4af8-4189-a1f3-eee71f3cedf0&name=image.png&userId=617e2f4b-928c-4801-bbaa-c4b2ab7a5bde&cache=v2)
 
 **Estrutura básica**
 
@@ -145,7 +144,7 @@ Detalhes: Todas as pequenas ações necessárias para chegar ao último passo e,
 
 Aqui surge a parte final: dividir em realeases. Depois de estimar o tempo para cada detail, dividimos o trabalho em realeases e atribuímos aos participantes da equipe.
 
-![image.png](Desenvolvimento%20e%20Difusa%CC%83o%20da%20Cultura%20de%20Inovac%CC%A7a%CC%83%2012935f46816581c2b548e2013ef03f84/image%203.png)
+![image.png](https://www.notion.so/signed/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F89d5c770-4af8-4189-a1f3-eee71f3cedf0%2F754c7034-1e4c-4509-99d0-e0ac2261b379%2Fimage.png?table=block&id=12b35f46-8165-8000-9b42-e9563ed5a04a&spaceId=89d5c770-4af8-4189-a1f3-eee71f3cedf0&name=image.png&userId=617e2f4b-928c-4801-bbaa-c4b2ab7a5bde&cache=v2)
 
 ### Qual tecnologia usar?
 
