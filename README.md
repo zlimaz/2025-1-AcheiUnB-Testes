@@ -25,15 +25,11 @@ AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Univ
 
 ## 👥 Equipe
 
-| Nome                    | GitHub                    |
-|-------------------------|---------------------------|
-| Ana Elisa Marques    | [@anaelisaramos](https://github.com/anaelisaramos) |
-| Davi Camilo Menezes   | [@DaviCamilo23](https://github.com/DaviCamilo23) |
-| Euller Júlio da Silva   | [@potatoyz908](https://github.com/potatoyz908) |
-| Leonardo Ramiro Alves de Oliveira   | [@leoramiroo](https://github.com/leoramiroo) |
-| Pedro Everton de Paula    | [@pedroeverton217](https://github.com/pedroeverton217) |
-| Pedro Henrique Martins Silva   | [@314dro](https://github.com/314dro) |
-| Tiago Antunes Balieiro   | [@TiagoBalieiro](https://github.com/TiagoBalieiro) |
+| <img src="https://github.com/anaelisaramos.png" width="150"> <br> [**Ana Elisa Marques**](https://github.com/anaelisaramos) | <img src="https://github.com/DaviCamilo23.png" width="150"> <br> [**Davi Camilo Menezes**](https://github.com/DaviCamilo23) | <img src="https://github.com/potatoyz908.png" width="150"> <br> [**Euller Júlio da Silva**](https://github.com/potatoyz908) |
+|-----------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/leoramiroo.png" width="150"> <br> [**Leonardo Ramiro Alves de Oliveira**](https://github.com/leoramiroo) | <img src="https://github.com/pedroeverton217.png" width="150"> <br> [**Pedro Everton de Paula**](https://github.com/pedroeverton217) | <img src="https://github.com/314dro.png" width="150"> <br> [**Pedro Henrique Martins Silva**](https://github.com/314dro) |
+| <img src="https://github.com/TiagoBalieiro.png" width="150"> <br> [**Tiago Antunes Balieiro**](https://github.com/TiagoBalieiro) |  |  |
+
 
 
 ## ✨ Início
