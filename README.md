@@ -25,11 +25,13 @@ AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Univ
 
 ## 👥 Equipe
 
-| <img src="https://github.com/anaelisaramos.png" width="150"> <br> [**Ana Elisa Marques**](https://github.com/anaelisaramos) | <img src="https://github.com/DaviCamilo23.png" width="150"> <br> [**Davi Camilo Menezes**](https://github.com/DaviCamilo23) | <img src="https://github.com/potatoyz908.png" width="150"> <br> [**Euller Júlio da Silva**](https://github.com/potatoyz908) |
-|-----------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| <img src="https://github.com/leoramiroo.png" width="150"> <br> [**Leonardo Ramiro Alves de Oliveira**](https://github.com/leoramiroo) | <img src="https://github.com/pedroeverton217.png" width="150"> <br> [**Pedro Everton de Paula**](https://github.com/pedroeverton217) | <img src="https://github.com/314dro.png" width="150"> <br> [**Pedro Henrique Martins Silva**](https://github.com/314dro) |
-| <img src="https://github.com/TiagoBalieiro.png" width="150"> <br> [**Tiago Antunes Balieiro**](https://github.com/TiagoBalieiro) |  |  |
+| [![Ana Elisa Marques](https://avatars.githubusercontent.com/u/78448515?v=4)](https://github.com/anaelisaramos) | [![Davi Camilo Menezes](https://avatars.githubusercontent.com/u/144080784?v=4)](https://github.com/DaviCamilo23) | [![Euller Júlio da Silva](https://avatars.githubusercontent.com/u/125329742?v=4)](https://github.com/potatoyz908) | [![Leonardo Ramiro Alves de Oliveira](https://avatars.githubusercontent.com/u/144712954?v=4)](https://github.com/leoramiroo) |
+|-------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|
+| Ana Elisa Marques | Davi Camilo Menezes | Euller Júlio da Silva | Leonardo Ramiro Alves de Oliveira |
 
+| [![Pedro Everton de Paula](https://avatars.githubusercontent.com/u/117595816?v=4)](https://github.com/pedroeverton217) | [![Pedro Henrique Martins Silva](https://avatars.githubusercontent.com/u/142694744?v=4)](https://github.com/314dro) | [![Tiago Antunes Balieiro](https://avatars.githubusercontent.com/u/143669941?v=4)](https://github.com/TiagoBalieiro) | 
+|-------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|
+| Pedro Everton de Paula | Pedro Henrique Martins Silva | Tiago Antunes Balieiro |
 
 
 ## ✨ Início
