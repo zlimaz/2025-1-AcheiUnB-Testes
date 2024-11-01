@@ -41,7 +41,7 @@ AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Univ
 Clone o repositório do projeto usando o seguinte comando:
 
 ```bash
-git clone https://github.com/unb-achei/2023-2-AcheiUnB.git
+git clone https://github.com/unb-achei/2024-2-AcheiUnB.git
 ```
 
 ### 📋 Pré-requisitos
@@ -147,21 +147,21 @@ make migrate         # Executa as migrations
 
 ## 📚 Documentação
 
-Acesse a documentação completa do projeto [aqui](https://github.com/unb-achei/2023-2-AcheiUnB/wiki).
+Acesse a documentação completa do projeto [aqui](https://github.com/unb-achei/2024-2-AcheiUnB/wiki).
 
 ## 📎 Extra
 
 ### Story Map e Activity Flow
 
-Para acessar o Story Map e Activity Flow, [clique aqui](https://github.com/unb-achei/2023-2-AcheiUnB/wiki/Story-Map).
+Para acessar o Story Map e Activity Flow, [clique aqui](https://github.com/unb-achei/2024-2-AcheiUnB/wiki/Story-Map).
 
 ### Arquitetura
 
-A descrição da arquitetura do projeto pode ser encontrada [aqui](https://github.com/unb-achei/2023-2-AcheiUnB/wiki/Arquitetura).
+A descrição da arquitetura do projeto pode ser encontrada [aqui](https://github.com/unb-achei/2024-2-AcheiUnB/wiki/Arquitetura).
 
 ### Protótipo
 
-O protótipo da plataforma está disponível [aqui](https://github.com/unb-achei/2023-2-AcheiUnB/wiki/Protótipo).
+O protótipo da plataforma está disponível [aqui](https://github.com/unb-achei/2024-2-AcheiUnB/wiki/Protótipo).
 
 ---
 
