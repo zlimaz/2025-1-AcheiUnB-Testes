@@ -15,13 +15,17 @@ DevOps facilita uma integração contínua e entrega contínua (CI/CD), o que re
 
 ## Principais práticas e ferramentas
 
+Automação: Prática de reduzir processos manuais em toda a cadeia de desenvolvimento, integração e implantação, usando scripts, pipelines de CI/CD e ferramentas de configuração. A automação permite maior consistência, acelera entregas e minimiza erros humanos em cada etapa.
+
 Integração Contínua (CI): Prática de automatizar testes e validações sempre que há novas alterações no código.
 
 Entrega Contínua (CD): Processo de entregar software pronto para produção de forma automatizada.
 
 Infraestrutura como Código (IaC): Permite gerenciar e provisionar infraestrutura por meio de scripts, tornando o processo mais ágil e repetível.
 
-Monitoramento e Feedback: Monitoramento contínuo para identificar problemas rapidamente e implementar melhorias com base no feedback do usuário.
+Microsserviços: Prática de desenvolver sistemas como uma coleção de pequenos serviços independentes e especializados, de forma que caso alguma funcionalidade "quebre" ela consiga ser isolada para não "quebrar" todo o sistema junto.
+
+Monitoramento e Feedback: Monitoramento contínuo para identificar problemas rapidamente e implementar melhorias com base no feedback do usuário, utilizando por exemplo sistemas de logs.
 
 ## Benefícios de adotar DevOps
 
