@@ -70,27 +70,22 @@ No Django REST Framework (DRF), **serialização** é o processo de converter da
 - O DRF fornece ferramentas robustas de validação para impedir que dados mal formatados ou não confiáveis sejam processados.
 - A validação é feita automaticamente com base nos serializers, e regras personalizadas podem ser adicionadas conforme necessário.
 
-### 5. **Proteção Contra CSRF (Cross-Site Request Forgery)**
-
-- DRF usa tokens CSRF para proteger as sessões de usuários contra ataques CSRF.
-- CSRF é mais relevante para aplicações web que usam cookies de sessão, mas também pode ser relevante em certos contextos de API.
-
-### 6. **Proteção Contra Cross-Site Scripting (XSS) e Injeção de SQL**
+### 5. **Proteção Contra Cross-Site Scripting (XSS) e Injeção de SQL**
 
 - DRF herda as proteções contra XSS e injeção de SQL do Django. As consultas ao banco de dados são parametrizadas, o que evita que dados inseridos pelo usuário modifiquem a estrutura das consultas SQL.
 - Para XSS, o Django realiza uma sanitização automática de dados exibidos em templates HTML, protegendo a aplicação contra scripts maliciosos.
 
-### 7. **Criptografia e HTTPS**
+### 6. **Criptografia e HTTPS**
 
 - Embora não seja exclusivo do DRF, é fundamental que APIs sejam acessadas apenas por **HTTPS** para garantir a criptografia dos dados transmitidos.
 - O DRF facilita o uso de headers e configurações de segurança, mas a criptografia é uma configuração a ser feita no nível do servidor.
 
-### 8. **Proteção Contra Exposição de Informações Sensíveis**
+### 7. **Proteção Contra Exposição de Informações Sensíveis**
 
 - É importante garantir que dados sensíveis, como senhas, tokens de API e detalhes de autenticação, sejam adequadamente protegidos.
 - DRF permite definir quais campos serão exibidos em respostas usando serializers e fornece métodos para garantir que dados sensíveis não sejam expostos.
 
-### 9. **Logs e Monitoramento de Segurança**
+### 8. **Logs e Monitoramento de Segurança**
 
 - DRF permite que você monitore e registre atividades, o que é útil para identificar e responder a acessos ou tentativas de acessos suspeitos.
 
@@ -129,9 +124,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 ]
 ```
-
-## Principais uso do DRF para o nosso projeto
-
 
 ## Considerações finais
 
