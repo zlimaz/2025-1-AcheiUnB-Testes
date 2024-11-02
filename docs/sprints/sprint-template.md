@@ -7,7 +7,6 @@ Período: DD/MM/AAAA a DD/MM/AAAA
 ## Objetivos
 - [ ] Objetivo 1
 - [ ] Objetivo 2
-- [ ] Objetivo 3
 - [ ] ...
 
 ## Reuniões
@@ -15,28 +14,19 @@ Período: DD/MM/AAAA a DD/MM/AAAA
 Data: DD/MM/AAAA  
 Local: Local da reunião  
 **Ata:**
-- Ata 1
-- Ata 2
-- Ata 3
-- ...
+
 
 ### Reunião 2
 Data: DD/MM/AAAA  
 Local: Local da reunião  
 **Ata:**
-- Ata 1
-- Ata 2
-- Ata 3
-- ...
+
 
 - ### Reunião 3
 Data: DD/MM/AAAA  
 Local: Local da reunião  
 **Ata:**
-- Ata 1
-- Ata 2
-- Ata 3
-- ...
+
 
 ## Finalização
 > A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_. Além disso, deve conter um link para as _issues_ que foram fechadas.
