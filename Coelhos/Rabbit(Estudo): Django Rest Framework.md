@@ -89,7 +89,7 @@ No Django REST Framework (DRF), **serialização** é o processo de converter da
 
 - DRF permite que você monitore e registre atividades, o que é útil para identificar e responder a acessos ou tentativas de acessos suspeitos.
 
-## Instalação
+## Instalando e configurando no seu projeto Django
 
 Você pode instalar o Django REST Framework usando o `pip`, incluindo quaisquer pacotes opcionais que desejar:
 
