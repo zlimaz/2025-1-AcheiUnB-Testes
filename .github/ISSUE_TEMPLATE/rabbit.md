@@ -25,4 +25,4 @@ Defina quem será o coelho para estudar o conceito ou tecnologia.
 - [ ] ...
 
 **Estudo:**
-Todas as anotações dos estudos estão na pasta [Coelhos.](https://github.com/unb-mds/2024-2-AcheiUnB/tree/main/Coelhos).
+Todas as anotações dos estudos estão na pasta [Coelhos](https://github.com/unb-mds/2024-2-AcheiUnB/tree/main/Coelhos).
