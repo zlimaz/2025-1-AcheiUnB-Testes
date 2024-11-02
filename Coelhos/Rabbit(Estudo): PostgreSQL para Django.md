@@ -215,7 +215,7 @@ Com a conexão estabelecida, você pode gerenciar o banco de dados de forma visu
 - **Exportação e Importação de Dados**: O DBeaver facilita a importação/exportação de dados para diversos formatos, como CSV, Excel e JSON, útil para backups e integrações.
 - **Gerenciamento de Usuários e Permissões**: Configure permissões e gerencie usuários diretamente pelo DBeaver, otimizando a segurança e organização do banco de dados.
 
-![image.png](Configurac%CC%A7a%CC%83o%20do%20PostgreSQL%20para%20Django%2013235f46816580bc8ab7d4ba3dca40f0/image.png)
+![image.png](https://www.bytebase.com/_next/image/?url=%2Fcontent%2Fblog%2Fbytebase-vs-dbeaver%2Fdbv-gui.webp&w=1920&q=100)
 
 ### Recursos Adicionais do DBeaver
 
