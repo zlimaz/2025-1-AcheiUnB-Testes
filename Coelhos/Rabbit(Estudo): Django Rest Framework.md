@@ -94,6 +94,45 @@ No Django REST Framework (DRF), **serialização** é o processo de converter da
 
 - DRF permite que você monitore e registre atividades, o que é útil para identificar e responder a acessos ou tentativas de acessos suspeitos.
 
+## Instalação
+
+Você pode instalar o Django REST Framework usando o `pip`, incluindo quaisquer pacotes opcionais que desejar:
+
+```bash
+pip install djangorestframework
+pip install markdown       # Suporte a Markdown para a API navegável.
+pip install django-filter  # Suporte a filtragem.
+
+```
+Ou você pode clonar o projeto diretamente do GitHub:
+
+```bash
+git clone https://github.com/encode/django-rest-framework
+
+```
+Depois de instalar, adicione 'rest_framework' à configuração INSTALLED_APPS do seu projeto Django:
+
+
+```python
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+]
+```
+Se você pretende usar a API navegável, é recomendável também adicionar as views de login e logout do REST Framework. Para isso, adicione o seguinte ao seu arquivo urls.py raiz:
+
+```python
+from django.urls import path, include
+
+urlpatterns = [
+    ...
+    path('api-auth/', include('rest_framework.urls')),
+]
+```
+
+## Principais uso do DRF para o nosso projeto
+
+
 ## Considerações finais
 
 O Django REST Framework facilita o desenvolvimento de APIs web de maneira ágil e simplificada. Conforme a documentação oficial, o DRF gera uma API navegável que melhora a usabilidade para os desenvolvedores. Além disso, o DRF oferece um sistema robusto de autenticação e serialização de dados, proporcionando um ambiente seguro e eficiente para desenvolvimento de APIs RESTful.
