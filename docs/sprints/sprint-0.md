@@ -38,8 +38,12 @@ Local: Discord
 
 **Ata:**
 
-O time decidiu utilizar o Discord como plataforma para realizar as reuniões. Foi organizado o agendamento das reuniões semanais. Tiago apresentou uma proposta para implementar o cardápio do RU na Plataforma de Gestão Acadêmica, sugerindo também a criação de uma plataforma de alimentação privada na FGA.
+Nessa reunião, time organizou o agendamento das reuniões semanais. Tiago apresentou uma proposta para implementar o cardápio do RU na Plataforma de Gestão Acadêmica, sugerindo também a criação de uma plataforma de alimentação privada na FGA.
 
 ## Finalização
 > O time alcançou todos os objetivos da _Sprint_.
 
+---
+
+**Observações:**
+>Como observação, cabe citar que o tieme definiu o Discord como local para as reuniões serem realizadas.
