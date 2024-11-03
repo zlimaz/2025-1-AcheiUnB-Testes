@@ -1,23 +1,3 @@
-### **Pesquisa sobre Arquitetura de Software**
----
-#### **O que é?**
-A arquitetura de software refere-se, de maneira resumida, à abordagem adotada para gerenciar os componentes essenciais de um projeto, definidos e organizados pelos desenvolvedores.
-
-#### **Porquê é importante?**
-A arquitetura é fundamental para o desenvolvimento de software, pois, sem ela, o código pode se tornar desorganizado e confuso, o que dificulta e prolonga o processo de implementação das modificações necessárias. Quanto maior a qualidade interna do produto, mais rapidamente serão entregues as funcionalidades, assim, acelerando o desenvolvimento do software.
-
-#### **Quem serão os Coelhos?**
-Os responsáveis por apresentar a por esta tarefa serão **Pedro Silva**, @314dro e **Tiago Balieiro**, @TiagoBalieiro.
-
-#### **Tópicos a serem estudados:**
-- [x] **Documentação**
-- [x] **Staks** 
-- [x] **Framework**
-- [x] **API**
-
-**Estudo:**
-Todas as anotações dos estudos estão na pasta [Coelhos.](https://github.com/unb-mds/2024-2-AcheiUnB/tree/main/Coelhos).
-
 #### **Arquitetura de Software**
 # Uma breve introdução sobre arquitetura de software
 
@@ -25,7 +5,7 @@ Após ler um artigo indicado pela professora sobre arquitetura de software, o co
 
 A arquitetura é essencial para o software, pois sem ela o código se torna poluído, fazendo com que seja mais difícil e demore mais para realizar as modificações necessárias. 🧩
 
-[[Link para o artigo](https://lh7-rt.googleusercontent.com/docsz/AD_4nXcOws-RltPS457qsIxwp26e1jkIyJdZXYQRz7TBe2-lhjxNdPoj_MtrTTac5kigCsUwQ-yX2BsISuEMlwS6zx9-EskvcJy3v_ytq1MOqmr5VI2unW0HuUQAcp01NCU6zG9WH4YsyqaIBikY8XxSFE-4i4EI?key=zaDTgrjPjKgjBEz7mlb2b-Vn)](https://lh7-rt.googleusercontent.com/docsz/AD_4nXcOws-RltPS457qsIxwp26e1jkIyJdZXYQRz7TBe2-lhjxNdPoj_MtrTTac5kigCsUwQ-yX2BsISuEMlwS6zx9-EskvcJy3v_ytq1MOqmr5VI2unW0HuUQAcp01NCU6zG9WH4YsyqaIBikY8XxSFE-4i4EI?key=zaDTgrjPjKgjBEz7mlb2b-Vn)
+[Link para o artigo](https://lh7-rt.googleusercontent.com/docsz/AD_4nXcOws-RltPS457qsIxwp26e1jkIyJdZXYQRz7TBe2-lhjxNdPoj_MtrTTac5kigCsUwQ-yX2BsISuEMlwS6zx9-EskvcJy3v_ytq1MOqmr5VI2unW0HuUQAcp01NCU6zG9WH4YsyqaIBikY8XxSFE-4i4EI?key=zaDTgrjPjKgjBEz7mlb2b-Vn)
 
 Quanto maior a qualidade interna do produto, mais rápido serão entregues os *features*, acelerando o processo de desenvolvimento. 🏃‍♂️💻
 
@@ -35,7 +15,7 @@ A arquitetura de software é algo que até mesmo os melhores arquitetos vão apr
 
 “We made good decisions, but only now do we understand how we should have built it.”
 
-[[Martin Fowler sobre arquitetura](https://martinfowler.com/architecture/)](https://martinfowler.com/architecture/)
+[Martin Fowler sobre arquitetura](https://martinfowler.com/architecture/)
 
 ## **Documentação** 📄
 
@@ -53,8 +33,7 @@ Componentes principais:
 6. **Restrições e Premissas**: fatores que limitam o desenvolvimento.
 7. **Riscos**: principais riscos identificados.
 
-[[Exemplo de Documento de Visão](https://prodest.es.gov.br/Media/prodestnovo/UECI/Exclusiva/ANEXO%20I%20-%20Modelo%20de%20Documento%20de%20Vis%C3%A3o.pdf)](https://prodest.es.gov.br/Media/prodestnovo/UECI/Exclusiva/ANEXO%20I%20-%20Modelo%20de%20Documento%20de%20Vis%C3%A3o.pdf)
-
+[Exemplo de Documento de Visão](https://prodest.es.gov.br/Media/prodestnovo/UECI/Exclusiva/ANEXO%20I%20-%20Modelo%20de%20Documento%20de%20Vis%C3%A3o.pdf)
 **TAP (Termo de Abertuda de Projeto)**
 
 O **Termo de Abertura do Projeto (TAP)** formaliza o início do projeto, definindo objetivos, escopo, *stakeholders* e recursos necessários. Elementos comuns incluem:
@@ -68,8 +47,7 @@ O **Termo de Abertura do Projeto (TAP)** formaliza o início do projeto, definin
 7. **Cronograma**
 8. **Riscos**
 
-[[Exemplo de TAP](https://planejamentoestrategico.ifma.edu.br/wp-content/uploads/sites/53/2019/03/TA-Projeto-Estrate_gico-FABRICA-DE-INOVACAO.pdf)](https://planejamentoestrategico.ifma.edu.br/wp-content/uploads/sites/53/2019/03/TA-Projeto-Estrate_gico-FABRICA-DE-INOVACAO.pdf)
-
+[Exemplo de TAP](https://planejamentoestrategico.ifma.edu.br/wp-content/uploads/sites/53/2019/03/TA-Projeto-Estrate_gico-FABRICA-DE-INOVACAO.pdf)
 ### **Documento de Arquitetura** 🏗️
 
 Esse documento detalha a estrutura técnica e as decisões de design do sistema. Ele ajuda a manter consistência e eficiência no desenvolvimento. Componentes incluem:
@@ -83,12 +61,11 @@ Esse documento detalha a estrutura técnica e as decisões de design do sistema.
 7. **Restrições Técnicas**
 8. **Estratégia de Evolução**
 
-[[Exemplo de Documento de Arquitetura](https://datasus.saude.gov.br/wp-content/uploads/2019/12/Documento-de-arquitetura-de-software.docx)](https://datasus.saude.gov.br/wp-content/uploads/2019/12/Documento-de-arquitetura-de-software.docx)
+[Exemplo de Documento de Arquitetura](https://datasus.saude.gov.br/wp-content/uploads/2019/12/Documento-de-arquitetura-de-software.docx)
 
-[[Template de Documento de Arquitetura por RUP](https://www.notion.so/Arquitetura-de-Software-e3434f0456cf444ab594daecd10cb374?pvs=21)](https://www.notion.so/Arquitetura-de-Software-e3434f0456cf444ab594daecd10cb374?pvs=21)
+[Template de Documento de Arquitetura por RUP](https://www.notion.so/Arquitetura-de-Software-e3434f0456cf444ab594daecd10cb374?pvs=21)
 
-[[Template de Documento de Arquitetura em português (UFPE)](https://cin.ufpe.br/~gta/rup-vc/extend.formal_resources/guidances/examples/resources/sadoc_v1.htm#toc)](https://cin.ufpe.br/~gta/rup-vc/extend.formal_resources/guidances/examples/resources/sadoc_v1.htm#toc)
-
+[Template de Documento de Arquitetura em português (UFPE)](https://cin.ufpe.br/~gta/rup-vc/extend.formal_resources/guidances/examples/resources/sadoc_v1.htm#toc)
 ## **Stacks (Pilha)** 🛠️
 
 Em arquitetura de software, o termo **stack** refere-se ao conjunto de tecnologias usadas para desenvolver e executar uma aplicação.
