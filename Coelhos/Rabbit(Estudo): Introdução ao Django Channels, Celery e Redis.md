@@ -122,7 +122,7 @@
 - **Configuração e Uso Básico**
     - Passos iniciais para instalação e configuração do Django Channels, incluindo definição de WebSockets e integração com o Django.
 
-![image.png](Configurar%20notificac%CC%A7o%CC%83es%20assi%CC%81ncronas%20usando%20Djan%2013335f468165806797b6c492171c08f0/image.png)
+![image.png](https://images.ctfassets.net/ee3ypdtck0rk/1VuBus1RpboyS49sN9VEli/abd96f76593d5d92054260dbb40b8561/django-channels-generic-architecture-overview.png?w=1840&h=744&q=80&fm=png)
 
 ---
 
@@ -134,7 +134,7 @@
 - **Integração do Celery com Django**
     - Passo a passo para integrar o Celery com o Django, incluindo criação de tarefas e teste de execução.
 
-![image.png](Configurar%20notificac%CC%A7o%CC%83es%20assi%CC%81ncronas%20usando%20Djan%2013335f468165806797b6c492171c08f0/image%201.png)
+![image.png](https://thetldr.tech/content/images/2021/08/image-1.png)
 
 ---
 
@@ -146,16 +146,8 @@
 - **Testes e Exemplos de Notificações Assíncronas**
     - Demonstrações de uso prático do Redis e Celery para enviar notificações e mensagens em tempo real, complementando a configuração com Django Channels.
     
-    ![image.png](Configurar%20notificac%CC%A7o%CC%83es%20assi%CC%81ncronas%20usando%20Djan%2013335f468165806797b6c492171c08f0/image%202.png)
+    ![image.png](https://miro.medium.com/v2/resize:fit:1102/1*FNOoJykIEq65hnIpWzRvmg.png)
     
-
----
-
-### **Materiais de Referência**
-
-- [Django Channels Documentation](https://channels.readthedocs.io/en/stable/) - Documentação oficial do Django Channels, com guias de configuração e exemplos práticos.
-- [Celery Documentation](https://docs.celeryproject.org/) - Guia detalhado do Celery, incluindo integração com Django e configurações avançadas.
-- [Configuração de Redis para Django e Celery](https://realpython.com/asynchronous-tasks-with-django-and-celery/) - Tutorial sobre uso do Redis como broker para tarefas assíncronas com Celery e Django Channels.
 
 ---
 
@@ -167,7 +159,7 @@ Signals são ferramentas úteis no Django para permitir que certos componentes d
 
 Por exemplo, podemos utilizar signals para enviar notificações ou atualizar dados sempre que determinado evento ocorrer, como a criação ou atualização de um objeto.
 
-![image.png](Configurar%20notificac%CC%A7o%CC%83es%20assi%CC%81ncronas%20usando%20Djan%2013335f468165806797b6c492171c08f0/image%203.png)
+![image.png](https://miro.medium.com/v2/resize:fit:1400/1*3vwP83CAZIIr5_wDjSHUhg.png)
 
 ## Criação de Signals Personalizados e Conexão com Modelos
 
@@ -180,11 +172,11 @@ No Django, podemos criar signals personalizados que se conectam a eventos espec�
 3. Conectar o signal ao evento específico do modelo (como `post_save`, `pre_delete`).
 4. Configurar o arquivo `apps.py` para registrar os signals.
 
-![image.png](Configurar%20notificac%CC%A7o%CC%83es%20assi%CC%81ncronas%20usando%20Djan%2013335f468165806797b6c492171c08f0/image%204.png)
+![image.png](https://miro.medium.com/v2/resize:fit:1400/1*qPGrT7NWzDuOiabfswEbXg.png)
 
 # Exemplo de Automação com Notificações
 
-![image.png](Configurar%20notificac%CC%A7o%CC%83es%20assi%CC%81ncronas%20usando%20Djan%2013335f468165806797b6c492171c08f0/image%205.png)
+![image.png](https://notificacoesinteligentes.com/wp-content/uploads/2024/01/sbswqvv475y5dxsxbebhsw5jqx71kbmm-1024x585.webp)
 
 ## Automatização de Envio de Notificações ou Atualizações com Signals
 
