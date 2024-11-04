@@ -103,7 +103,6 @@ Um ambiente igual para toda a equipe Evita “Funciona no meu computador”.
 # AWS (Amazon Web Services)
 
 A **Amazon Web Services (AWS)** é uma plataforma de computação em nuvem fornecida pela Amazon, que oferece uma ampla gama de serviços e ferramentas que permitem que empresas e desenvolvedores construam, gerenciem e escalem suas aplicações de maneira flexível e eficiente. A seguir, discutiremos os principais serviços da AWS, sua importância e como eles são usados para facilitar o desenvolvimento de software, desde a infraestrutura até a automação e escalabilidade.
-(https://aws.amazon.com/pt/free/?gclid=Cj0KCQiA_qG5BhDTARIsAA0UHSJSSCXUHKnonbx2zGcHKkazSgWP0VbDqWn4qrbRSpg1Hs_65FBYN-IaAifIEALw_wcB&trk=9eeea834-765c-4895-95ec-d2fb1a1a573d&sc_channel=ps&ef_id=Cj0KCQiA_qG5BhDTARIsAA0UHSJSSCXUHKnonbx2zGcHKkazSgWP0VbDqWn4qrbRSpg1Hs_65FBYN-IaAifIEALw_wcB:G:s&s_kwcid=AL!4422!3!561843094998!p!!g!!amazon%20aws!15278604641!130587773020&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all)
 
 ## 1. O que é AWS
 
@@ -219,3 +218,5 @@ A AWS é uma **plataforma de serviços em nuvem** que fornece infraestrutura com
 ## Conclusão
 
 A AWS oferece uma infraestrutura robusta, escalável e segura que atende a uma ampla gama de necessidades no desenvolvimento de software. Com serviços que variam de computação a machine learning, e ferramentas para automação e monitoramento, a AWS permite que empresas e desenvolvedores criem aplicações altamente eficientes, reduzam custos operacionais e escalem conforme necessário. Adotar as melhores práticas e usar os serviços certos é essencial para aproveitar ao máximo o potencial da AWS.
+
+Link AWS Free: https://aws.amazon.com/pt/free/?gclid=Cj0KCQiA_qG5BhDTARIsAA0UHSJSSCXUHKnonbx2zGcHKkazSgWP0VbDqWn4qrbRSpg1Hs_65FBYN-IaAifIEALw_wcB&trk=9eeea834-765c-4895-95ec-d2fb1a1a573d&sc_channel=ps&ef_id=Cj0KCQiA_qG5BhDTARIsAA0UHSJSSCXUHKnonbx2zGcHKkazSgWP0VbDqWn4qrbRSpg1Hs_65FBYN-IaAifIEALw_wcB:G:s&s_kwcid=AL!4422!3!561843094998!p!!g!!amazon%20aws!15278604641!130587773020&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all
