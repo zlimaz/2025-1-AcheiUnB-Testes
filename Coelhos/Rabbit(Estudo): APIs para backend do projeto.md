@@ -931,7 +931,6 @@ No seu template, você pode renderizar os filtros:
     
     ```
     
-
 ### Conclusão
 
 O Django Filter é uma ferramenta poderosa para simplificar a filtragem de dados em aplicações Django, tornando mais fácil para os desenvolvedores criar interfaces de busca e filtragem ricas e intuitivas. Ele economiza tempo e esforço ao lidar com a construção de consultas dinâmicas e a validação de dados de entrada.
