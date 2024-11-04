@@ -12,8 +12,6 @@ O Django Allauth é uma biblioteca poderosa para gerenciar autenticação de usu
 5. **Configuração Flexível**: Possibilita a customização de templates e lógica de autenticação, para que a interface e experiência do usuário estejam de acordo com a identidade visual do projeto.
 6. **Compatível com Django REST Framework**: Ele pode ser usado com o Django REST Framework para autenticação em APIs, especialmente útil no caso de aplicações móveis ou SPA (Single Page Application).
 
-Em nossa aplicação é possível a utilçização de apenas o sistema de permições e escopos do DRF e Oauth2, como no SuaGrade-UnB. Porém se quisermos fazer um sistema para que os usuários se cadastrem dentro do nosso aplicativo possam assim modificar usuário e etc precisaremos utilizar o Allauth, que ainda permite a imtegralização com o Google Accounts via Oauth2.
-
 # Oauth2
 
 O OAuth 2.0 é um protocolo padrão para autorização. Permite que aplicativos como Web App, Mobile e Desktop obtenham acesso limitado às informações de usuários através do protocolo HTTP.Estrutura de autorição para aplicações que utilizam HTTP. É um proyocolo padrão para autorização.
