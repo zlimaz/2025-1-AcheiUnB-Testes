@@ -164,4 +164,87 @@ Porém é necessário que se esboçe o código HTML para que o form leia correta
 
 ## Estudo sobre Django Message
 
+### O framework de mensagens
 
+Comumente, em aplicações web, é necessário exibir uma mensagem de notificação de uma única vez (também conhecida como "flash message") ao usuário após o processamento de um formulário ou de outros tipos de entrada do usuário.
+
+Para isso, o Django oferece suporte total para mensagens baseadas em cookies e sessões, tanto para usuários anônimos quanto para usuários autenticados. O framework de mensagens permite que você armazene temporariamente mensagens em uma solicitação e as recupere para exibição em uma solicitação subsequente (geralmente a próxima). Cada mensagem é marcada com um nível específico que determina sua prioridade (por exemplo, info, warning ou error).
+
+### Habilitando mensagens
+
+As mensagens são implementadas por meio de uma classe de middleware e do respectivo processador de contexto.
+
+As configurações padrão do `settings.py` criadas pelo `django-admin startproject` já contêm todas as configurações necessárias para habilitar a funcionalidade de mensagens:
+
+- `'django.contrib.messages'` está em `INSTALLED_APPS`.
+- `MIDDLEWARE` contém `'django.contrib.sessions.middleware.SessionMiddleware'` e `'django.contrib.messages.middleware.MessageMiddleware'`.
+- O backend de armazenamento padrão depende de sessões. Por isso, o `SessionMiddleware` deve ser habilitado e aparecer antes do `MessageMiddleware` em `MIDDLEWARE`.
+- A opção `'context_processors'` do backend `DjangoTemplates`, definida em sua configuração `TEMPLATES`, contém `'django.contrib.messages.context_processors.messages'`.
+
+### Configurando o mecanismo de mensagens
+
+### Backends de armazenamento
+
+O framework de mensagens pode usar diferentes backends para armazenar mensagens temporárias.
+
+O Django fornece três classes de armazenamento integradas em `django.contrib.messages`:
+
+**class storage.session.SessionStorage**
+
+Essa classe armazena todas as mensagens dentro da sessão da requisição. Portanto, requer o aplicativo `contrib.sessions` do Django.
+
+**class storage.cookie.CookieStorage**
+
+Essa classe armazena os dados da mensagem em um cookie (assinados com um hash secreto para evitar manipulação) para persistir notificações entre requisições. Mensagens antigas são descartadas se o tamanho dos dados do cookie exceder 2048 bytes.
+
+**class storage.fallback.FallbackStorage**
+
+Essa classe primeiro utiliza o `CookieStorage` e recorre ao `SessionStorage` para as mensagens que não puderam caber em um único cookie. Também requer o aplicativo `contrib.sessions` do Django.
+
+Esse comportamento evita a gravação na sessão sempre que possível, proporcionando o melhor desempenho no caso geral.
+
+O `FallbackStorage` é a classe de armazenamento padrão. Se não for adequada às suas necessidades, você pode selecionar outra classe de armazenamento definindo `MESSAGE_STORAGE` para seu caminho completo de importação, por exemplo:
+
+```python
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+```
+
+**class storage.base.BaseStorage**
+
+Para escrever sua própria classe de armazenamento, herde a classe `BaseStorage` em `django.contrib.messages.storage.base` e implemente os métodos `_get` e `_store`.
+
+### Níveis de mensagens
+
+O framework de mensagens é baseado em uma arquitetura de níveis configurável, semelhante à do módulo de logging do Python. Os níveis de mensagem permitem agrupar mensagens por tipo, para que possam ser filtradas ou exibidas de maneira diferente nas views e templates.
+
+Os níveis integrados, que podem ser importados diretamente de `django.contrib.messages`, são:
+
+| Constante | Propósito |
+| --- | --- |
+| DEBUG | Mensagens relacionadas ao desenvolvimento que serão ignoradas (ou removidas) em uma implantação de produção |
+| INFO | Mensagens informativas para o usuário |
+| SUCCESS | Uma ação foi bem-sucedida, por exemplo, "Seu perfil foi atualizado com sucesso" |
+| WARNING | Uma falha não ocorreu, mas pode ser iminente |
+| ERROR | Uma ação não foi bem-sucedida ou alguma outra falha ocorreu |
+
+A configuração `MESSAGE_LEVEL` pode ser usada para mudar o nível mínimo registrado (ou pode ser alterado por requisição). Tentativas de adicionar mensagens de um nível inferior a este serão ignoradas.
+
+### Tags de mensagens
+
+As tags de mensagens são uma representação em string do nível da mensagem, além de quaisquer tags extras que foram adicionadas diretamente na view (veja "Adicionando tags de mensagem extras" abaixo para mais detalhes). As tags são armazenadas em uma string e são separadas por espaços. Normalmente, as tags de mensagens são usadas como classes CSS para personalizar o estilo da mensagem com base no tipo de mensagem. Por padrão, cada nível tem uma única tag que é uma versão minúscula de sua própria constante:
+
+| Nível Constante | Tag |
+| --- | --- |
+| DEBUG | debug |
+| INFO | info |
+| SUCCESS | success |
+| WARNING | warning |
+| ERROR | error |
+
+Para alterar as tags padrão para um nível de mensagem (seja integrado ou personalizado), defina a configuração `MESSAGE_TAGS` como um dicionário contendo os níveis que você deseja alterar. Como isso estende as tags padrão, você só precisa fornecer tags para os níveis que deseja sobrescrever.
+
+[Documentação Django Message](https://docs.djangoproject.com/en/5.1/ref/contrib/messages/)
+
+---
+
+## Django Pillow
