@@ -61,5 +61,107 @@ para o Authorization Server.
 
 ---
 
-## Estudo sobre Django Forms e Message
+## Estudo sobre Django Forms
+
+### Formulários em HTML
+
+Em HTML, um formulário é uma coleção de elementos dentro de `<form>...</form>` que permitem ao visitante fazer coisas como:
+
+- Inserir texto,
+- Selecionar opções,
+- Manipular objetos ou controles,
+
+Em seguida, o usuário pode enviar essas informações de volta ao servidor.
+
+Alguns desses elementos de interface de formulário, como entradas de texto ou caixas de seleção, são incorporados ao próprio HTML. Outros elementos são mais complexos; por exemplo, uma interface que exibe um seletor de data ou permite mover um controle deslizante. Para esses, geralmente são usados **JavaScript** e **CSS**, além dos elementos `<input>` do HTML.
+
+Além dos elementos `<input>`, um formulário precisa especificar:
+
+- **onde**: a URL para onde os dados correspondentes à entrada do usuário devem ser enviados;
+- **como**: o método HTTP (GET ou POST) pelo qual os dados devem ser enviados.
+
+---
+
+### GET e POST
+
+**GET** e **POST** são os únicos métodos HTTP usados para lidar com formulários.
+
+- **POST**: O formulário de login do Django, por exemplo, é enviado usando o método POST. Nesse caso, o navegador:
+  1. Agrupa os dados do formulário,
+  2. Codifica para transmissão,
+  3. Envia para o servidor,
+  4. Recebe uma resposta.
+
+- **GET**: O GET, por outro lado, agrupa os dados em uma string e usa isso para compor uma URL, incluindo as chaves e valores dos dados. 
+
+**Usos recomendados**:
+- Qualquer solicitação que possa **alterar o estado do sistema** - como mudanças no banco de dados - deve usar POST.
+- **GET** deve ser usado apenas para solicitações que **não afetam o estado do sistema**.
+
+**Segurança**:
+- **GET** não é adequado para um formulário de senha, pois a senha apareceria na URL, visível no histórico do navegador e logs do servidor.
+- **POST** é mais seguro, especialmente quando combinado com proteções, como a **proteção CSRF** do Django, que oferece controle de acesso adicional.
+
+Por outro lado, GET é adequado para funcionalidades como formulários de busca na web, pois as URLs podem ser facilmente **marcadas como favorito, compartilhadas ou reenviadas**.
+
+---
+
+### A Classe Form do Django
+
+No centro desse sistema está a classe `Form` do Django. Semelhante aos modelos do Django, a classe `Form`:
+
+- Descreve a estrutura de um formulário,
+- Determina o comportamento e a aparência do formulário.
+
+#### Campos de um Formulário
+
+- **Mapeamento**: Campos de uma classe de formulário mapeiam para elementos `<input>` de um formulário HTML.
+- **ModelForm**: Um `ModelForm` mapeia os campos de uma classe de modelo para elementos `<input>`, como no caso do admin do Django.
+- **Classes de campo**: Cada campo de um formulário é uma classe que gerencia dados e realiza validação.
+  - Exemplo: `DateField` e `FileField` lidam com tipos de dados muito diferentes e executam funções distintas.
+
+Cada campo de formulário é representado ao usuário como um **widget HTML** (elemento de interface). Cada tipo de campo tem uma **classe de widget padrão**, mas esses widgets podem ser sobrescritos conforme necessário.
+
+---
+
+### Instanciação, Processamento e Renderização de Formulários
+
+Ao renderizar um objeto no Django, normalmente:
+
+1. Obtemos o objeto na **view** (buscando-o no banco de dados, por exemplo);
+2. Passamos o objeto para o **contexto do template**;
+3. Expandimos o objeto para HTML usando **variáveis de template**.
+
+Para um formulário:
+
+- **Renderizar um formulário vazio** faz sentido, pois queremos que o usuário o preencha.
+- Quando manipulamos um formulário em uma view, normalmente o **instanciamos** ali, podendo deixá-lo vazio ou preenchido previamente.
+
+Ao instanciar um formulário, podemos optar por deixá-lo vazio ou preenchê-lo previamente, por exemplo com:
+
+  1. dados de uma instância de modelo salva (como no caso de formulários de administração para edição)
+  2. dados que coletamos de outras fontes
+  3. dados recebidos de um envio anterior de formulário HTML
+
+ ### Construindo um formulário no Django
+### forms.py
+
+```python
+from django import forms
+
+class NameForm(forms.Form):
+    your_name = forms.CharField(label="Seu nome", max_length=100)
+```
+Neste exemplo, criamos um formulário básico usando a classe Form do Django. O campo your_name é do tipo CharField, que cria um campo de texto no formulário com o rótulo "Seu nome" e permite um comprimento máximo de 100 caracteres.
+
+Porém é necessário que se esboçe o código HTML para que o form leia corretamente a URL.
+
+[Documentação Django Forms](https://docs.djangoproject.com/en/5.1/topics/forms/#html-forms)
+
+[Cuso Django Forms](https://www.youtube.com/playlist?list=PLaUQIPIyD0z43DiRKM0x8YNEB-1QNCOwR)
+
+---
+
+## Estudo sobre Django Message
+
 
