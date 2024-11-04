@@ -247,4 +247,74 @@ Para alterar as tags padrão para um nível de mensagem (seja integrado ou perso
 
 ---
 
-## Django Pillow
+## Pillow
+
+Pillow é uma biblioteca Python que oferece uma série de funcionalidades para abrir, manipular e salvar diferentes formatos de imagem
+
+Pillow permite realizar operações como:
+
+- Redimensionamento e recorte de imagens
+- Aplicação de filtros e efeitos
+- Conversão entre diferentes formatos de imagem
+- Adição de texto e gráficos a imagens
+- Processamento em lote de imagens
+
+### Benefícios do uso do Pillow com Django
+
+- **Flexibilidade**: Permite uma ampla gama de manipulações de imagem, desde as mais simples até as mais complexas.
+- **Integração**: Funciona bem com o sistema de upload de arquivos do Django, facilitando o gerenciamento de imagens.
+- **Suporte a Vários Formatos**: Pillow suporta uma variedade de formatos de imagem, como JPEG, PNG, GIF, entre outros.
+
+### Como usar Pillow no Django
+
+Para usar Pillow em um projeto Django, você deve seguir alguns passos:
+
+1. **Instalação**:
+Você pode instalar Pillow usando pip:
+    
+    ```bash
+    pip install Pillow
+    ```
+    
+2. **Configuração do modelo**:
+Ao trabalhar com imagens em Django, você geralmente as armazena em um campo de modelo. Para isso, você deve usar o campo `ImageField`. Por exemplo:
+
+```python
+from django.db import models
+
+class MyModel(models.Model):
+    image = models.ImageField(upload_to='images/')
+```
+
+3. **Manipulação de Imagens**:
+Uma vez que você tenha a imagem carregada, pode usar as funcionalidades do Pillow para manipulá-la. Por exemplo, para redimensionar uma imagem:
+
+```python
+from PIL import Image
+from django.core.files.base import ContentFile
+
+def process_image(image_file):
+    image = Image.open(image_file)
+    image = image.resize((800, 800))  # Redimensiona a imagem para 800x800
+    image_io = BytesIO()
+    image.save(image_io, format='JPEG')
+    return ContentFile(image_io.getvalue(), name=image_file.name)
+```
+
+4. **Exibição de Imagens**:
+No Django, você pode exibir imagens em seus templates usando a URL do campo `ImageField`:
+
+```html
+<img src="{{ my_model.image.url }}" alt="My Image">
+```
+
+
+![image](https://github.com/user-attachments/assets/735dd0ba-09a3-47d3-bbd0-030b137ce145)
+
+Exemplo onde a Pillow redimenciona a imagem.
+
+[Documentação PIllow](https://pillow.readthedocs.io/en/stable/index.html)
+
+---
+
+## Django Filter
