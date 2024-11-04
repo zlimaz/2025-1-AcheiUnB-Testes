@@ -95,17 +95,71 @@ Um dos principais conceitos do Tailwind é o “utility-first”, invés de cria
 
 Aqui está um exemplo de um código feito com CSS padrão:
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/edd79509-9359-4755-aab4-70cffd7295a4/77a8f102-86c4-463c-b46c-01b50399f91a/image.png)
+```CSS
+<div class="chat-notification">
+  <div class="chat-notification-logo-wrapper">
+    <img class="chat-notification-logo" src="/img/logo.svg" alt="ChitChat Logo">
+  </div>
+  <div class="chat-notification-content">
+    <h4 class="chat-notification-title">ChitChat</h4>
+    <p class="chat-notification-message">You have a new message!</p>
+  </div>
+</div>
+
+<style>
+  .chat-notification {
+    display: flex;
+    align-items: center;
+    max-width: 24rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  .chat-notification-logo-wrapper {
+    flex-shrink: 0;
+  }
+  .chat-notification-logo {
+    height: 3rem;
+    width: 3rem;
+  }
+  .chat-notification-content {
+    margin-left: 1.5rem;
+  }
+  .chat-notification-title {
+    color: #1a202c;
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+  .chat-notification-message {
+    color: #718096;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+</style>
+
+```
 
 E o mesmo código feito usando Tailwind:
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/edd79509-9359-4755-aab4-70cffd7295a4/d7dcc951-417f-49be-a435-30775880773d/image.png)
+```CSS
+
+<div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center gap-x-4">
+  <div class="shrink-0">
+    <img class="size-12" src="/img/logo.svg" alt="ChitChat Logo">
+  </div>
+  <div>
+    <div class="text-xl font-medium text-black">ChitChat</div>
+    <p class="text-slate-500">You have a new message!</p>
+  </div>
+</div>
+
+```
 
 Ele funciona escanenado todos os arquivos HTML, componentes JavaScript e qualquer outro template por nomes de classes, gerando o estilo correspondente e escrevendo eles em um arquvio CSS estático.
 
-Como instalar: Em sua documentação existe um guia específico para instalação em diversos frame-works
-
-![image.png](https://file.notion.so/f/f/edd79509-9359-4755-aab4-70cffd7295a4/351204fd-c6fc-4199-afdf-328bd8ebe34c/image.png?table=block&id=131718bf-056f-80e7-bff6-c61b47326c5d&spaceId=edd79509-9359-4755-aab4-70cffd7295a4&expirationTimestamp=1730678400000&signature=eB6Qz3wdPtm4JA5h6D9VfKSVXDuBnBXPQnufsdgF2WQ&downloadName=image.png)
+Como instalar: Em sua documentação existe um guia específico para instalação em diversos frame-work. Caso o Framework desejado não esteja lá existe um tutorial mais genérico.
 
 ### Responsividade
 
