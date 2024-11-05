@@ -63,7 +63,7 @@ Esse documento detalha a estrutura técnica e as decisões de design do sistema.
 
 [Exemplo de Documento de Arquitetura](https://datasus.saude.gov.br/wp-content/uploads/2019/12/Documento-de-arquitetura-de-software.docx)
 
-[Template de Documento de Arquitetura por RUP](https://www.notion.so/Arquitetura-de-Software-e3434f0456cf444ab594daecd10cb374?pvs=21)
+[Template de Documento de Arquitetura por RUP](https://files.defcon.no/RUP/webtmpl/templates/a_and_d/rup_sad.htm)
 
 [Template de Documento de Arquitetura em português (UFPE)](https://cin.ufpe.br/~gta/rup-vc/extend.formal_resources/guidances/examples/resources/sadoc_v1.htm#toc)
 ## **Stacks (Pilha)** 🛠️
