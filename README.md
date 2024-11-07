@@ -151,7 +151,7 @@ Acesse a documentação completa do projeto [aqui](https://github.com/unb-achei/
 
 ### Story Map e Activity Flow
 
-Para acessar o Story Map e Activity Flow, [clique aqui](https://github.com/unb-achei/2024-2-AcheiUnB/wiki/Story-Map).
+Para acessar o Story Map e Activity Flow, [clique aqui](https://miro.com/app/board/uXjVLKTcaY4=/?share_link_id=775702257830).
 
 ### Arquitetura
 
