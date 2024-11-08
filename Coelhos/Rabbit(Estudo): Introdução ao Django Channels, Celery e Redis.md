@@ -118,7 +118,6 @@
 
 - **Introdução ao Channels para Comunicação em Tempo Real**
     - O Django Channels permite adicionar funcionalidades de comunicação em tempo real a aplicações Django, possibilitando eventos como chat ao vivo, atualizações instantâneas e notificações.
-    - **(Espaço para imagem do fluxo de comunicação com Channels)**
 - **Configuração e Uso Básico**
     - Passos iniciais para instalação e configuração do Django Channels, incluindo definição de WebSockets e integração com o Django.
 
@@ -130,7 +129,6 @@
 
 - **Instalação e Configuração do Celery para Tarefas Assíncronas**
     - O Celery é uma ferramenta poderosa para gerenciamento de tarefas assíncronas. Ele facilita o processamento de tarefas em segundo plano, ideal para operações demoradas, como processamento de dados e envio de emails.
-    - **(Espaço para imagem da arquitetura de filas com Celery)**
 - **Integração do Celery com Django**
     - Passo a passo para integrar o Celery com o Django, incluindo criação de tarefas e teste de execução.
 
@@ -142,7 +140,6 @@
 
 - **Instalação do Redis e Configuração como Broker para o Celery**
     - Redis é um banco de dados em memória que serve como “broker” para o Celery, gerenciando as filas de mensagens entre tarefas assíncronas.
-    - **(Espaço para imagem do Redis configurado como broker do Celery)**
 - **Testes e Exemplos de Notificações Assíncronas**
     - Demonstrações de uso prático do Redis e Celery para enviar notificações e mensagens em tempo real, complementando a configuração com Django Channels.
     
