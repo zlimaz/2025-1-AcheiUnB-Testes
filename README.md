@@ -164,4 +164,3 @@ O protótipo da plataforma está disponível [aqui](https://github.com/unb-achei
 ---
 
 AcheiUnB é um software livre, disponível sob a licença MIT.
-```
