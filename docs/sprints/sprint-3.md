@@ -34,10 +34,11 @@ A reunião começou com a visualização do story map e a definição das histó
 Por fim, definimos os objetivos iniciais da Sprint, com foco nas entregas prioritárias e nas atividades de integração da equipe.
 
 ### Reunião 2
-Data: DD/MM/AAAA  
-Local: Local da reunião  
+Data: 08/11/2024  
+Local: Discord 
 **Ata:**
 
+A reunião começou com a finalização do MoSCoW, categorizando as funcionalidades em "deve ter", "pode ter" ou "não precisa ter", utilizando a plataforma [Planning Poker](https://planningpokeronline.com/). Em seguida, discutimos as tarefas concluídas da sprint atual e, com base no progresso das equipes, designamos tarefas adicionais e realizamos um pré-planejamento para a próxima sprint.
 
 - ### Reunião 3
 Data: DD/MM/AAAA  
@@ -46,7 +47,7 @@ Local: Local da reunião
 
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_. Além disso, deve conter um link para as _issues_ que foram fechadas.
+> A _Sprint_ foi 
 
 ---
 
