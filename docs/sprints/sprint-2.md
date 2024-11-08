@@ -2,7 +2,7 @@
 Período: 28/10/2024 a 04/11/2024
 
 ## Descrição
-> A Sprint 2 focará no estabelecimento de uma base sólida para o desenvolvimento do projeto. O time se propôs a estudar e aplicar conceitos fundamentais como GitHub, GitFlow, DevOps, e ferramentas específicas para front-end e back-end. Além disso, atividades de integração do time serão promovidas através do Pair Programming e das apresentações dos temas. [Link para as issues da Sprint 2].
+> A Sprint 2 focará no estabelecimento de uma base sólida para o desenvolvimento do projeto. O time se propôs a estudar e aplicar conceitos fundamentais como GitHub, GitFlow, DevOps, e ferramentas específicas para front-end e back-end. Além disso, atividades de integração do time serão promovidas através do Pair Programming e das apresentações dos temas.
 
 ## Objetivos
 - [x] Incentivar o Pair Programming entre os membros
