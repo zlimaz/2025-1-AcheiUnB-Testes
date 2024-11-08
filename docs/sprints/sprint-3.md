@@ -38,7 +38,7 @@ Data: 08/11/2024
 Local: Discord 
 **Ata:**
 
-A reunião começou com a finalização do MoSCoW, categorizando as funcionalidades em "deve ter", "pode ter" ou "não precisa ter", utilizando a plataforma [Planning Poker](https://planningpokeronline.com/). Em seguida, discutimos as tarefas concluídas da sprint atual e, com base no progresso das equipes, designamos tarefas adicionais e realizamos um pré-planejamento para a próxima sprint.
+A reunião começou com a finalização do MoSCoW, categorizando as funcionalidades em "deve ter", "pode ter" ou "não precisa ter", utilizando a plataforma [Planning Poker](https://planningpokeronline.com/). Em seguida, discutimos as tarefas concluídas da sprint atual e, com base no progresso das equipes, designamos tarefas adicionais para a _Sprint_.
 
 - ### Reunião 3
 Data: DD/MM/AAAA  
