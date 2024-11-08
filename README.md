@@ -4,24 +4,24 @@ AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Univ
 
 ## 📝 Sumário
 
-- AcheiUnB
-  - 📝 Sumário
-  - 👥 Equipe
-  - ✨ Início
-    - 📋 Pré-requisitos
-    - 💻 Ambiente
-    - 📁 Dependências do Projeto
-    - 💾 Execução
-      - Observações do Docker
-    - ✅ Autenticação com o Google OAuth
-    - 📥 Atualização do Banco de Dados
-    - 🖱️ Acesso aos Serviços
-    - 📍 Migrations
-  - 📚 Documentação
-  - 📎 Extra
-    - Story Map e Activity Flow
-    - Arquitetura
-    - Protótipo
+- [AcheiUnB](#acheiunb)
+  - [📝 Sumário](#-sumário)
+  - [👥 Equipe](#-equipe)
+  - [✨ Início](#-início)
+    - [📋 Pré-requisitos](#-pré-requisitos)
+    - [💻 Ambiente](#-ambiente)
+    - [📁 Dependências do Projeto](#-dependências-do-projeto)
+    - [💾 Execução](#-execução)
+      - [Observações do Docker](#observações-do-docker)
+    - [✅ Autenticação com o Google OAuth](#-autenticação-com-o-google-oauth)
+    - [📥 Atualização do Banco de Dados](#-atualização-do-banco-de-dados)
+    - [🖱️ Acesso aos Serviços](#️-acesso-aos-serviços)
+    - [📍 Migrations](#-migrations)
+  - [📚 Documentação](#-documentação)
+  - [📎 Extra](#-extra)
+    - [Story Map e Activity Flow](#story-map-e-activity-flow)
+    - [Arquitetura](#arquitetura)
+    - [Protótipo](#protótipo)
 
 ## 👥 Equipe
 
@@ -155,7 +155,7 @@ Para acessar o Story Map e Activity Flow, [clique aqui](https://github.com/unb-a
 
 ### Arquitetura
 
-A descrição da arquitetura do projeto pode ser encontrada [aqui](https://github.com/unb-achei/2024-2-AcheiUnB/wiki/Arquitetura).
+A descrição da arquitetura do projeto pode ser encontrada [aqui](https://www.figma.com/board/ai5E0akKD2yDr9FfnW9k4l/Prot%C3%B3tipo-de-Arquitetura?node-id=0-1&t=19ErTsypFap1Nvl9-1).
 
 ### Protótipo
 
