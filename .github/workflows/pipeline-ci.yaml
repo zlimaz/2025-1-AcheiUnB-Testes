@@ -1,0 +1,20 @@
+# Nome do workflow
+name: CI/CD Workflow
+
+# Definir quando o workflow será executado
+on:
+  push:
+    branches: 
+      - main # Executa o workflow ao push na branch 'main'
+  pull_request:
+    branches: 
+      - main # Executa o workflow ao abrir um PR na branch 'main'
+
+# Definindo os jobs
+jobs:
+  # Job para rodar os testes
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
