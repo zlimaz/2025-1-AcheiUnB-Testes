@@ -23,12 +23,13 @@ Data: 11/11/2024
 Local: Discord  
 **Ata:**
 
-A reunião iniciou com a definição dos principais objetivos da Sprint 4, enfatizando as entregas prioritárias e as atividades de integração da equipe. Foi discutida a importância de cada tarefa para o avanço do projeto, e cada membro compartilhou sua disponibilidade e possíveis desafios esperados. Em seguida, foi realizada uma votação de dificuldade de cada tarefa, para estimar o tempo necessário e a complexidade de implementação, o que ajudará no acompanhamento do progresso e na divisão de esforços ao longo da Sprint.
-Por fim, alinhamos as responsabilidades de cada membro para garantir que todos tenham clareza sobre suas atividades e pontos de apoio para o Pair Programming e outras colaborações.
+A reunião iniciou com a definição dos principais objetivos da Sprint 4, enfatizando as entregas prioritárias e as atividades de integração da equipe. Foi discutida a importância de cada tarefa para o avanço do projeto, e cada membro compartilhou sua disponibilidade e possíveis desafios esperados. Em seguida, foi realizada uma votação de dificuldade de cada tarefa, para estimar o tempo necessário e a complexidade de implementação, o que ajudará no acompanhamento do progresso e na divisão de esforços ao longo da Sprint. Por fim, alinhamos as responsabilidades de cada membro para garantir que todos tenham clareza sobre suas atividades e pontos de apoio para o Pair Programming e outras colaborações.
+
 ### Reunião 2
-Data: DD/MM/AAAA  
-Local: Local da reunião  
+Data: 11/11/2024  
+Local: Discord
 **Ata:**
+Na reunião, foi realizada uma revisão das delegações das equipes, decidindo que o Front-end ficaria apenas com uma tarefa de nível difícil. Além disso, fizemos um novo emparelhamento para o projeto.
 
 ## Finalização
 > A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_. Além disso, deve conter um link para as _issues_ que foram fechadas.
