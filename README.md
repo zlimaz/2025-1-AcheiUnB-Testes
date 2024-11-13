@@ -46,7 +46,7 @@ git clone https://github.com/unb-achei/2024-2-AcheiUnB.git
 
 Para rodar o projeto, você precisa das seguintes ferramentas:
 
-- **Python** v3.11.6 e **Pip** v22.0.2 ou superior
+- **Python** v3.12.0 e **Pip** v22.0.2 ou superior
 
 ### 💻 Ambiente
 
