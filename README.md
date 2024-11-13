@@ -53,7 +53,7 @@ Para rodar o projeto, você precisa das seguintes ferramentas:
 Para configurar o ambiente, rode o seguinte script:
 
 ```bash
-make config
+make config 
 ```
 
 ### 📁 Dependências do Projeto
