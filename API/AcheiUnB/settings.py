@@ -101,10 +101,10 @@ SOCIALACCOUNT_PROVIDERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nome_do_banco',
-        'USER': 'usuario_do_banco',
-        'PASSWORD': 'senha_do_banco',
-        'HOST': 'localhost',  
+        'NAME': 'db',
+        'USER': 'postgres',
+        'PASSWORD': 'senha',
+        'HOST': 'db',  
         'PORT': '5432',       
     }
 }
