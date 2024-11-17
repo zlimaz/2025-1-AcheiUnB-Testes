@@ -86,12 +86,12 @@ WSGI_APPLICATION = "AcheiUnB.wsgi.application"
 SOCIALACCOUNT_PROVIDERS = {
     'microsoft': {
         'APP': {
-            'client_id': 'seu_client_id',
-            'secret': 'seu_client_secret',
+            'client_id': '70c0d24a-2df5-4344-84d3-e1dde18b6895',
+            'secret': 'f26dade0-5557-4580-85c3-a8c86a24bdbb',
             'key': '',
         },
             "settings": {
-                    "tenant": "organizations",
+                    "tenant": "ec359ba1-630b-4d2b-b833-c8e6d48f8059",
         }
     }
 }
@@ -161,7 +161,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/certu"
 LOGOUT_REDIRECT_URL = "/login/"
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 LANGUAGE_CODE = 'pt-br'
