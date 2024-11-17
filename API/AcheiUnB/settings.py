@@ -88,9 +88,17 @@ SOCIALACCOUNT_PROVIDERS = {
         'APP': {
             'client_id': 'seu_client_id',
             'secret': 'seu_client_secret',
-            'key': ''
+            'key': '',
         },
+            "settings": {
+                    "tenant": "organizations",
+        }
     }
+}
+# Permitir apenas usuários do tenant da UnB
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_PROVIDERS['microsoft']['AUTH_PARAMS'] = {
+    'domain': 'alunos.unb.br',
 }
 
 
@@ -156,3 +164,4 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/login/"
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
+LANGUAGE_CODE = 'pt-br'
