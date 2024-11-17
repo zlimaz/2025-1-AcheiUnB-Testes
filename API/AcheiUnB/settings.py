@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,13 +87,10 @@ WSGI_APPLICATION = "AcheiUnB.wsgi.application"
 SOCIALACCOUNT_PROVIDERS = {
     'microsoft': {
         'APP': {
-            'client_id': '70c0d24a-2df5-4344-84d3-e1dde18b6895',
-            'secret': 'f26dade0-5557-4580-85c3-a8c86a24bdbb',
+            'client_id': os.getenv('MICROSOFT_CLIENT_ID'),
+            'secret': os.getenv('MICROSOFT_CLIENT_SECRET'),
             'key': '',
         },
-            "settings": {
-                    "tenant": "ec359ba1-630b-4d2b-b833-c8e6d48f8059",
-        }
     }
 }
 # Permitir apenas usuários do tenant da UnB
