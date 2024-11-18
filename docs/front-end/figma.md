@@ -1,0 +1,1 @@
+Implementação inicial do Figma: [Aqui](https://www.figma.com/design/balBSne5eGu1mDpKqEW7ey/Tailwind-UI-Components-for-Figma-%7C-TailGrids-(Community)?node-id=510-207&node-type=canvas&t=bOeHKWqF0iphWZJc-0)
