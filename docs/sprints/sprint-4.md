@@ -31,6 +31,12 @@ Local: Discord
 **Ata:**
 Na reunião, foi realizada uma revisão das delegações das equipes, decidindo que o Front-end ficaria apenas com uma tarefa de nível difícil. Além disso, fizemos um novo emparelhamento para o projeto.
 
+### Reunião 3
+Data: 18/11/2024  
+Local: Discord
+**Ata:**
+Na reunião...
+
 ## Finalização
 > A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_. Além disso, deve conter um link para as _issues_ que foram fechadas.
 
