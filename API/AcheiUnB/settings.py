@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,11 +87,16 @@ WSGI_APPLICATION = "AcheiUnB.wsgi.application"
 SOCIALACCOUNT_PROVIDERS = {
     'microsoft': {
         'APP': {
-            'client_id': 'seu_client_id',
-            'secret': 'seu_client_secret',
-            'key': ''
+            'client_id': os.getenv('MICROSOFT_CLIENT_ID'),
+            'secret': os.getenv('MICROSOFT_CLIENT_SECRET'),
+            'key': '',
         },
     }
+}
+# Permitir apenas usuários do tenant da UnB
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_PROVIDERS['microsoft']['AUTH_PARAMS'] = {
+    'domain': 'alunos.unb.br',
 }
 
 
@@ -101,14 +107,13 @@ SOCIALACCOUNT_PROVIDERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db',
-        'USER': 'postgres',
-        'PASSWORD': 'senha',
-        'HOST': 'db',  
-        'PORT': '5432',       
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
-
 
 
 # Password validation
@@ -153,6 +158,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/certu"
 LOGOUT_REDIRECT_URL = "/login/"
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
+LANGUAGE_CODE = 'pt-br'

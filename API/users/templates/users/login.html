@@ -1,4 +1,16 @@
-{% load socialaccount %}
-<h2>Login no AcheiUnB</h2>
-<a href="{% provider_login_url 'microsoft' %}">Login com e-mail institucional</a>
-<a href="{% url 'anon-login' %}">Entrar como anônimo</a>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <hr>
+    <p>Bem-vindo! Para visualizar os itens achados e perdidos faça login pela sua conta institucional da UnB</p>
+    <a href="{% url 'microsoft_login' %}" class="btn btn-primary">
+        Login com Microsoft
+    </a>
+     <div class="social-login">
+</body>
+</html>
