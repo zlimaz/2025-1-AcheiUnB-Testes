@@ -13,10 +13,11 @@ Período: 18/11/2024 a 25/11/2024
 - [ ] Pesquisa sobre Heroku para hospedagem e iniciar a implementação
 
 ## Reuniões
-### Reunião 1
-Data: 18/11/2024
-Local: Local da reunião  
-**Ata:**  Nesta planning, definimos as issues para a sprint 5, de forma que iremos progredir na implementação de endpoints, e implementação do docker pro banco de dados, além de continuidade da prototipagem no figma e pesquisa sobre a hospedagem da aplicação.
+### Reunião 1  
+Data: 18/11/2024  
+Local: Local da reunião    
+**Ata:**  
+Nesta planning, definimos as issues para a sprint 5, de forma que iremos progredir na implementação de endpoints, e implementação do docker pro banco de dados, além de continuidade da prototipagem no figma e pesquisa sobre a hospedagem da aplicação.
 
 
 ### Reunião 2
