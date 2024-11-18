@@ -25,6 +25,8 @@ services:
       POSTGRES_PASSWORD: senha
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    env_file:
+    - /home/pedroubu/2024-2-AcheiUnB/API/.env
     ports:
       - "5432:5432"
 
