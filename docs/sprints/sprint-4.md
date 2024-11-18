@@ -35,12 +35,13 @@ Na reunião, foi realizada uma revisão das delegações das equipes, decidindo 
 Data: 18/11/2024  
 Local: Discord
 **Ata:**
-Na reunião...
+Na reunião, foi feita uma breve review da sprint 4 onde relatamos dificuldades na realização das tarefas, desde dificuldades pessoais às dificuldades na realização de tasks que conectam equipes diferentes. Na retrospective discutimos sobre as coisas que nos ajudaram a avançar e sobre as coisas que nos detiveram de certa forma. E nos reajustamos, decidindo seguir novos direcionamentos. Depois disso, tivemos uma breve discussão sobre a contagem de commits para a matéria, tivemos um integrante que não teve seus commits da semana registrados. Por fim, tivemos uma bela amostra da entrega do protótipo do front-end.
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_. Além disso, deve conter um link para as _issues_ que foram fechadas.
+> A sprint 4 foi marcada por grandes dificuldades com o docker na parte do back-end porém foi possível entregar quase todas tarefas da semana, apenas um atraso na issue do site de documentação e uma repassagem para próxima sprint do protótipo do figma. No geral foi uma boa sprint considerando as adversidades.
 
 ---
 
 **Observações:**
-> Esse espaço deve ser utilizado para registrar qualquer observação que o time julgar pertinente.
+> Pair Programming teve eficácia comprovada por um dos integrantes.
+> Programar de madrugada não vale a pena!
