@@ -7,17 +7,15 @@ Foram definidas as telas que o site terá e teve início a prototipação delas 
 
 ## Implementação inicial de algumas telas
 
-Aqui estão algumas telas que já foram feitas, lembrando ainda que essa não é a versão final. Algumas coisas podem ser alteradas e ainda falta muito a ser criado.
+Aqui estão algumas telas que já foram feitas, lembrando ainda que essa não é a versão final. Algumas coisas podem ser alteradas.
 
-![](imgs/tela_prototipo1.png)  ![](imgs/tela_prototipo2.png)  ![](imgs/tela_prototipo3.png)
+![](imgs/01.png)  ![](imgs/02.png)  ![](imgs/03.png)  ![](imgs/04.png)  ![](imgs/05.png)  ![](imgs/06.png)  ![](imgs/07.png)
 
 
 # O que falta?
 
 Pretendemos fazer uma versão do protótipo tanto para mobile quanto para desktop. O protótipo para mobile tem sido o foco, tendo em vista que grande parte do público alvo do site acessará principalmente por meio de celular. Também pretendemos adicionar reatividade no protótipo, para que fique o mais fiél possível ao site que iremos implementar, em que sejá possível navegar entre as páginas e clicar em botões.
 As telas que faltam são:
-- Tela de perdidos
 - Tela específica do item
 - Tela de meus itens
-- Tela do usuário
 - Tela de chat
