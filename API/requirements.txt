@@ -10,3 +10,5 @@ setuptools==75.5.0
 sqlparse==0.5.1
 urllib3==2.2.3
 Pillow
+djangorestframework
+django-extensions

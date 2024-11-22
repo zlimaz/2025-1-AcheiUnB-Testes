@@ -17,11 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from users import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # Rotas do Allauth para login pelo Microsoft
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-    path('anon/', user_views.anon_login, name='anon-login'),  # Login anônimo
+    path('', include('users.urls')),  # Inclui as rotas do app "users"
 ]

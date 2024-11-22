@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.microsoft",
     "users",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    'allauth.account.middleware.AccountMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -65,6 +66,12 @@ AUTHENTICATION_BACKENDS = [
 
 
 ROOT_URLCONF = "AcheiUnB.urls"
+
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",  # Apenas JSON será usado
+    ],
+}
 
 TEMPLATES = [
     {
@@ -85,33 +92,32 @@ TEMPLATES = [
 WSGI_APPLICATION = "AcheiUnB.wsgi.application"
 
 SOCIALACCOUNT_PROVIDERS = {
-    'microsoft': {
-        'APP': {
-            'client_id': os.getenv('MICROSOFT_CLIENT_ID'),
-            'secret': os.getenv('MICROSOFT_CLIENT_SECRET'),
-            'key': '',
+    "microsoft": {
+        "APP": {
+            "client_id": os.getenv("MICROSOFT_CLIENT_ID"),
+            "secret": os.getenv("MICROSOFT_CLIENT_SECRET"),
+            "key": "",
         },
     }
 }
 # Permitir apenas usuários do tenant da UnB
 SOCIALACCOUNT_QUERY_EMAIL = True
-SOCIALACCOUNT_PROVIDERS['microsoft']['AUTH_PARAMS'] = {
-    'domain': 'alunos.unb.br',
+SOCIALACCOUNT_PROVIDERS["microsoft"]["AUTH_PARAMS"] = {
+    "domain": "alunos.unb.br",
 }
-
 
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db',
-        'USER': 'postgres',
-        'PASSWORD': 'senha',
-        'HOST': 'db',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "db",
+        "USER": "postgres",
+        "PASSWORD": "senha",
+        "HOST": "db",
+        "PORT": "5432",
     }
 }
 
@@ -161,4 +167,4 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = "/certu"
 LOGOUT_REDIRECT_URL = "/login/"
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = "pt-br"
