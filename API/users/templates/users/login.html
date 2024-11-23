@@ -3,14 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Entrar com Microsoft</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .btn {
+            background-color: #0078D4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #005A9E;
+        }
+    </style>
 </head>
 <body>
-    <hr>
-    <p>Bem-vindo! Para visualizar os itens achados e perdidos faça login pela sua conta institucional da UnB</p>
-    <a href="{% url 'microsoft_login' %}" class="btn btn-primary">
-        Login com Microsoft
-    </a>
-     <div class="social-login">
+    <h1>Perdeu algo no campus?</h1>
+    <p>A gente te ajuda!</p>
+    <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=407427a4-6920-4549-80c6-bc772b8da945&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccounts%2Fmicrosoft%2Flogin%2Fcallback%2F&scope=User.Read&response_type=code&state=Zay5NfY4tSn7JgvO&domain=alunos.unb.br" class="btn">Entre com a conta da Microsoft</a>
 </body>
 </html>
