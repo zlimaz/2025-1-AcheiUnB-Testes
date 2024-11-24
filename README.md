@@ -13,7 +13,7 @@ AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Univ
     - [📁 Dependências do Projeto](#-dependências-do-projeto)
     - [💾 Execução](#-execução)
       - [Observações do Docker](#observações-do-docker)
-    - [✅ Autenticação com o Google OAuth](#-autenticação-com-o-google-oauth)
+    - [✅ Autenticação com o Microsoft OAuth](#-autenticação-com-o-microsoft-oauth)
     - [📥 Atualização do Banco de Dados](#-atualização-do-banco-de-dados)
     - [🖱️ Acesso aos Serviços](#️-acesso-aos-serviços)
     - [📍 Migrations](#-migrations)
@@ -39,7 +39,7 @@ AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Univ
 Clone o repositório do projeto usando o seguinte comando:
 
 ```bash
-git clone https://github.com/unb-achei/2024-2-AcheiUnB.git
+git clone https://github.com/unb-mds/2024-2-AcheiUnB.git
 ```
 
 ### 📋 Pré-requisitos
@@ -47,6 +47,7 @@ git clone https://github.com/unb-achei/2024-2-AcheiUnB.git
 Para rodar o projeto, você precisa das seguintes ferramentas:
 
 - **Python** v3.12.0
+- **Docker** v20.10.0+
 
 ### 💻 Ambiente
 
@@ -99,19 +100,16 @@ docker compose up
   docker compose down -v
   ```
 
-### ✅ Autenticação com o Google OAuth
+### ✅ Autenticação com o Microsoft OAuth
 
 Para ativar o login com Google, substitua `your_client_id` no arquivo `web/.env.local` pelo Client ID do seu projeto no Google Cloud:
 
-1. Crie um projeto no [Google Cloud](https://console.cloud.google.com/).
-2. Vá para "Credenciais" e selecione "Criar credenciais" > "ID do cliente OAuth".
-3. Defina como tipo de aplicativo "Aplicativo Web" e adicione `http://localhost:3000` como origem autorizada e URI de redirecionamento.
-4. Copie o Client ID e substitua em `web/.env.local`.
+1. Acesse o portal do [Azure Active Directory](https://portal.azure.com/).
+2. Crie um aplicativo para o AcheiUnB.
+3. Defina como tipo de aplicativo "Aplicativo Web" e adicione `http://localhost:8000` como origem autorizada e URI de redirecionamento.
+4. Copie o Client ID e o Client Secret gerados. e substitua em `API/.env`.
 
-Após essa configuração:
-
-1. No [Google Cloud](https://console.cloud.google.com/), vá para "Tela de Consentimento OAuth".
-2. Adicione o seu e-mail como usuário de teste e salve.
+Após a configuração, o login estará habilitado.
 
 ### 📥 Atualização do Banco de Dados
 
