@@ -82,7 +82,8 @@ Além disso, o Heroku oferece serviços adicionais, como bancos de dados gerenci
 **Conclusão:**
 O Heroku é uma excelente opção para hospedar seu projeto Django, seja para gerenciar a aplicação, o banco de dados ou ambos. A camada gratuita é útil para testes e protótipos, enquanto os planos pagos são recomendados para produção e maior escalabilidade.
 
-**Alternativas para o Heroku:**
+
+# Alternativas para o Heroku:
 
 ---
 
