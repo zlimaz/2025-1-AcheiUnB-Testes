@@ -10,12 +10,12 @@ Período: 11/11/2024 a 18/11/2024
 
 > - Para DevOps, foram atribuídas a pesquisa e o início da implementação do Docker no projeto, integrando-o com o protótipo do back-end, além da tarefa de começar a implementação da documentação OSS.
 ## Objetivos
-- [ ] Prototipagem do site no Figma (Front-end)
-- [ ] Configuração do ambiente front-end (Front-end)
-- [ ] Realização do login via Microsoft (Back-end)
-- [ ] COnfiguração do banco de dados e implementação do registre-se (Back-end)
-- [ ] Pesquisa e o início da implementação do Docker no projeto com o protótipo do back-end (DevOps)
-- [ ] Além da tarefa de começar a implementação da Documentação OSS (DevOps)
+- [x] Prototipagem do site no Figma (Front-end)
+- [x] Configuração do ambiente front-end (Front-end)
+- [x] Realização do login via Microsoft (Back-end)
+- [x] Configuração do banco de dados e implementação do registre-se (Back-end)
+- [x] Pesquisa e o início da implementação do Docker no projeto com o protótipo do back-end (DevOps)
+- [x] Além da tarefa de começar a implementação da Documentação OSS (DevOps)
 
 ## Reuniões
 ### Reunião 1
