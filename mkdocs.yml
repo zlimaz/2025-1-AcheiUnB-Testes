@@ -1,5 +1,5 @@
 site_name: Documentação Achei-Unb
-repo_url: https://unb-mds.github.io/2024-2-AcheiUnB/
+repo_url: https://github.com/unb-mds/2024-2-AcheiUnB
 
 nav:
   - Home: index.md
