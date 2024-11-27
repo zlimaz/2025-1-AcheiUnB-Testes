@@ -2,12 +2,12 @@
 Período: DD/MM/AAAA a DD/MM/AAAA
 
 ## Descrição
-> A descrição da _Sprint_ deve conter um resumo do que o time se propôs a fazer. Além dos links para as _issues_ que serão desenvolvidas na _Sprint_.
+> A descrição da _Sprint_ deve conter um resumo do que o time se propôs a fazer.
 
 ## Objetivos
-- [ ] Objetivo 1
-- [ ] Objetivo 2
-- [ ] ...
+- Objetivo 1
+- Objetivo 2
+- ...
 
 ## Reuniões
 ### Reunião 1
@@ -22,15 +22,14 @@ Local: Local da reunião
 **Ata:**
 
 
-- ### Reunião 3
+### Reunião 3
 Data: DD/MM/AAAA  
 Local: Local da reunião  
 **Ata:**
 
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_. Além disso, deve conter um link para as _issues_ que foram fechadas.
-
+> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_ (caso existam).
 ---
 
 **Observações:**

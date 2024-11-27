@@ -11,12 +11,12 @@ Período: 18/11/2024 a 25/11/2024
 > - Para o DevOps, atribuiu-se o estudo sobre serviços de hospedagem, com enfoque no Heroku, buscando iniciar sua implementação (caso ele seja a forma de hospedagem escolhida após a pesquisa).
 
 ## Objetivos
-- [x] Configuração ambiente front-end
-- [x] Finalização da prototipagem do site no Figma
-- [x] Implementar endpoints para o protótipo ao release 1
-- [x] Finalizar a implementação do banco de dados dentro do Docker
-- [x] Correção de bugs back-end
-- [x] Pesquisa sobre Heroku para hospedagem e iniciar a implementação
+- Configuração ambiente front-end
+- Finalização da prototipagem do site no Figma
+- Implementar endpoints para o protótipo ao release 1
+- Finalizar a implementação do banco de dados dentro do Docker
+- Correção de bugs back-end
+- Pesquisa sobre Heroku para hospedagem e iniciar a implementação
 
 ## Reuniões
 ### Reunião 1

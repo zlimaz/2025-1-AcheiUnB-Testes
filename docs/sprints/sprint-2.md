@@ -5,13 +5,13 @@ Período: 28/10/2024 a 04/11/2024
 > A Sprint 2 focará no estabelecimento de uma base sólida para o desenvolvimento do projeto. O time se propôs a estudar e aplicar conceitos fundamentais como GitHub, GitFlow, DevOps, e ferramentas específicas para front-end e back-end. Além disso, atividades de integração do time serão promovidas através do Pair Programming e das apresentações dos temas.
 
 ## Objetivos
-- [x] Incentivar o Pair Programming entre os membros
-- [x] Promover a interação do grupo através de apresentações temáticas
-- [x] Estudo dos conceitos básicos necessários para o desenvolvimento:
+- Incentivar o Pair Programming entre os membros
+- Promover a interação do grupo através de apresentações temáticas
+- Estudo dos conceitos básicos necessários para o desenvolvimento:
   - GitHub, GitFlow, DevOps, AWS, Docker, Kubernetes (Pedro Everton, Leonardo e Davi)
   - Figma, Bibliotecas CSS, Frameworks, Prettier (Tiago e Ana Elisa)
   - Bibliotecas, DBeaver, PostgreSQL, MongoDB, Frameworks (Euller e Pedro Silva)
-- [x] Organização das equipes de desenvolvimento: Front-end, DevOps e Back-end
+- Organização das equipes de desenvolvimento: Front-end, DevOps e Back-end
 
 ## Reuniões
 

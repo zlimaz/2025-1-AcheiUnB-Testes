@@ -7,19 +7,19 @@
 ## Objetivos
 
 ### Back-end
-- [x] Concluir o Documento de Arquitetura, Documento de Visão e/ou TAP para definição clara da estrutura do sistema.
-- [x] Desenvolver o Protótipo de Arquitetura para estabelecer as bases técnicas do back-end.
-- [x] Iniciar o protótipo do código back-end, implementando a estrutura básica do projeto.
+- Concluir o Documento de Arquitetura, Documento de Visão e/ou TAP para definição clara da estrutura do sistema.
+- Desenvolver o Protótipo de Arquitetura para estabelecer as bases técnicas do back-end.
+- Iniciar o protótipo do código back-end, implementando a estrutura básica do projeto.
 
 ### DevOps
-- [x] Implementar o pipeline de CI/CD para garantir a automação dos processos de build e deploy.
-- [x] Configurar o workflow com Codecov para monitoramento e cobertura de código.
-- [x] Propor soluções para a configuração dos diferentes ambientes (desenvolvimento, teste e produção).
-- [x] Pesquisar e iniciar a implementação do Docker e Kubernetes para gerenciar a infraestrutura do projeto.
+- Implementar o pipeline de CI/CD para garantir a automação dos processos de build e deploy.
+- Configurar o workflow com Codecov para monitoramento e cobertura de código.
+- Propor soluções para a configuração dos diferentes ambientes (desenvolvimento, teste e produção).
+- Pesquisar e iniciar a implementação do Docker e Kubernetes para gerenciar a infraestrutura do projeto.
 
 ### Front-end
-- [x] Definir o design do projeto: realizar brainstorm para escolha de cores, logotipo e estilo visual da interface.
-- [x] Aprofundar o estudo nas tecnologias escolhidas para o front-end, garantindo que todos os membros da equipe estejam alinhados e familiarizados com as ferramentas e frameworks que serão utilizados.
+- Definir o design do projeto: realizar brainstorm para escolha de cores, logotipo e estilo visual da interface.
+- Aprofundar o estudo nas tecnologias escolhidas para o front-end, garantindo que todos os membros da equipe estejam alinhados e familiarizados com as ferramentas e frameworks que serão utilizados.
 
 ---
 
