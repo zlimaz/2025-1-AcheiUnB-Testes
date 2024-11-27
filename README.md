@@ -143,7 +143,7 @@ make migrate         # Executa as migrations
 
 ## 📚 Documentação
 
-Acesse a documentação completa do projeto [aqui](https://github.com/unb-achei/2024-2-AcheiUnB/wiki).
+Acesse a documentação completa do projeto [aqui](https://unb-mds.github.io/2024-2-AcheiUnB/).
 
 ## 📎 Extra
 
