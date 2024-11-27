@@ -8,14 +8,14 @@ Período: 25/11/2024 a 02/12/2024
 > - DevOps: Decidir qual serviço de hospedagem utilizar para o projeto dentre Heroku (gratuito), Render e AWS, implementando o escolhido no projeto, e codecov e codecov_token.
 
 ## Objetivos
-- [ ] Iniciar o protótipo da release 1
-- [ ] Corrigir erros gramaticais, bugs do protótipo e adicionar fotos dos membros
-- [ ] Integralizar o front-end com o back-end
-- [ ] Decidir tecnologia de deploy entre Heroku (gratuito), Render e AWS
-- [ ] Implementar o serviço de hospedagem escolhido
-- [ ] Codecov e codecov_token
-- [ ] Adiantar a implementação dos chats
-- [ ] Deixar o security.md e o contributing.md escritos
+- Iniciar o protótipo da release 1
+- Corrigir erros gramaticais, bugs do protótipo e adicionar fotos dos membros
+- Integralizar o front-end com o back-end
+- Decidir tecnologia de deploy entre Heroku (gratuito), Render e AWS
+- Implementar o serviço de hospedagem escolhido
+- Codecov e codecov_token
+- Adiantar a implementação dos chats
+- Deixar o security.md e o contributing.md escritos
 
 ## Reuniões
 ### Reunião 1
