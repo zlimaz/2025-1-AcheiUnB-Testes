@@ -5,12 +5,12 @@ Período: 18/10/2024 a 21/10/2024
 > A descrição da _Sprint_ deve conter um resumo do que o time se propôs a fazer. Na Sprint Planning, decidimos as tecnologias e discutimos ideias para o projeto. As tecnologias escolhidas foram Python, Javascript e Docker.
 
 ## Objetivos
-- [ ] Trazer novas ideias para o projeto na próxima reunião
-- [ ] Ideias para o tema do projeto
-- [ ] Definir os meios de comunicação
-- [ ] Agendar reuniões semanais
-- [ ] Definir temas para o projeto
-- [ ] Definir template para as issues
+- Trazer novas ideias para o projeto na próxima reunião
+- Ideias para o tema do projeto
+- Definir os meios de comunicação
+- Agendar reuniões semanais
+- Definir temas para o projeto
+- Definir template para as issues
 
 ## Reuniões
 ### Reunião 1
