@@ -5,9 +5,9 @@ Período: DD/MM/AAAA a DD/MM/AAAA
 > A descrição da _Sprint_ deve conter um resumo do que o time se propôs a fazer. Além dos links para as _issues_ que serão desenvolvidas na _Sprint_.
 
 ## Objetivos
-- [ ] Objetivo 1
-- [ ] Objetivo 2
-- [ ] ...
+- Objetivo 1
+- Objetivo 2
+- ...
 
 ## Reuniões
 ### Reunião 1
