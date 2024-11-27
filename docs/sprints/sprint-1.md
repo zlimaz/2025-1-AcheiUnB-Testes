@@ -8,10 +8,10 @@ Período: 21/10/2024 a 28/10/2024
 > - Trello: [Workspace de Tarefas](https://trello.com/invite/b/671420333e2bc75780e55195/ATTIb2e3efef0314897d9ef60cbbc83446d1E5E3B441/mds-project)  
 
 ## Objetivos  
-- [x] Definir tema da aplicação
-- [x] Configurar plataforma de gerenciamento de tarefas
-- [x] Configurar plataforma de versionamento
-- [x] Estabelecer os primeiros coelhos da semana, com temas a serem estudados:  
+- Definir tema da aplicação
+- Configurar plataforma de gerenciamento de tarefas
+- Configurar plataforma de versionamento
+- Estabelecer os primeiros coelhos da semana, com temas a serem estudados:
   - Git, GitHub, GitHub Flow: Pedro Everton e Davi  
   - Metodologias Ágeis: Euller e Ana Elisa  
   - Arquitetura de Software: Tiago e Pedro Silva  
