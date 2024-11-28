@@ -24,7 +24,7 @@ Caso identifique qualquer vulnerabilidade no sistema AcheiUnB, por favor, entre 
 
 ## Expectativas dos Relatores
 
-- Os relatores podem esperar uma resposta inicial da nossa equipe dentro de **72 horas úteis** após o envio do relatório.
+- Os relatores podem esperar uma resposta inicial da nossa equipe dentro de **72 horas** após o envio do relatório.
 - Serão mantidos informados sobre o progresso da resolução e receberão uma estimativa de prazo para a correção.
 - Agradecemos a colaboração e garantimos que todas as comunicações relacionadas à segurança serão tratadas com seriedade e confidencialidade.
 
