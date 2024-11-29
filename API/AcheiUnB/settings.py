@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.microsoft",
     "users",
     "django_extensions",
+    "channels",
+    "chat",
 ]
 
 MIDDLEWARE = [
@@ -82,6 +84,14 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'SIGNING_KEY': SECRET_KEY,  # Use a chave secreta do Django
     'ALGORITHM': 'HS256',
+}
+
+ASGI_APPLICATION = 'AcheiUnB.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.channels_redis",  # Para desenvolvimento local
+    },
 }
 
 TEMPLATES = [
