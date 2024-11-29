@@ -131,13 +131,13 @@ Para organizar o desenvolvimento e facilitar a rastreabilidade das mudanças, ca
 O nome de cada branch deve seguir o formato:
 
 ```
-<origem>-<número_da_issue>/<tipo>/<descrição_curta>
+<número_da_issue>/<tipo>/<descrição_curta>
 ```
 
 **Exemplo de nome de branch:**
 
 ```
-back-42/feat/autenticacao-oauth
+42/feat/autenticacao-oauth
 ```
 
 ### 2.2 Elementos da Nomeação de Branches
@@ -164,7 +164,7 @@ Para a issue **#50**, que requer a criação de um novo formulário de login com
 1. Crie a branch com o nome adequado:
 
    ```
-   front-50/feat/cria-formulario-login
+   50/feat/cria-formulario-login
    ```
 
 2. Realize um commit seguindo o padrão convencionado:
