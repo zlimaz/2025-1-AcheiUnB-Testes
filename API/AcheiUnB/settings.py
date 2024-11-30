@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.microsoft",
     "users",
     "django_extensions",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -179,3 +181,7 @@ LOGIN_REDIRECT_URL = "/certu"
 LOGOUT_REDIRECT_URL = "/login/"
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 LANGUAGE_CODE = "pt-br"
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173', 
+]
