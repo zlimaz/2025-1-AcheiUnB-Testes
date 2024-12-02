@@ -30,21 +30,17 @@ disponíveis para auxiliar os membros do front e do DevOps, caso necessário.
 
 
 ### Reunião 2
-Data: DD/MM/AAAA  
-Local: Local da reunião  
+Data: 02/12/2024  
+Local: Discord  
 **Ata:**
 
-
-- ### Reunião 3
-Data: DD/MM/AAAA  
-Local: Local da reunião  
-**Ata:**
+Iniciamos a reunião realizando a review da Sprint, onde contamos como foi o caminhar da semana em relação às tarefas propostas, apontando como maior dificuldade a questão da semana estar cheia de outros afazeres/atividades da faculdade, porém, a grande maioria das tasks foram concluídas com êxito. Indo para a retrospectiva, analisamos os pontos positivos e negativos no desenvolver do projeto, até agora, notando uma melhora significante na comunicação entre os membros (especialmente o DevOps). Além disso, foi analisada a possibilidade de remanejamento dos times do grupo (todos passarem a atuar no Front e no Back após a Release 1).
 
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_. Além disso, deve conter um link para as _issues_ que foram fechadas.
+> A Sprint foi finalizada com grande parte das tarefas propostas realizadas com sucesso, havendo, além disso, uma melhora significativa na comunicação entre os membros da equipe.
 
 ---
 
 **Observações:**
-> Esse espaço deve ser utilizado para registrar qualquer observação que o time julgar pertinente.
+> Evolução do time DevOps!
