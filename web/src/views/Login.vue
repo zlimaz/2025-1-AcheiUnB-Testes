@@ -13,7 +13,7 @@
       <button 
       @click="redirectToLoginMicrosoft"
       class="flex items-center rounded-full bg-gray-50 px-5 py-3 text-md font-medium text-azul ring-1 ring-inset ring-gray-500/10">
-        <img src="../components/icons/Microsoft_logo.svg" alt="Logo Microsoft" class="h-6 w-auto mr-2"/>
+        <!--img src="../components/icons/Microsoft_logo.svg" alt="Logo Microsoft" class="h-6 w-auto mr-2"/-->
         Entre com a conta da Microsoft
       </button>
     </div>
