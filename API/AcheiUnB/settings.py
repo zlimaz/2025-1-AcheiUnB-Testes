@@ -71,8 +71,8 @@ AUTHENTICATION_BACKENDS = [
 ROOT_URLCONF = "AcheiUnB.urls"
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",  # Apenas JSON será usado
@@ -80,17 +80,18 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'SIGNING_KEY': SECRET_KEY,  # Use a chave secreta do Django
-    'ALGORITHM': 'HS256',
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "SIGNING_KEY": SECRET_KEY,  # Use a chave secreta do Django
+    "ALGORITHM": "HS256",
 }
 
-ASGI_APPLICATION = 'AcheiUnB.asgi.application'
+ASGI_APPLICATION = "AcheiUnB.asgi.application"
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.channels_redis",  # Para desenvolvimento local
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
 
@@ -172,6 +173,8 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Static files (CSS, JavaScript, Images)
