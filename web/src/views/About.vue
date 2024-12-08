@@ -1,7 +1,5 @@
-<template></template>
+<template>about</template>
 
-<script setup>
-import Logo from "../components/Logo.vue";
-</script>
+<script setup></script>
 
 <style scoped></style>

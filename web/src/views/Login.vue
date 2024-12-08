@@ -4,8 +4,7 @@
     class="fixed inset-0 flex items-center justify-center z-50"
   >
     <div class="fixed inset-0 flex items-center justify-center z-50">
-      <h1 class="text-5xl italic text-azul md:text-6xl">Achei</h1>
-      <h1 class="text-5xl font-bold text-azul md:text-6xl">UnB</h1>
+      <Logo customClass="text-azul" />
     </div>
   </div>
 
@@ -16,8 +15,7 @@
     <div
       class="titulo flex space-x-1 mt-20 mb-20 ml-8 md:flex md:justify-center md:mb-52"
     >
-      <h1 class="text-5xl italic font-light md:text-6xl">Achei</h1>
-      <h1 class="text-5xl font-bold md:text-6xl">UnB</h1>
+      <Logo />
     </div>
     <div
       class="slogan max-w-72 ml-8 md:mr-8 md:max-w-none md:w-auto md:text-center"
@@ -45,6 +43,8 @@
 </template>
 
 <script setup>
+import Logo from "../components/Logo.vue";
+
 window.addEventListener("load", () => {
   const transitionScreen = document.getElementById("transition-screen");
   const mainContent = document.getElementById("main-content");
