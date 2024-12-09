@@ -22,22 +22,19 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from django.shortcuts import render
+
+# View para servir o arquivo Vue.js
+def vue_app(request):
+    return render(request, 'index.html')  # Caminho para o index.html dentro da pasta templates
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path(
-        "accounts/", include("allauth.urls")
-    ),  # Rotas do Allauth para login pelo Microsoft
-    path(
-        "", auth_views.LoginView.as_view(template_name="users/login.html"), name="login"
-    ),
-    path("", include("users.urls")),  # Inclui as rotas do app "users"
-    path(
-        "api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"
-    ),  # Obter token de acesso e refresh
-    path(
-        "api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
-    ),  # Atualizar token de acesso
-    path("api/chat/", include("chat.urls")),
-    path("api/", include("users.urls")),
+    path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),  # Rotas do Allauth para login pelo Microsoft
+    path('', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('', include('users.urls')),  # Inclui as rotas do app "users"
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # Obter token de acesso e refresh
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Atualizar token de acesso
+    path('api/chat/', include('chat.urls')),
+
 ]
