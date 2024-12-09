@@ -25,7 +25,7 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # Rotas do Allauth para login pelo Microsoft
-    path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('', include('users.urls')),  # Inclui as rotas do app "users"
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # Obter token de acesso e refresh
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Atualizar token de acesso

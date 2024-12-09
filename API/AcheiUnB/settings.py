@@ -48,9 +48,11 @@ INSTALLED_APPS = [
     "django_extensions",
     "channels",
     "chat",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -189,6 +191,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = "/certu"
-LOGOUT_REDIRECT_URL = "/login/"
+LOGOUT_REDIRECT_URL = ""
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 LANGUAGE_CODE = "pt-br"
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173', 
+]
