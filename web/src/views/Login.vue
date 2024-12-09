@@ -32,7 +32,7 @@
         class="flex items-center rounded-full bg-gray-50 px-5 py-3 text-md font-medium text-azul ring-1 ring-inset ring-gray-500/10"
       >
         <img
-          src="../components/icons/Microsoft_logo.svg"
+          src="../components/icons/Microsoft_logo2.svg"
           alt="Logo Microsoft"
           class="h-6 w-auto mr-2"
         />
@@ -62,7 +62,7 @@ window.addEventListener("load", () => {
 
 function redirectToLoginMicrosoft() {
   window.location.href =
-    "http://localhost:8000/accounts/microsoft/login/callback/?code=1.AQoAoZs17AtjK024M8jm1I-AWaQndEAgaUlFgMa8dyuNqUUKAEsKAA.AgABBAIAAADW6jl31mB3T7ugrWTT8pFeAwDs_wUA9P9MZdKMoEzV5HiWul9EpMcaWKfGBT0keLmk9c-rCvbWkOxjVSGoUAMeU6cAae8lWykGXY-tzhlJL6cUPo_1F1vEPTJPL-vd3xiMZhexpdE1KrfxPUJaUfkyZf83gIq6lH5iY8rjmPDncnEGE-QiawLZBcUGrUbCd6yeBV1N2v5tJcUIL0qnOPX55XDo22hEKnC-AGK-PimzMAB66TIfwOmMEmoA-3Oga80t8c6Y3h0fVCbx5znZHoziSu1xaG9f0ZeptIAuZUn_GStwiBVua8wstZ7ETcqmauX6KJIIl2TIUZ_UGDmzlOM-5cAyl6X8K0d-qjQ6ojSppdPt5ZuMXjFJO7uTqxpFfz6z5QoU_JxlG264WmVlGOwZ6LlMVHv29zSeE__3siJqpsnnvqnhMEbsIpxxwHi54esBWwhTEtp70fmDo9QdOzALuUyiCXm09ucno-2c4Xbf7v1NQgbWlzEhzrDVAOM-OKD19B5UMRhqHYbjUwQjjmXm390DoYKNDX3OZbvY5RHiV48Xlw3pH9TtTlyLGgOeX4TkGFSpaorkoRKpf7Ra05vD5pWkY2-w3X0zkWwvjK_CPkqn-6Noj-KNGtAmdzc7CZDY8CkjV7malOf8qHw2JgPP7M2a9jzjk6hNOi0ZKBe1WQBTXDzxzykjHZt1_5Mruo2FDo6mSIr4UcftjCgLf1b7Asd9yIHWSmCA8YhXFWBG8wlI6bNLMj-ytwOcjKYlTdkRTeKT&state=Zay5NfY4tSn7JgvO&session_state=22111dff-b57b-4d45-97be-8c7ffaf3d2b7#";
+    "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=407427a4-6920-4549-80c6-bc772b8da945&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Faccounts%2Fmicrosoft%2Flogin%2Fcallback%2F&scope=User.Read&response_type=code&state=Zay5NfY4tSn7JgvO&domain=alunos.unb.br";
 }
 </script>
 
