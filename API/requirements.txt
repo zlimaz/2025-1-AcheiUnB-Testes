@@ -13,4 +13,5 @@ Pillow
 djangorestframework
 django-extensions
 djangorestframework-simplejwt
+channels
 django-cors-headers==4.6.0

@@ -11,6 +11,14 @@ nav:
     - Sprint 3: sprints/sprint-3.md
     - Sprint 4: sprints/sprint-4.md
     - Sprint 5: sprints/sprint-5.md
+    - Sprint 6: sprints/sprint-6.md
+    - Sprint 7: sprints/sprint-7.md
+    - Sprint 8: sprints/sprint-8.md
+    - Sprint 9: sprints/sprint-9.md
+    - Sprint 10: sprints/sprint-10.md
+    - Sprint 11: sprints/sprint-11.md
+    - Sprint 12: sprints/sprint-12.md
+    - Sprint 13: sprints/sprint-13.md
     
   - Arquitetura: Architecture.md
   - Front-End: 
@@ -19,7 +27,28 @@ nav:
 
 theme:
   name: material
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-2
+        name: Switch to system preference
+
   features:
     - navigation.tabs
     - navigation.tabs.sticky
+    - navigation.path
+    - navigation.top
     
