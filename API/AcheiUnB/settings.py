@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-%7=()&6sxvzdq68n)q^8n)g6#kw8p=45v)(hp^t%@*e4ty=##u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "channels",
     "chat",
-    "corsheaders"
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -196,5 +196,5 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 LANGUAGE_CODE = "pt-br"
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173', 
+    "http://localhost:5173",
 ]
