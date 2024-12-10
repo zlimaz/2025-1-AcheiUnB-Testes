@@ -36,5 +36,6 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # Obter token de acesso e refresh
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Atualizar token de acesso
     path('api/chat/', include('chat.urls')),
+    path('api/', include('users.urls')),  
 
 ]

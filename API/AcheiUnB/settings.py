@@ -129,6 +129,12 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS["microsoft"]["AUTH_PARAMS"] = {
     "domain": "alunos.unb.br",
 }
+SOCIALACCOUNT_PROVIDERS["microsoft"]["SCOPE"] = [
+    "email",
+    "openid",
+    "profile",
+    "User.Read",
+]
 
 
 # Database
