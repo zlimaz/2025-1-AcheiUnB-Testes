@@ -1,6 +1,8 @@
 <template>
   <div class="h-screen">
-    <div class="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] p-8">
+    <div
+      class="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] p-8 gap-y-6"
+    >
       <ItemCard />
       <ItemCard />
       <ItemCard />
