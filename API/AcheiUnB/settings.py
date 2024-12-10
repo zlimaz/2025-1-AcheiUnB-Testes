@@ -136,6 +136,11 @@ SOCIALACCOUNT_PROVIDERS["microsoft"]["SCOPE"] = [
     "User.Read",
 ]
 
+ACCOUNT_ADAPTER = "allauth.account.adapter.DefaultAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "allauth.socialaccount.adapter.DefaultSocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "users.adapters.CustomSocialAccountAdapter"
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
