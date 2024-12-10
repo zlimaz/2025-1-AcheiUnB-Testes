@@ -1,6 +1,13 @@
 <template>
   <div class="h-screen">
-    <ItemCard />
+    <div class="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] p-8">
+      <ItemCard />
+      <ItemCard />
+      <ItemCard />
+      <ItemCard />
+      <ItemCard />
+      <ItemCard />
+    </div>
     <div class="fixed bottom-0 w-full">
       <MainMenu activeIcon="search" />
     </div>

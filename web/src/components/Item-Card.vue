@@ -6,9 +6,9 @@
     <div class="w-full h-[115px] bg-cinza2 rounded-lg"></div>
 
     <!--linha-->
-    <div class="h-[2px] w-1/4 bg-laranja my-4"></div>
+    <div class="h-[2px] w-1/4 bg-laranja mt-4 mb-2"></div>
 
-    <div class="text-cinza3 font-bold font-['Inter']">Perdidos</div>
+    <div class="text-azul font-bold font-inter">Carteira</div>
   </div>
 </template>
 
