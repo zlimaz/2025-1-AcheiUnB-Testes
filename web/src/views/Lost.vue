@@ -1,5 +1,6 @@
 <template>
   <div class="h-screen">
+    <ItemCard />
     <div class="fixed bottom-0 w-full">
       <MainMenu activeIcon="search" />
     </div>
@@ -8,6 +9,8 @@
 
 <script setup>
 import MainMenu from "../components/Main-Menu.vue";
+import ItemCard from "../components/Item-Card.vue";
+import ButtonAdd from "../components/Button-Add.vue";
 </script>
 
 <style scoped></style>
