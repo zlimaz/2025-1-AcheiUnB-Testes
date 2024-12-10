@@ -11,6 +11,9 @@ export default {
         cinza2: "#D9D9D9",
         cinza3: "#8899a8",
       },
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
     },
   },
   plugins: [],
