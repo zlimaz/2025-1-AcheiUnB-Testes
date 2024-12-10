@@ -4,6 +4,8 @@ export default {
     "./src/views/Login.vue",
     "./src/views/About.vue",
     "./src/components/Logo.vue",
+    "./src/components/Main-Menu.vue",
+    "./src/icons/Search-Icon.vue",
   ],
   theme: {
     extend: {
