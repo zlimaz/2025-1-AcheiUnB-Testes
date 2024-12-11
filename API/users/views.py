@@ -75,7 +75,6 @@ class UserDetailView(APIView):
             )
         },
     )
-
     def get(self, request):
         user = request.user
         social_account = SocialAccount.objects.filter(
@@ -83,7 +82,7 @@ class UserDetailView(APIView):
         ).first()
 
         # Extrai a matrícula e a foto do usuário(se disponivel)
-        if user.email and '@aluno.unb.br' in user.email:
+        if user.email and "@aluno.unb.br" in user.email:
             matricula = user.email.split("@")[0]
         else:
             matricula = None
@@ -114,13 +113,16 @@ def microsoft_login(request):
     )
     return redirect(auth_url)
 
+
 def microsoft_callback(request):
     """Processa o callback da Microsoft após o login."""
     # Obtém o código de autorização da URL
     code = request.GET.get("code")
     if not code:
         messages.error(request, "Código de autorização não fornecido.")
-        return redirect("http://localhost:8000/#/")  # Redireciona para a home se o código não for fornecido
+        return redirect(
+            "http://localhost:8000/#/"
+        )  # Redireciona para a home se o código não for fornecido
 
     # Troca o código pelo token
     app = ConfidentialClientApplication(
@@ -145,7 +147,11 @@ def microsoft_callback(request):
 
         # Redireciona para a página inicial
         messages.success(request, "Login realizado com sucesso!")
-        return redirect("http://localhost:5173/#/lost")  # Substitua "home" pela URL name da sua página inicial
+        return redirect(
+            "http://localhost:5173/#/lost"
+        )  # Substitua "home" pela URL name da sua página inicial
     else:
         messages.error(request, "Erro ao obter o token de acesso.")
-        return redirect("http://localhost:8000/#/")  # Redireciona para a página inicial com erro
+        return redirect(
+            "http://localhost:8000/#/"
+        )  # Redireciona para a página inicial com erro
