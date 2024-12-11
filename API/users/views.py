@@ -119,7 +119,8 @@ def microsoft_callback(request):
     # Obtém o código de autorização da URL
     code = request.GET.get("code")
     if not code:
-        return JsonResponse({"error": "Código de autorização não fornecido."}, status=400)
+        messages.error(request, "Código de autorização não fornecido.")
+        return redirect("http://localhost:8000/#/")  # Redireciona para a home se o código não for fornecido
 
     # Troca o código pelo token
     app = ConfidentialClientApplication(
@@ -132,8 +133,19 @@ def microsoft_callback(request):
     )
 
     if "access_token" in result:
-        # Você pode usar o token para autenticar o usuário
+        # Você pode usar o token para autenticar o usuário ou armazenar informações adicionais
         user_info = result.get("id_token_claims")
-        return JsonResponse({"message": "Login bem-sucedido!", "user": user_info})
+
+        # (Opcional) Salve as informações do usuário na sessão
+        request.session["user"] = {
+            "name": user_info.get("name"),
+            "email": user_info.get("preferred_username"),
+            "oid": user_info.get("oid"),
+        }
+
+        # Redireciona para a página inicial
+        messages.success(request, "Login realizado com sucesso!")
+        return redirect("http://localhost:5173/#/lost")  # Substitua "home" pela URL name da sua página inicial
     else:
-        return JsonResponse({"error": "Erro ao obter o token.", "details": result}, status=400)
+        messages.error(request, "Erro ao obter o token de acesso.")
+        return redirect("http://localhost:8000/#/")  # Redireciona para a página inicial com erro
