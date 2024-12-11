@@ -3,7 +3,7 @@
   class="rounded-lg relative w-60 h-12 cursor-pointer flex items-center border border-laranja bg-laranja group hover:bg-laranja active:bg-laranja active:border-laranja"
 >
   <span
-    class="text-azul font-semibold ml-6 transform group-hover:translate-x-0"
+    class="text-azul font-inter ml-6 transform group-hover:translate-x-0"
     >Adicionar item achado</span
   >
   <span
