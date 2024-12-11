@@ -15,6 +15,9 @@
 <script>
 export default {
   name: "ItemCard",
+  props: {
+    image: String,
+  },
 };
 </script>
 
