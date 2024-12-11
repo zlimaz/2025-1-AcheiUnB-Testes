@@ -10,6 +10,7 @@
       <ItemCard />
       <ItemCard />
     </div>
+    <ButtonAdd />
     <div class="fixed bottom-0 w-full">
       <MainMenu activeIcon="search" />
     </div>
