@@ -25,20 +25,17 @@ Para a planning, foi conversado sobre o que iremos apresentar na Release 1, como
 
 
 ### Reunião 2
-Data: DD/MM/AAAA  
-Local: Local da reunião  
+Data: 09/12/2024  
+Local: Discord  
 **Ata:**
 
-
-### Reunião 3
-Data: DD/MM/AAAA  
-Local: Local da reunião  
-**Ata:**
+Iniciamos a reunião pela review da Sprint 7, onde falamos sobre nossas dificuldades, especialmente relacionadas ao grande número de atividades da faculdade, e tarefas que foram possíveis de serem concluídas. Além disso, discutimos sobre o que será necessário apresentar na Release 1. Seguindo para a retrospectiva, escrevemos "o que nos ajudou a avançar?", "o que nos deteve?", "como podemos fazer as coisas de forma diferente?" e "o que devemos fazer a seguir?", onde destacamos coisas como o ótimo protótipo do projeto, e como já dito na review, a falta de tempo para a realização de algumas tarefas da Sprint, devido às múltiplas provas e atividades de outras disciplinas, além da necessidade de integralizar melhor as equipes, de maneira a membros do front, back e DevOps ajudem um pouco em outras partes (como o front não ficar só restrito a mexer no front do projeto etc).
 
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_ (caso existam).
+> De maneira geral, a Sprint 7 foi marcada por adversidades e contratempos devido a diferentes demandas da faculdade, e embora poucas tarefas foram concluídas com sucesso, a maioria das atividades essenciais para serem apresentadas na Release 1 já estão feitas ou estão próximas de serem finalizadas!
+
 ---
 
 **Observações:**
-> Esse espaço deve ser utilizado para registrar qualquer observação que o time julgar pertinente.
+> Não desanimar e voltar ao ritmo!
