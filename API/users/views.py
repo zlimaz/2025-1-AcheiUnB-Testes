@@ -11,11 +11,16 @@ from msal import ConfidentialClientApplication
 from django.shortcuts import redirect
 from django.http import JsonResponse
 import os
+from rest_framework.views import APIView
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from rest_framework.response import Response
+
 
 # Configurações do MSAL
 CLIENT_ID = os.getenv("MICROSOFT_CLIENT_ID")
 CLIENT_SECRET = os.getenv("MICROSOFT_CLIENT_SECRET")
-AUTHORITY = os.getenv("MICROSOFT_AUTHORITY")
+AUTHORITY = os.getenv("AUTHORITY")
 REDIRECT_URI = os.getenv("MICROSOFT_REDIRECT_URI")
 
 

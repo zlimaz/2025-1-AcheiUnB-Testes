@@ -27,7 +27,8 @@ SECRET_KEY = "django-insecure-%7=()&6sxvzdq68n)q^8n)g6#kw8p=45v)(hp^t%@*e4ty=##u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0',
+                 'localhost']
 
 
 # Application definition
@@ -116,11 +117,12 @@ SOCIALACCOUNT_PROVIDERS = {
         "APP": {
             "client_id": os.getenv("MICROSOFT_CLIENT_ID"),
             "secret": os.getenv("MICROSOFT_CLIENT_SECRET"),
+            "authority": os.getenv("MICROSOFT_AUTHORITY"),
             "key": "",
         },
     }
 }
-MICROSOFT_REDIRECT_URI = "http://localhost:8000/microsoft/callback/"
+MICROSOFT_REDIRECT_URI = "http://localhost:8000/accounts/microsoft/login/callback/"
 # Permitir apenas usuários do tenant da UnB
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS["microsoft"]["AUTH_PARAMS"] = {

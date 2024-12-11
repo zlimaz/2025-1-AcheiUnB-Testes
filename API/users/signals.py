@@ -1,9 +1,5 @@
 from django.dispatch import receiver
-from allauth.account.signals import user_signed_up, user_logged_in
-from allauth.socialaccount.models import SocialAccount
 
-@receiver(user_signed_up)
-@receiver(user_logged_in)
 def update_user_profile(request, user, **kwargs):
     social_account = SocialAccount.objects.filter(user=user, provider="microsoft").first()
 
