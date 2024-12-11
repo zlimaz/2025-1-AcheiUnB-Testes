@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-%7=()&6sxvzdq68n)q^8n)g6#kw8p=45v)(hp^t%@*e4ty=##u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
 
 
 # Application definition
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "channels",
     "chat",
-    "corsheaders"
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -58,12 +58,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware"
+    "django.contrib.messages.middleware.MessageMiddleware",
 ]
 
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend"
-]
+AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
 
 
 ROOT_URLCONF = "AcheiUnB.urls"
@@ -116,16 +114,27 @@ SOCIALACCOUNT_PROVIDERS = {
         "APP": {
             "client_id": os.getenv("MICROSOFT_CLIENT_ID"),
             "secret": os.getenv("MICROSOFT_CLIENT_SECRET"),
+            "authority": os.getenv("MICROSOFT_AUTHORITY"),
             "key": "",
         },
     }
 }
-MICROSOFT_REDIRECT_URI = "http://localhost:8000/microsoft/callback/"
+MICROSOFT_REDIRECT_URI = "http://localhost:8000/accounts/microsoft/login/callback/"
 # Permitir apenas usuários do tenant da UnB
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS["microsoft"]["AUTH_PARAMS"] = {
     "domain": "alunos.unb.br",
 }
+SOCIALACCOUNT_PROVIDERS["microsoft"]["SCOPE"] = [
+    "email",
+    "openid",
+    "profile",
+    "User.Read",
+]
+
+ACCOUNT_ADAPTER = "allauth.account.adapter.DefaultAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "allauth.socialaccount.adapter.DefaultSocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "users.adapters.CustomSocialAccountAdapter"
 
 
 # Database
@@ -179,7 +188,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "AcheiUnB/static/dist"),  # Diretório dos arquivos do Vue.js
@@ -197,5 +206,5 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 LANGUAGE_CODE = "pt-br"
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173', 
+    "http://localhost:5173",
 ]
