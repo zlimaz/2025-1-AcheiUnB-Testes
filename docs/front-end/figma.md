@@ -1,16 +1,13 @@
-Implementação inicial do Figma: [Aqui](https://www.figma.com/design/balBSne5eGu1mDpKqEW7ey/Tailwind-UI-Components-for-Figma-%7C-TailGrids-(Community)?node-id=510-207&node-type=canvas&t=bOeHKWqF0iphWZJc-0)
+# Figma do protótipo pode ser accesado [neste link](https://www.figma.com/proto/balBSne5eGu1mDpKqEW7ey/Prot%C3%B3tipo-AcheiUnb?node-id=510-209&node-type=canvas&t=O2l0blysnjExn6v7-1&scaling=scale-down&content-scaling=fixed&page-id=510%3A207&starting-point-node-id=510%3A1728)
 
+Ou nestas apresentações (fullscreen no canto superior esquerdo):
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/balBSne5eGu1mDpKqEW7ey/Prot%C3%B3tipo-AcheiUnb?node-id=510-209&node-type=canvas&scaling=scale-down&content-scaling=fixed&page-id=510%3A207&starting-point-node-id=510%3A1728&embed-host=share" allowfullscreen></iframe>
+
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/balBSne5eGu1mDpKqEW7ey/Prot%C3%B3tipo-AcheiUnb?node-id=510-207&embed-host=share" allowfullscreen></iframe>
 
 # O que foi feito até agora?
 
 Foram definidas as telas que o site terá e teve início a prototipação delas no Figma. Optou-se por cada um ficar responsável pela criação de metade das telas, sendo as primeiras feitas em conjunto para que houvesse uma melhor ambientação ao Figma e cada um se ajudasse compartilhando dicas e ideias.
-
-## Implementação inicial de algumas telas
-
-Aqui estão algumas telas que já foram feitas, lembrando ainda que essa não é a versão final. Algumas coisas podem ser alteradas.
-
-![](imgs/01.png)  ![](imgs/02.png)  ![](imgs/03.png)  ![](imgs/04.png)  ![](imgs/05.png)  ![](imgs/06.png)  ![](imgs/07.png)
-
 
 # O que falta?
 
