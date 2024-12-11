@@ -42,6 +42,7 @@ Local: Local da reunião
 
 
 ## Finalização
+
 A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_ (caso existam).
 
 
