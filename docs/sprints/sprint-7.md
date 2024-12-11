@@ -34,6 +34,7 @@ Iniciamos a reunião pela review da Sprint 7, onde falamos sobre nossas dificuld
 
 ## Finalização
 > De maneira geral, a Sprint 7 foi marcada por adversidades e contratempos devido a diferentes demandas da faculdade, e embora poucas tarefas foram concluídas com sucesso, a maioria das atividades essenciais para serem apresentadas na Release 1 já estão feitas ou estão próximas de serem finalizadas!
+
 ---
 
 **Observações:**
