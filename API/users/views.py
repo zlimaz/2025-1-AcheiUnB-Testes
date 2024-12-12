@@ -148,7 +148,7 @@ def microsoft_callback(request):
         # Redireciona para a página inicial
         messages.success(request, "Login realizado com sucesso!")
         return redirect(
-            "http://localhost:5173/#/lost"
+            "http://localhost:5173/#/found"
         )  # Substitua "home" pela URL name da sua página inicial
     else:
         messages.error(request, "Erro ao obter o token de acesso.")
