@@ -49,7 +49,8 @@ O sistema utiliza uma variedade de tecnologias para garantir escalabilidade, mod
 
 - **DevOps**:
   - **Docker**: Docker é utilizado para containerizar o back-end, facilitando a implantação e a gestão de dependências em ambientes diferentes.
-  - **Kubernetes**: Para gerenciamento de contêineres em ambientes de produção, Kubernetes é utilizado para escalabilidade e gerenciamento de cargas de trabalho.
+  - **GitHub Actions**: Ferramenta, disponibilizada pro próprio GitHub, que utilizada para criação das Pipelines de CI/CD, visando uma testagem automazida de todo código empurrado ao projeto por meio de scripts de workflow.
+  - **CodeCov**: Plataforma online de relatório de testagem de código, utilizada para gerar gráficos de acompanhamento e sugestão de melhoria na testagem de código do software. Funciona conectando o repositório à uma conta na plataforma e enviando os relatórios dos teste gerados pela pipeline CI/CD.
 
 - **Design/Front-end**:
   - **Figma**: Ferramenta de design utilizada para criar protótipos e garantir uma UI consistente.
@@ -75,10 +76,9 @@ O sistema utiliza uma variedade de tecnologias para garantir escalabilidade, mod
 
 5. **Execução de Tarefas Assíncronas**: Em caso de tarefas que não precisam ser concluídas imediatamente (por exemplo, envio de notificações), **Celery** executa essas operações em segundo plano.
 
-6. **Gerenciamento com Docker e Kubernetes**: Todo o back-end está containerizado usando **Docker**, permitindo fácil implantação e isolamento de dependências. **Kubernetes** é responsável pela orquestração dos contêineres em ambientes de produção, proporcionando escalabilidade e monitoramento contínuo.
-
+6. **Gerenciamento com Docker**: Todo o back-end está containerizado usando **Docker**, permitindo fácil implantação e isolamento de dependências.
 ---
 
 ## Conclusão
 
-A arquitetura do AcheiUnB foi desenvolvida para ser modular, escalável e de fácil manutenção, utilizando tecnologias amplamente adotadas no mercado. Com o uso do Django, PostgreSQL, Docker e Kubernetes, o sistema é robusto o suficiente para suportar o volume de usuários esperado e flexível para evoluir conforme a necessidade dos usuários. A separação clara entre front-end, API e banco de dados permite um desenvolvimento colaborativo eficiente e facilita a futura expansão da plataforma.
+A arquitetura do AcheiUnB foi desenvolvida para ser modular, escalável e de fácil manutenção, utilizando tecnologias amplamente adotadas no mercado. Com o uso do Django, PostgreSQL e Docker, o sistema é robusto o suficiente para suportar o volume de usuários esperado e flexível para evoluir conforme a necessidade dos usuários. A separação clara entre front-end, API e banco de dados permite um desenvolvimento colaborativo eficiente e facilita a futura expansão da plataforma.

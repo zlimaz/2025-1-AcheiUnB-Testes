@@ -1,4 +1,4 @@
-site_name: Documentação Achei-Unb
+site_name: Documentação AcheiUnb
 repo_url: https://github.com/unb-mds/2024-2-AcheiUnB
 
 nav:
@@ -21,9 +21,7 @@ nav:
     #- Sprint 13: sprints/sprint-13.md
   - Story Map: StoryMap.md
   - Arquitetura: Architecture.md
-  - Front-End: 
-    - Figma: front-end/figma.md
-    - Identidade Visual: front-end/Visual-identity.md
+  - Protótipo: front-end/figma.md
 
 theme:
   name: material
