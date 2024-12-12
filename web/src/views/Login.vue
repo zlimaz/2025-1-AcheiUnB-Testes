@@ -28,7 +28,7 @@
 
     <div class="flex justify-center mt-52 lg:">
       <button
-        @click="goToPage"
+        @click="redirectToLoginMicrosoft"
         class="flex items-center rounded-full bg-gray-50 px-5 py-3 text-md font-medium text-azul ring-1 ring-inset ring-gray-500/10"
       >
         <img
@@ -43,7 +43,6 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
 import Logo from "../components/Logo.vue";
 
 window.addEventListener("load", () => {
@@ -61,16 +60,10 @@ window.addEventListener("load", () => {
   });
 });
 
-//function redirectToLoginMicrosoft() {
-  //window.location.href = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=407427a4-6920-4549-80c6-bc772b8da945&%2F&scope=User.Read&response_type=code&state=Zay5NfY4tSn7JgvO&domain=alunos.unb.br';
-//}
-
-const router = useRouter();
-
-const goToPage = () => {
-  router.push('/lost');
+function redirectToLoginMicrosoft() {
+  window.location.href =
+    "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=f1b79927-10ff-4601-a361-f9cab58fb250&scope=User.Read&response_type=code&state=Zay5NfY4tSn7JgvO&domain=alunos.unb.br";
 }
-
 </script>
 
 <style scoped>
