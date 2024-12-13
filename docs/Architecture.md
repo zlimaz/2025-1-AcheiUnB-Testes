@@ -81,6 +81,7 @@ O sistema utiliza uma variedade de tecnologias para garantir escalabilidade, mod
 5. **Execução de Tarefas Assíncronas**: Em caso de tarefas que não precisam ser concluídas imediatamente (por exemplo, envio de notificações), **Celery** executa essas operações em segundo plano.
 
 6. **Gerenciamento com Docker**: Todo o back-end está containerizado usando **Docker**, permitindo fácil implantação e isolamento de dependências.
+
 ---
 
 ## Conclusão
