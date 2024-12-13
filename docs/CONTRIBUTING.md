@@ -110,7 +110,7 @@ Este projeto segue o [Código de Conduta do Contributor Covenant](https://github
 - **Backend**: Python (Django, Django Rest Framework)
 - **Banco de Dados**: PostgreSQL
 - **Containerização**: Docker
-- **Frontend**: React (futuramente, se aplicável)
+- **Frontend**: Vue js
 - **Testes**: Pytest ou ferramentas nativas do Django
 
 ---
