@@ -4,7 +4,7 @@
       <Header />
     </div>
     <div
-      class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center p-3 gap-y-3"
+      class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center py-6 lg:px-3 gap-y-3"
     >
       <ItemCard image="/src/assets/images/carteira.png" />
       <ItemCard image="/src/assets/images/gloss.png" />
@@ -18,6 +18,31 @@
       <ItemCard image="/src/assets/images/sombrinha.png" />
       <ItemCard />
       <ItemCard image="/src/assets/images/bone.png" />
+      <ItemCard image="/src/assets/images/carteira.png" />
+      <ItemCard image="/src/assets/images/gloss.png" />
+      <ItemCard image="/src/assets/images/caneta.png" />
+      <ItemCard image="/src/assets/images/sombrinha.png" />
+      <ItemCard />
+      <ItemCard image="/src/assets/images/bone.png" />
+      <ItemCard image="/src/assets/images/carteira.png" />
+      <ItemCard image="/src/assets/images/gloss.png" />
+      <ItemCard image="/src/assets/images/caneta.png" />
+      <ItemCard image="/src/assets/images/sombrinha.png" />
+      <ItemCard />
+      <ItemCard image="/src/assets/images/bone.png" />
+    </div>
+
+    <div class="flex py-20">
+      <img
+        src="../assets/icons/arrow-left.svg"
+        alt=""
+        class="w-[30px] h-[30px]"
+      />
+      <img
+        src="../assets/icons/arrow-right.svg"
+        alt=""
+        class="w-[30px] h-[30px]"
+      />
     </div>
 
     <ButtonAdd class="" />
