@@ -31,7 +31,7 @@
       <ItemCard :image="imagem4" time="Há uma hora" />
     </div>
 
-    <div class="flex pb-20 w-full justify-center gap-x-6">
+    <div class="flex pb-20 w-full justify-center gap-x-6 pt-10 pb-32">
       <img
         src="../assets/icons/arrow-left.svg"
         alt=""
