@@ -51,10 +51,14 @@ O sistema utiliza uma variedade de tecnologias para garantir escalabilidade, mod
   - **Docker**: Docker é utilizado para containerizar o back-end, facilitando a implantação e a gestão de dependências em ambientes diferentes.
   - **GitHub Actions**: Ferramenta, disponibilizada pro próprio GitHub, que utilizada para criação das Pipelines de CI/CD, visando uma testagem automazida de todo código empurrado ao projeto por meio de scripts de workflow.
   - **CodeCov**: Plataforma online de relatório de testagem de código, utilizada para gerar gráficos de acompanhamento e sugestão de melhoria na testagem de código do software. Funciona conectando o repositório à uma conta na plataforma e enviando os relatórios dos teste gerados pela pipeline CI/CD.
+  - 
 
 - **Design/Front-end**:
   - **Figma**: Ferramenta de design utilizada para criar protótipos e garantir uma UI consistente.
-  - **Bibliotecas CSS e Frameworks**: Utilizadas para estilizar a aplicação e garantir que a interface seja responsiva e fácil de usar.
+  - **Bibliotecas CSS**: Utilizadas para estilizar a aplicação e garantir que a interface seja responsiva e fácil de usar.
+  - **Tailwind CSS**: Um framework de CSS utilitário que permite construir estilos diretamente no HTML com classes pré-definidas, promovendo agilidade e consistência no design.
+  - **Vue.js**: Um framework JavaScript progressivo para construir interfaces de usuário, focado em reatividade, modularidade e simplicidade.
+  - **Vite**: Um bundler moderno e rápido para desenvolvimento front-end. Utilizado para integração do front com o back. Oferece build otimizado e HMR (Hot Module Replacement) instantâneo, tornando o desenvolvimento com Vue (e outros frameworks) mais ágil. 
   - **Prettier**: Ferramenta de formatação de código para garantir consistência no código front-end.
 
 - **Back-end**:
