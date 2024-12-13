@@ -32,7 +32,7 @@
       <ItemCard image="/src/assets/images/bone.png" />
     </div>
 
-    <div class="flex py-20">
+    <div class="flex pb-20 w-full justify-center gap-x-6">
       <img
         src="../assets/icons/arrow-left.svg"
         alt=""
@@ -57,7 +57,6 @@ import MainMenu from "../components/Main-Menu.vue";
 import ItemCard from "../components/Item-Card.vue";
 import ButtonAdd from "../components/Button-Add.vue";
 import Header from "../components/Header.vue";
-import SearchBar from "@/components/SearchBar.vue";
 </script>
 
 <style scoped></style>
