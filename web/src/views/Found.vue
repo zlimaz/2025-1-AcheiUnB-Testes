@@ -9,7 +9,7 @@
     </div>
 
     <div
-      class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3"
+      class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-10"
     >
       <ItemCard :image="imagem1" time="Agora a pouco" />
       <ItemCard :image="imagem2" time="Há uma hora" />
@@ -31,7 +31,9 @@
       <ItemCard :image="imagem4" time="Há uma hora" />
     </div>
 
-    <div class="flex pb-20 w-full justify-center gap-x-6 pt-10 pb-32">
+    <div
+      class="flex w-full justify-start sm:justify-center gap-x-6 pb-[120px] px-10"
+    >
       <img
         src="../assets/icons/arrow-left.svg"
         alt=""
