@@ -3,9 +3,13 @@
     <div class="fixed w-full top-0">
       <Header />
     </div>
-    <SubMenu />
+
+    <div class="pt-20 pb-8">
+      <SubMenu />
+    </div>
+
     <div
-      class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center py-6 lg:px-3 gap-y-3"
+      class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3"
     >
       <ItemCard :image="imagem1" time="Agora a pouco" />
       <ItemCard :image="imagem2" time="Há uma hora" />
