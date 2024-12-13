@@ -10,10 +10,17 @@
     </div>
 
     <!--linha-->
-    <div class="h-[2px] w-1/4 bg-laranja mt-3"></div>
+    <div class="h-[2px] w-1/4 bg-laranja mt-4"></div>
 
-    <div class="text-azul font-bold font-inter my-1">Carteira</div>
-    <img src="../assets/icons/locale.svg" alt="" class="w-[15px] h-[15px]" />
+    <div class="text-azul font-bold font-inter mt-1">Carteira</div>
+    <div class="flex items-end">
+      <img
+        src="../assets/icons/locale.svg"
+        alt=""
+        class="w-[15px] h-[15px] mr-1"
+      />
+      <div class="text-azul font-inter text-sm">UED - S1</div>
+    </div>
   </div>
 </template>
 
