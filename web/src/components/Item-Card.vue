@@ -12,8 +12,9 @@
     <!--linha-->
     <div class="h-[2px] w-1/4 bg-laranja mt-4"></div>
 
+    <!--textos-->
     <div class="text-azul font-bold font-inter mt-1">Carteira</div>
-    <div class="flex items-end">
+    <div class="flex items-start">
       <img
         src="../assets/icons/locale.svg"
         alt=""
@@ -21,6 +22,9 @@
       />
       <div class="text-azul font-inter text-sm">UED - S1</div>
     </div>
+    <span class="text-right font-inter font-bold text-xs text-cinza3 p-1">{{
+      time
+    }}</span>
   </div>
 </template>
 
@@ -29,6 +33,7 @@ export default {
   name: "ItemCard",
   props: {
     image: String,
+    time: String,
   },
 };
 </script>
