@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen">
-    <div class="sticky top-0">
+    <div class="fixed w-full top-0">
       <Header />
     </div>
     <div
@@ -26,7 +26,7 @@
       <ItemCard />
     </div>
 
-    <ButtonAdd class="" />
+    <ButtonAdd />
     <div class="fixed bottom-0 w-full">
       <MainMenu activeIcon="search" />
     </div>
