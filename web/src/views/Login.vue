@@ -26,13 +26,13 @@
       </p>
     </div>
 
-    <div class="flex justify-center mt-52 lg:">
+    <div class="flex justify-center mt-52">
       <button
         @click="redirectToLoginMicrosoft"
         class="flex items-center rounded-full bg-gray-50 px-5 py-3 text-md font-medium text-azul ring-1 ring-inset ring-gray-500/10"
       >
         <img
-          src="../components/icons/Microsoft_logo2.svg"
+          src="../assets/icons/Microsoft_logo2.svg"
           alt="Logo Microsoft"
           class="h-6 w-auto mr-2"
         />

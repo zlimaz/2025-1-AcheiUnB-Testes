@@ -7,12 +7,12 @@ export default {
         azul: "#133E78",
         laranja: "#F59E0B",
         verde: "#008940",
-        cinza1: "#F3F4F6",
+        cinza1: "#EAEAEA",
         cinza2: "#D9D9D9",
         cinza3: "#8899a8",
       },
-      fontFamily: {
-        inter: ["Inter", "sans-serif"],
+      boxShadow: {
+        complete: "0 0 3px 1px rgb(0 0 0 / 0.1);",
       },
     },
   },

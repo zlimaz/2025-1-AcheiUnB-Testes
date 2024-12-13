@@ -5,9 +5,11 @@
       <div class="flex-1">
         <SearchBar />
       </div>
-      <div>
-        <Logo sizeClass="text-2xl" />
-      </div>
+      <button
+      >
+      <router-link to="/about" class="no-underline text-white"><Logo class="pr-4" sizeClass="text-2xl" /></router-link>
+        
+      </button>
     </div>
   </template>
 

@@ -1,8 +1,12 @@
 <template>
-  <h1 :class="[customClass || 'text-light']">
-    <span class="italic" :class="sizeClass">Achei</span>
-    <span class="font-bold" :class="sizeClass">UnB</span>
-  </h1>
+  <div class="flex space-x-1">
+    <h1 :class="[customClass || 'text-light']">
+      <span class="italic" :class="sizeClass">Achei</span>
+    </h1>
+    <h1 :class="[customClass || 'text-light']">
+      <span class="font-bold" :class="sizeClass">UnB</span>
+    </h1>
+  </div>
 </template>
 
 <script>
