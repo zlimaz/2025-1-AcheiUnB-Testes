@@ -1,5 +1,5 @@
 # Sprint 8
-Período: 09/12/2024 a 16/12/2024
+Período: 09/12/2024 a 23/12/2024
 
 ## Descrição
 > Para a Sprint 8, foram atribuídas as seguintes tarefas:
@@ -30,21 +30,17 @@ principais do projeto.
 
 
 ### Reunião 2
-Data: DD/MM/AAAA  
-Local: Local da reunião  
+Data: 23/12/2024  
+Local: Discord  
 **Ata:**
 
-
-### Reunião 3
-Data: DD/MM/AAAA  
-Local: Local da reunião  
-**Ata:**
+Iniciamos a reunião discutindo a possibilidade de trabalhar no projeto durante o recesso, onde alguns membros se disponibilizaram, e com isso, esses membros (Davi, Euller e Pedro Silva) combinaram de se reunirem depois para discutir mais sobre. Após isso, conversamos sobre a troca do Scrum Master (Euller para Pedro Everton), devido a outras atividades fora da faculdade, sendo o melhor para manter o bom desempenho da equipe. Com isso, também discutimos sobre a ideia de mudar os times da equipe (Front, Back e DevOps), remanejando os times para Ana, Davi e Tiago no Front-end e Euller, Leo, Pedro Everton e Pedro Silva no Back-end. Depois disso, realizamos o MoCoW, no Planning poker, onde votamos na necessidade (deve, pode ou não) da implementação de certas funcionalidades, tal como o nível de dificuldades das mesmas.
 
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_ (caso existam).
+> As atividades da Sprint 8 foram feitas com êxito, e conseguimos apresentar o projeto de maneira ideal na Release 1!
 
 ---
 
 **Observações:**
-> Esse espaço deve ser utilizado para registrar qualquer observação que o time julgar pertinente.
+> Feliz Natal e Ano Novo!
