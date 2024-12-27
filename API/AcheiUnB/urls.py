@@ -8,6 +8,9 @@ from rest_framework_simplejwt.views import (
 from django.shortcuts import render
 from users import views
 from users.views import microsoft_callback
+from django.conf import settings
+from django.conf.urls.static import static
+from users.views import DeleteUserView
 
 
 # View para servir o arquivo Vue.js
@@ -35,4 +38,9 @@ urlpatterns = [
     ),  # Atualizar token de acesso
     path("api/chat/", include("chat.urls")),
     path("api/", include("users.urls")),
+        path('delete-user/<int:user_id>/', DeleteUserView.as_view(), name='delete_user'),
 ]
+
+# Adiciona a configuração para servir arquivos estáticos no desenvolvimento
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
