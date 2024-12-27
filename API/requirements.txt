@@ -16,3 +16,4 @@ channels
 django-cors-headers==4.6.0
 drf-yasg
 msal
+django-filter>=22.1
