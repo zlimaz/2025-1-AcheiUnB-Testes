@@ -15,6 +15,14 @@ from rest_framework.views import APIView
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+from .models import Item, Category
+from .serializers import ItemSerializer, CategorySerializer
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework import status
+from .serializers import ItemImageSerializer
+from .models import Item, ItemImage
 
 
 # Configurações do MSAL
@@ -24,34 +32,43 @@ AUTHORITY = os.getenv("AUTHORITY")
 REDIRECT_URI = os.getenv("MICROSOFT_REDIRECT_URI")
 
 
-class ItemListCreateView(ListCreateAPIView):
+class ItemViewSet(ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get_queryset(self):
-        # Filtrar itens por categoria se passado na query string
-        category = self.request.query_params.get("category")
-        is_valuable = self.request.query_params.get("is_valuable")
-
-        queryset = super().get_queryset()
-        if category:
-            queryset = queryset.filter(category=category)
-        if is_valuable is not None:
-            queryset = queryset.filter(is_valuable=is_valuable.lower() == "true")
-
-        return queryset
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['category', 'color', 'is_valuable', 'status']
+    search_fields = ['name', 'location', 'description']
+    ordering_fields = ['created_at', 'found_lost_date']
 
     def perform_create(self, serializer):
-        serializer.save(
-            user=self.request.user if self.request.user.is_authenticated else None
-        )
+        serializer.save(user=self.request.user if self.request.user.is_authenticated else None)
 
-    def ItemListCreateView(ListCreateAPIView):
-        queryset = Item.objects.all()
-        serializer_class = ItemSerializer
-        permission_classes = [IsAuthenticatedOrReadOnly]
 
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class ItemImageViewSet(ModelViewSet):
+    serializer_class = ItemImageSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        item_id = self.kwargs.get("item_id")
+        return ItemImage.objects.filter(item_id=item_id)
+
+    def create(self, request, *args, **kwargs):
+        item_id = self.kwargs.get("item_id")
+        try:
+            item = Item.objects.get(id=item_id)
+        except Item.DoesNotExist:
+            return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(item=item)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]
