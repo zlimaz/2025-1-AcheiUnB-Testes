@@ -9,3 +9,4 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
         if apps.exists():
             return apps.first()  # Garante que a primeira entrada válida seja usada
         raise SocialApp.DoesNotExist("Nenhuma configuração de aplicativo encontrada para o provedor")
+    
