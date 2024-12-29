@@ -5,8 +5,8 @@ from django.utils.crypto import get_random_string
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.permissions import IsAuthenticated
-from .models import Item
-from .serializers import ItemSerializer
+from .models import Brand, Color, Item
+from .serializers import BrandSerializer, ColorSerializer, ItemSerializer
 from msal import ConfidentialClientApplication
 from django.shortcuts import redirect
 from django.http import JsonResponse
@@ -64,6 +64,22 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+class ColorViewSet(ModelViewSet):
+    queryset = Color.objects.all()
+    serializer_class = ColorSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class BrandViewSet(ModelViewSet):
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
 
 class ItemImageViewSet(ModelViewSet):
     serializer_class = ItemImageSerializer
@@ -393,46 +409,3 @@ class DeleteUserView(View):
             )
         except User.DoesNotExist:
             return JsonResponse({"error": "Usuário não encontrado."}, status=404)
-
-
-'''def microsoft_callback(request):
-    """Processa o callback da Microsoft após o login."""
-    # Obtém o código de autorização da URL
-    code = request.GET.get("code")
-    if not code:
-        messages.error(request, "Código de autorização não fornecido.")
-        return redirect(
-            "http://localhost:8000/#/"
-        )  # Redireciona para a home se o código não for fornecido
-
-    # Troca o código pelo token
-    app = ConfidentialClientApplication(
-        CLIENT_ID, authority=AUTHORITY, client_credential=CLIENT_SECRET
-    )
-    result = app.acquire_token_by_authorization_code(
-        code,
-        scopes=["User.Read"],  # Scopes solicitados
-        redirect_uri=REDIRECT_URI,
-    )
-
-    if "access_token" in result:
-        # Você pode usar o token para autenticar o usuário ou armazenar informações adicionais
-        user_info = result.get("id_token_claims")
-
-        # (Opcional) Salve as informações do usuário na sessão
-        request.session["user"] = {
-            "name": user_info.get("name"),
-            "email": user_info.get("preferred_username"),
-            "oid": user_info.get("oid"),
-        }
-
-        # Redireciona para a página inicial
-        messages.success(request, "Login realizado com sucesso!")
-        return redirect(
-            "http://localhost:8000/#/found"
-        )  # Substitua "home" pela URL name da sua página inicial
-    else:
-        messages.error(request, "Erro ao obter o token de acesso.")
-        return redirect(
-            "http://localhost:8000/#/"
-        )  # Redireciona para a página inicial com erro'''
