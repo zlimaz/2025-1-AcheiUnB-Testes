@@ -2,6 +2,9 @@
 # Saia imediatamente se algum comando falhar
 set -e
 
+echo "Gerando novas migrações..."
+python manage.py makemigrations  # Cria novas migrações com base nos modelos
+
 echo "Iniciando migrações do banco de dados..."
 python manage.py migrate  # Executa o migrate automaticamente
 
