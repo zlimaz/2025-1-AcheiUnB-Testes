@@ -1,14 +1,14 @@
 from rest_framework import serializers
-from .models import Item, Category, ItemImage
+from .models import Brand, Color, Item, Category, ItemImage
 
-class ColorSerializer(serializers.Serializer):
+class ColorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Item
+        model = Color
         fields = ['id', 'name', 'color_id']
     
-class BrandSerializer(serializers.Serializer):
+class BrandSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Item
+        model = Brand
         fields = ['id', 'name', 'brand_id']
 
 class ItemImageSerializer(serializers.ModelSerializer):

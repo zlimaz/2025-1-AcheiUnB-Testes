@@ -53,7 +53,13 @@ class CategoryViewSet(ModelViewSet):
 class ColorViewSet(ModelViewSet):
     queryset = Color.objects.all()
     serializer_class = ColorSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class BrandViewSet(ModelViewSet):
     queryset = Brand.objects.all()
