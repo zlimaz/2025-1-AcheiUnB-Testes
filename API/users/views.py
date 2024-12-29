@@ -5,8 +5,8 @@ from django.utils.crypto import get_random_string
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.permissions import IsAuthenticated
-from .models import Item
-from .serializers import ItemSerializer
+from .models import Brand, Color, Item
+from .serializers import BrandSerializer, ColorSerializer, ItemSerializer
 from msal import ConfidentialClientApplication
 from django.shortcuts import redirect
 from django.http import JsonResponse
@@ -37,7 +37,7 @@ class ItemViewSet(ModelViewSet):
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['category', 'color', 'is_valuable', 'status']
+    filterset_fields = ['category', 'color', 'brand', 'is_valuable', 'status']
     search_fields = ['name', 'location', 'description']
     ordering_fields = ['created_at', 'found_lost_date']
 
@@ -50,6 +50,22 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+class ColorViewSet(ModelViewSet):
+    queryset = Color.objects.all()
+    serializer_class = ColorSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class BrandViewSet(ModelViewSet):
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
 class ItemImageViewSet(ModelViewSet):
     serializer_class = ItemImageSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
