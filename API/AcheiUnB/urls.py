@@ -38,7 +38,7 @@ urlpatterns = [
     ),  # Atualizar token de acesso
     path("api/chat/", include("chat.urls")),
     path("api/", include("users.urls")),
-        path('delete-user/<int:user_id>/', DeleteUserView.as_view(), name='delete_user'),
+    path("delete-user/<int:user_id>/", DeleteUserView.as_view(), name="delete_user"),
 ]
 
 # Adiciona a configuração para servir arquivos estáticos no desenvolvimento

@@ -31,6 +31,7 @@ from datetime import datetime
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.views import View
+from .models import UserProfile
 
 
 # Configurações do MSAL
@@ -150,10 +151,10 @@ def fetch_user_data(access_token):
         )
 
 
-
 User = get_user_model()
 
-def save_or_update_user(user_data):
+
+def save_or_update_user(user_data, access_token=None):
     """
     Salva ou atualiza os dados do usuário no banco de dados.
     """
@@ -164,7 +165,7 @@ def save_or_update_user(user_data):
                 "username": user_data.get("userPrincipalName").split("@")[0],
                 "first_name": user_data.get("givenName", ""),
                 "last_name": user_data.get("surname", ""),
-                "password": "defaultpassword",  # Nunca salve senhas reais assim
+                "password": "defaultpassword",
                 "last_login": datetime.now(),
                 "is_superuser": False,
                 "is_staff": False,
@@ -173,10 +174,9 @@ def save_or_update_user(user_data):
             },
         )
         photo_url = get_and_save_user_photo(access_token, user.id)
-        user.profile_picture = (
-            photo_url  # Assumindo que você tem o campo profile_picture
+        profile, _ = UserProfile.objects.update_or_create(
+            user=user, defaults={"profile_picture": photo_url}
         )
-        user.save()
         return user, created
     except Exception as e:
         raise Exception(f"Erro ao salvar ou atualizar o usuário: {e}")
@@ -223,7 +223,9 @@ def microsoft_callback(request):
             user_data = fetch_user_data(access_token)
 
             # Salvar ou atualizar o usuário no banco de dados
-            user, created = save_or_update_user(user_data)
+            user, created = save_or_update_user(
+                user_data=user_data, access_token=access_token
+            )
 
             # Autenticar o usuário
             login(request, user)
@@ -339,16 +341,22 @@ def get_and_save_user_photo(access_token, user_id):
 
     :param access_token: Token de acesso do usuário.
     :param user_id: ID único do usuário (usado para nomear o arquivo).
-    :return: URL do arquivo salvo.
+    :return: URL do arquivo salvo ou None se a foto não estiver disponível.
     """
+    if not access_token:
+        raise ValueError(
+            "O parâmetro access_token não foi fornecido para obter a foto."
+        )
+
     # Diretório onde as fotos serão salvas
-    MEDIA_DIR = "media/user_photos/"
+    MEDIA_DIR = "/home/pedroubu/Imagens/AcheiUnBFt/"
     os.makedirs(MEDIA_DIR, exist_ok=True)  # Garante que o diretório existe
 
     url = "https://graph.microsoft.com/v1.0/me/photo/$value"
     headers = {"Authorization": f"Bearer {access_token}"}
 
     response = requests.get(url, headers=headers, stream=True)
+
     if response.status_code == 200:
         # Nome do arquivo (usando o user_id)
         file_path = os.path.join(MEDIA_DIR, f"{user_id}.jpg")
@@ -359,8 +367,11 @@ def get_and_save_user_photo(access_token, user_id):
                 photo_file.write(chunk)
 
         # Gera a URL (ajuste conforme necessário)
-        file_url = f"/media/user_photos/{user_id}.jpg"
+        file_url = f"/home/pedroubu/Imagens/AcheiUnBFt/{user_id}.jpg"
         return file_url
+    elif response.status_code == 404:  # Foto não encontrada
+        logger.warning(f"Foto de perfil não encontrada para o usuário {user_id}.")
+        return None
     else:
         raise Exception(
             f"Erro ao buscar a foto do usuário: {response.status_code} - {response.text}"
@@ -371,11 +382,15 @@ class DeleteUserView(View):
     """
     Endpoint para deletar usuários pelo ID.
     """
+
     def delete(self, request, user_id):
         try:
             user = User.objects.get(id=user_id)
             user.delete()  # Deleta o usuário do banco de dados
-            return JsonResponse({"message": f"Usuário com ID {user_id} foi deletado com sucesso."}, status=200)
+            return JsonResponse(
+                {"message": f"Usuário com ID {user_id} foi deletado com sucesso."},
+                status=200,
+            )
         except User.DoesNotExist:
             return JsonResponse({"error": "Usuário não encontrado."}, status=404)
 
