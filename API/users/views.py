@@ -50,7 +50,7 @@ class ItemViewSet(ModelViewSet):
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["category", "color", "is_valuable", "status"]
+    filterset_fields = ["category", "color", "brand" "is_valuable", "status"]
     search_fields = ["name", "location", "description"]
     ordering_fields = ["created_at", "found_lost_date"]
 
