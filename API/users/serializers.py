@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Brand, Color, Item, Category, ItemImage
+import cloudinary.uploader
 
 
 class ColorSerializer(serializers.ModelSerializer):
@@ -22,11 +23,12 @@ class ItemImageSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
-    imagem = serializers.ListField(
+    images = serializers.ListField(
         child=serializers.ImageField(allow_empty_file=False),
         write_only=True,
         required=False,
     )
+    image_urls = serializers.SerializerMethodField(read_only=True)
     barcode = serializers.CharField(read_only=True)  # Código único do item
 
     class Meta:
@@ -44,22 +46,26 @@ class ItemSerializer(serializers.ModelSerializer):
             "status",
             "found_lost_date",
             "created_at",
-            "images",
-            "image_url",
+            "images", # Para retornar imagens associadas ao item
+            "image_urls", # Para fazer upload de imagens
         ]
 
     def create(self, validated_data):
         # Extrai as imagens
-        images = validated_data.pop("imagem", [])
+        images = validated_data.pop("images", [])
         item = super().create(validated_data)
 
         for image in images:
-            upload_result = cloudinary.uploader.upload(image)
-            image_url = upload_result.get("secure_url")
-            ItemImage.objects.create(item=item, image_url=image_url)
+            try:
+                upload_result = cloudinary.uploader.upload(image)
+                image_url = upload_result.get("secure_url")
+                ItemImage.objects.create(item=item, image_url=image_url)
+            except Exception as e:
+                raise serializers.ValidationError({"images": str(e)})
 
         return item
-
+    def get_image_urls(self, obj):
+        return [image.image_url for image in obj.images.all()]
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
