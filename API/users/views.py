@@ -99,6 +99,13 @@ class ItemImageViewSet(ModelViewSet):
                 {"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND
             )
 
+        # Valida o limite de imagens
+        if item.images.count() >= 3:
+            return Response(
+                {"error": "Você pode adicionar no máximo 3 imagens por item."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         # Fazer upload da imagem para o Cloudinary.
         image_file = request.FILES.get("image")
 
