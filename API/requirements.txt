@@ -18,3 +18,4 @@ drf-yasg
 msal
 django-filter>=22.1
 cloudinary==1.32.0
+python-decouple
