@@ -99,7 +99,7 @@ class ItemImageViewSet(ModelViewSet):
                 {"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND
             )
 
-        # Fazer upload da imagem para o Cloudinary
+        # Fazer upload da imagem para o Cloudinary.
         image_file = request.FILES.get("image")
 
         if not image_file:
