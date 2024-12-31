@@ -1,6 +1,7 @@
 import os
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
+
 import cloudinary
 import cloudinary.uploader
 from decouple import config
@@ -85,7 +86,7 @@ ASGI_APPLICATION = "AcheiUnB.asgi.application"
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.channels_redis",  # Para desenvolvimento local
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
+        # "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
 

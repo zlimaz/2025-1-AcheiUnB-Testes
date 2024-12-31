@@ -5,41 +5,66 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0002_category_remove_item_image_item_color_and_more'),
+        ("users", "0002_category_remove_item_image_item_color_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Brand',
+            name="Brand",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, unique=True)),
-                ('brand_id', models.CharField(max_length=2, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, unique=True)),
+                ("brand_id", models.CharField(max_length=2, unique=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Color',
+            name="Color",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, unique=True)),
-                ('color_id', models.CharField(max_length=2, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, unique=True)),
+                ("color_id", models.CharField(max_length=2, unique=True)),
             ],
         ),
         migrations.AlterField(
-            model_name='item',
-            name='description',
+            model_name="item",
+            name="description",
             field=models.TextField(blank=True, max_length=250),
         ),
         migrations.AddField(
-            model_name='item',
-            name='brand',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.brand'),
+            model_name="item",
+            name="brand",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="users.brand",
+            ),
         ),
         migrations.AlterField(
-            model_name='item',
-            name='color',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.color'),
+            model_name="item",
+            name="color",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="users.color",
+            ),
         ),
     ]

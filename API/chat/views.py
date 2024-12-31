@@ -1,13 +1,13 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
-from .models import ChatRoom, Message
 from django.db import models  # Certifique-se de importar models para usar Q
-from .serializers import ChatRoomSerializer, MessageSerializer
 from rest_framework.exceptions import ValidationError
-from rest_framework.views import APIView
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+
 from chat.models import ChatRoom, Message
+
+from .serializers import ChatRoomSerializer, MessageSerializer
 
 
 class ChatRoomViewSet(ModelViewSet):
@@ -21,8 +21,10 @@ class ChatRoomViewSet(ModelViewSet):
 
         # Verifica se a sala já existe
         if ChatRoom.objects.filter(
-            (models.Q(participant_1=participant_1, participant_2=participant_2) |
-             models.Q(participant_1=participant_2, participant_2=participant_1))
+            (
+                models.Q(participant_1=participant_1, participant_2=participant_2)
+                | models.Q(participant_1=participant_2, participant_2=participant_1)
+            )
         ).exists():
             raise ValidationError("Já existe um chat entre esses participantes.")
 
@@ -31,6 +33,7 @@ class ChatRoomViewSet(ModelViewSet):
 
 class MessageViewSet(ModelViewSet):
     """ViewSet para gerenciar mensagens."""
+
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated]
@@ -42,13 +45,14 @@ class MessageViewSet(ModelViewSet):
             return Message.objects.filter(room_id=room_id)
         return super().get_queryset()
 
-
     def perform_create(self, serializer):
         # O remetente da mensagem será sempre o usuário autenticado
         serializer.save(sender=self.request.user)
 
+
 class ClearChatsView(APIView):
     """Endpoint para limpar todas as mensagens e/ou salas de chat."""
+
     permission_classes = [IsAdminUser]
 
     def delete(self, request, *args, **kwargs):

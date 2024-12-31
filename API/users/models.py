@@ -1,5 +1,3 @@
-from django.db import models
-from django.contrib.auth.models import User
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -17,27 +15,29 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-    
-class Color (models.Model):
-    name = models.CharField(max_length=50, unique=True) #Nome da cor
-    color_id = models.CharField(max_length=2, unique=True) #ID único da cor    
+
+
+class Color(models.Model):
+    name = models.CharField(max_length=50, unique=True)  # Nome da cor
+    color_id = models.CharField(max_length=2, unique=True)  # ID único da cor
 
     def __str__(self):
         return self.name
 
-class Brand (models.Model):
-    name = models.CharField(max_length=50, unique=True) #Nome da marca
-    brand_id = models.CharField(max_length=2, unique=True) #ID único da marca
+
+class Brand(models.Model):
+    name = models.CharField(max_length=50, unique=True)  # Nome da marca
+    brand_id = models.CharField(max_length=2, unique=True)  # ID único da marca
 
     def __str__(self):
         return self.name
-    
+
+
 class Item(models.Model):
     STATUS_CHOICES = [
         ("found", "Achado"),
         ("lost", "Perdido"),
     ]
-
 
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True
@@ -61,17 +61,17 @@ class Item(models.Model):
     found_lost_date = models.DateTimeField(null=True, blank=True)  # Data personalizada
     created_at = models.DateTimeField(auto_now_add=True)  # Data de cadastro automático
 
-    #Calcula o código único (barcode) do item
+    # Calcula o código único (barcode) do item
     @property
     def barcode(self):
         category_id = self.category.category_id if self.category else "00"
         color_id = self.color.color_id if self.color else "00"
         brand_id = self.brand.brand_id if self.brand else "00"
-        is_valuable = "1" if self.is_valuable else "0" #1 se é valioso e 0 se não
+        is_valuable = "1" if self.is_valuable else "0"  # 1 se é valioso e 0 se não
         return f"{category_id}{color_id}{brand_id}{is_valuable}"
 
     def __str__(self):
-        return f"{self.name} ({self.location})" 
+        return f"{self.name} ({self.location})"
 
 
 class ItemImage(models.Model):

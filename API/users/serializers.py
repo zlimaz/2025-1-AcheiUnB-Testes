@@ -1,6 +1,7 @@
-from rest_framework import serializers
-from .models import Brand, Color, Item, Category, ItemImage
 import cloudinary.uploader
+from rest_framework import serializers
+
+from .models import Brand, Category, Color, Item, ItemImage
 
 
 class ColorSerializer(serializers.ModelSerializer):
@@ -46,20 +47,24 @@ class ItemSerializer(serializers.ModelSerializer):
             "status",
             "found_lost_date",
             "created_at",
-            "images", # Para retornar imagens associadas ao item
-            "image_urls", # Para fazer upload de imagens
+            "images",  # Para retornar imagens associadas ao item
+            "image_urls",  # Para fazer upload de imagens
         ]
 
     def create(self, validated_data):
         # Extrai as imagens
         images = validated_data.pop("images", [])
-        if len(images) > 3:
+        MAX_IMAGES = 3
+
+        if len(images) > MAX_IMAGES:
             raise serializers.ValidationError("Você pode adicionar no máximo 3 imagens.")
         item = super().create(validated_data)
 
         for image in images:
-            if item.images.count() >= 3:
-                raise serializers.ValidationError("O item já possui o número máximo de 3 imagens.")
+            if item.images.count() >= MAX_IMAGES:
+                raise serializers.ValidationError(
+                    "O item já possui o número máximo de 3 imagens."
+                )
             try:
                 upload_result = cloudinary.uploader.upload(image)
                 image_url = upload_result.get("secure_url")
@@ -68,8 +73,10 @@ class ItemSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError({"images": str(e)})
 
         return item
+
     def get_image_urls(self, obj):
         return [image.image_url for image in obj.images.all()]
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

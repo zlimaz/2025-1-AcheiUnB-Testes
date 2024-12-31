@@ -1,39 +1,32 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
-from django.contrib import messages
-from django.utils.crypto import get_random_string
-from rest_framework.generics import ListCreateAPIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.permissions import IsAuthenticated
-from .models import Brand, Color, Item
-from .serializers import BrandSerializer, ColorSerializer, ItemSerializer
-from msal import ConfidentialClientApplication
-from django.shortcuts import redirect
-from django.http import JsonResponse
-import os
-from rest_framework.views import APIView
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
-from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
-from .models import Item, Category
-from .serializers import ItemSerializer, CategorySerializer
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework import status
-from .serializers import ItemImageSerializer
-from .models import Item, ItemImage
-import requests
-from django.contrib.auth import get_user_model
-from django.contrib.auth import login
 import logging
+import os
 from datetime import datetime
-from django.contrib.auth.models import AbstractUser
-from django.db import models
-from django.views import View
-from .models import UserProfile
-import cloudinary.uploader
 
+import cloudinary.uploader
+import requests
+from django.contrib.auth import get_user_model, login
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.views import View
+from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from msal import ConfidentialClientApplication
+from rest_framework import status
+from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+
+from .models import Brand, Category, Color, Item, ItemImage, UserProfile
+from .serializers import (
+    BrandSerializer,
+    CategorySerializer,
+    ColorSerializer,
+    ItemImageSerializer,
+    ItemSerializer,
+)
 
 # Configurações do MSAL
 CLIENT_ID = os.getenv("MICROSOFT_CLIENT_ID")
@@ -55,9 +48,7 @@ class ItemViewSet(ModelViewSet):
     ordering_fields = ["created_at", "found_lost_date"]
 
     def perform_create(self, serializer):
-        serializer.save(
-            user=self.request.user if self.request.user.is_authenticated else None
-        )
+        serializer.save(user=self.request.user if self.request.user.is_authenticated else None)
 
 
 class CategoryViewSet(ModelViewSet):
@@ -95,12 +86,11 @@ class ItemImageViewSet(ModelViewSet):
         try:
             item = Item.objects.get(id=item_id)
         except Item.DoesNotExist:
-            return Response(
-                {"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND
-            )
+            return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Valida o limite de imagens
-        if item.images.count() >= 3:
+        max_images = 3
+        if item.images.count() >= max_images:
             return Response(
                 {"error": "Você pode adicionar no máximo 3 imagens por item."},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -110,17 +100,13 @@ class ItemImageViewSet(ModelViewSet):
         image_file = request.FILES.get("image")
 
         if not image_file:
-            return Response(
-                {"error": "No image provided"}, status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"error": "No image provided"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             upload_result = cloudinary.uploader.upload(image_file)
             image_url = upload_result.get("secure_url")
         except Exception as e:
-            return Response(
-                {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         serializer = self.get_serializer(data={"image_url": image_url})
         serializer.is_valid(raise_exception=True)
@@ -152,9 +138,7 @@ class UserDetailView(APIView):
     )
     def get(self, request):
         user = request.user
-        social_account = SocialAccount.objects.filter(
-            user=user, provider="microsoft"
-        ).first()
+        social_account = SocialAccount.objects.filter(user=user, provider="microsoft").first()
 
         # Extrai a matrícula e a foto do usuário(se disponivel)
         if user.email and "@aluno.unb.br" in user.email:
@@ -230,9 +214,7 @@ def microsoft_login(request):
         client_id=CLIENT_ID, client_credential=CLIENT_SECRET, authority=AUTHORITY
     )
     # Gera a URL de autorização
-    auth_url = app.get_authorization_request_url(
-        scopes=SCOPES, redirect_uri=REDIRECT_URI
-    )
+    auth_url = app.get_authorization_request_url(scopes=SCOPES, redirect_uri=REDIRECT_URI)
     return redirect(auth_url)
 
 
@@ -243,9 +225,7 @@ def microsoft_callback(request):
     authorization_code = request.GET.get("code")
     if not authorization_code:
         logger.error("Código de autorização não fornecido.")
-        return JsonResponse(
-            {"error": "Código de autorização não fornecido."}, status=400
-        )
+        return JsonResponse({"error": "Código de autorização não fornecido."}, status=400)
 
     app = ConfidentialClientApplication(
         client_id=CLIENT_ID, client_credential=CLIENT_SECRET, authority=AUTHORITY
@@ -263,9 +243,7 @@ def microsoft_callback(request):
             user_data = fetch_user_data(access_token)
 
             # Salvar ou atualizar o usuário no banco de dados
-            user, created = save_or_update_user(
-                user_data=user_data, access_token=access_token
-            )
+            user, created = save_or_update_user(user_data=user_data, access_token=access_token)
 
             # Autenticar o usuário
             login(request, user)
@@ -274,9 +252,7 @@ def microsoft_callback(request):
             return redirect("http://localhost:8000/#/found")
         else:
             logger.error("Falha ao adquirir token de acesso.")
-            return JsonResponse(
-                {"error": "Falha ao adquirir token de acesso."}, status=400
-            )
+            return JsonResponse({"error": "Falha ao adquirir token de acesso."}, status=400)
     except Exception as e:
         logger.error(f"Erro no callback: {e}")
         return JsonResponse({"error": str(e)}, status=500)
@@ -331,9 +307,7 @@ class TestUserView(APIView):
                 status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
             )
         except Exception as e:
-            return Response(
-                {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request):
         """
@@ -384,9 +358,7 @@ def get_and_save_user_photo(access_token, user_id):
     :return: URL do arquivo salvo ou None se a foto não estiver disponível.
     """
     if not access_token:
-        raise ValueError(
-            "O parâmetro access_token não foi fornecido para obter a foto."
-        )
+        raise ValueError("O parâmetro access_token não foi fornecido para obter a foto.")
 
     # Diretório onde as fotos serão salvas
     MEDIA_DIR = "/home/pedroubu/Imagens/AcheiUnBFt/"
