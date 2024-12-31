@@ -1,0 +1,14 @@
+[tool.black]
+line-length = 95
+
+
+[tool.ruff]
+line-length = 95
+extend-exclude = ['migrations', '__pycache__',]
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+preview = true
+ignore = ["PLR2004", 'F821']  
+
+[tool.ruff.flake8-quotes]
+inline-quotes = 'single'
+

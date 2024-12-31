@@ -23,6 +23,7 @@ services:
     depends_on:
       - db
 
+
   db:
     image: postgres:15
     environment:

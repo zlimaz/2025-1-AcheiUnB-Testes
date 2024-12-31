@@ -1,18 +1,20 @@
 import json
-from channels.generic.websocket import AsyncWebsocketConsumer
+
 from asgiref.sync import sync_to_async
+from channels.generic.websocket import AsyncWebsocketConsumer
+
 from .models import ChatRoom, Message
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.room_id = self.scope['url_route']['kwargs']['room_id']
+        self.room_id = self.scope["url_route"]["kwargs"]["room_id"]
         self.room_group_name = f"chat_{self.room_id}"
 
         # Verifica se o usuário tem acesso à sala
         room = await sync_to_async(ChatRoom.objects.get)(id=self.room_id)
-        user = self.scope['user']
-        if user != room.participant_1 and user != room.participant_2:
+        user = self.scope["user"]
+        if user not in {room.participant_1, room.participant_2}:
             await self.close()
         else:
             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
