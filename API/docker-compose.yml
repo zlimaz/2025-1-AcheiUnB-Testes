@@ -23,6 +23,15 @@ services:
     depends_on:
       - db
 
+  ruff:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ruff . --fix
+    volumes:
+      - .:/app
+    
+
   db:
     image: postgres:15
     environment:
