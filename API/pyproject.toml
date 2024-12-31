@@ -1,0 +1,11 @@
+[tool.ruff]
+line-length = 88
+extend-exclude = ['migrations', '__pycache__',]
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'

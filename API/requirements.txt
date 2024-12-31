@@ -20,3 +20,4 @@ django-filter>=22.1
 cloudinary==1.32.0
 python-decouple
 ruff==0.0.287
+pre-commit==3.4.0
