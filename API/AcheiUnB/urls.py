@@ -1,20 +1,20 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
-from django.contrib.auth import views as auth_views
+from django.shortcuts import render
+from django.urls import include, path
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from django.shortcuts import render
+
 from users import views
-from users.views import microsoft_callback
+from users.views import DeleteUserView, microsoft_callback
 
 
 # View para servir o arquivo Vue.js
 def vue_app(request):
-    return render(
-        request, "index.html"
-    )  # Caminho para o index.html dentro da pasta templates
+    return render(request, "index.html")  # Caminho para o index.html dentro da pasta templates
 
 
 urlpatterns = [
@@ -35,4 +35,9 @@ urlpatterns = [
     ),  # Atualizar token de acesso
     path("api/chat/", include("chat.urls")),
     path("api/", include("users.urls")),
+    path("delete-user/<int:user_id>/", DeleteUserView.as_view(), name="delete_user"),
 ]
+
+# Adiciona a configuração para servir arquivos estáticos no desenvolvimento
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

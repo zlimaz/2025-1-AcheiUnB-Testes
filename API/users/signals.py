@@ -1,19 +1,17 @@
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from .models import UserProfile
 
-def update_user_profile(request, user, **kwargs):
-    social_account = SocialAccount.objects.filter(
-        user=user, provider="microsoft"
-    ).first()
 
-    if social_account:
-        extra_data = social_account.extra_data
-        user.first_name = extra_data.get("givenName", user.first_name)
-        user.last_name = extra_data.get("surname", user.last_name)
-        user.email = extra_data.get("mail", user.email)
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
 
-        # Extração da matrícula
-        if user.email and "@aluno.unb.br" in user.email:
-            user.username = user.email.split("@")[0]
 
-        user.save()
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    if hasattr(instance, "profile"):
+        instance.profile.save()

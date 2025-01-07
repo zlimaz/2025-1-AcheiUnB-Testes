@@ -6,4 +6,13 @@ class UsersConfig(AppConfig):
     name = "users"
 
     def ready(self):
-        import users.signals
+        # Importe os sinais dentro do método ready
+        pass  # Certifique-se de que o arquivo signals.py existe e está configurado
+
+
+"""class UsersConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "users"
+
+    def ready(self):
+        import users.signals"""
