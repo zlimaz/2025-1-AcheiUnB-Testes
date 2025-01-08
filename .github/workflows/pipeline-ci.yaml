@@ -33,15 +33,15 @@ jobs:
           
       - name: Run migrations
         run: |
-          docker-compose exec web python manage.py migrate
+          docker-compose -f API/docker-compose.yml exec web python manage.py migrate
 
       - name: Run tests with coverage
         run: |
-          docker-compose exec web coverage run --source='.' manage.py test
+          docker-compose -f API/docker-compose.yml exec web coverage run --source='.' manage.py test
 
       - name: Generate coverage report
         run: |
-          docker-compose exec web coverage xml
+          docker-compose -f API/docker-compose.yml exec web coverage xml
         # Gera o relatório em XML, necessário para o Codecov
 
       - name: Upload coverage to Codecov
