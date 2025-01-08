@@ -1,7 +1,5 @@
 from rest_framework import serializers
-
 from users.models import Item
-
 from .models import ChatRoom, Message
 
 
@@ -35,15 +33,14 @@ class ChatRoomSerializer(serializers.ModelSerializer):
             "messages",
         ]
 
-        def validate_item(self, value):
-            # Verifica se o item associado existe
-            if not Item.objects.filter(id=value.id).exists():
-                raise serializers.ValidationError("O item associado não foi encontrado.")
-            return value
+    def validate_item_id(self, value):
+        # Verifica se o item associado existe
+        if not Item.objects.filter(id=value).exists():
+            raise serializers.ValidationError("O item associado não foi encontrado.")
+        return value
 
-        def create(self, validated_data):
+    def create(self, validated_data):
         # Associa o item ao chat usando o item_id
-            item_id = validated_data.pop("item_id")
-            validated_data["item"] = Item.objects.get(id=item_id)
-            return super().create(validated_data)
-
+        item_id = validated_data.pop("item_id")
+        validated_data["item"] = Item.objects.get(id=item_id)
+        return super().create(validated_data)
