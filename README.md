@@ -2,6 +2,7 @@
 
 AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Universidade de Brasília (UnB) na busca e recuperação de itens perdidos. A plataforma permite que os alunos registrem e encontrem objetos, facilitando o contato entre quem perdeu e encontrou o item. O objetivo é reduzir a dependência de grupos de mensagens e proporcionar um sistema mais organizado e acessível para achados e perdidos.
 
+
 ## 📝 Sumário
 
 - [AcheiUnB](#acheiunb)
