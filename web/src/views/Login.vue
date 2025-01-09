@@ -10,7 +10,7 @@
 
   <div
     id="main-content"
-    class="telaInteira bg-azul text-white p-4 h-screen hidden"
+    class="telaInteira bg-azul text-white p-4 min-h-screen hidden"
   >
     <div
       class="titulo flex space-x-1 mt-20 mb-20 ml-8 md:flex md:justify-center md:mb-52"

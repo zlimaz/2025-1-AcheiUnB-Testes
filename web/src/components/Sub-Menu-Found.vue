@@ -4,7 +4,9 @@
       <span class="font-inter font-bold text-laranja">Achados</span>
       <div class="h-[2px] bg-laranja"></div>
     </div>
-    <span class="font-inter font-bold text-cinza3">Perdidos</span>
+    <router-link to="/lost" class="no-underline font-inter font-bold text-cinza3">
+      Perdidos
+    </router-link>
   </div>
 </template>
 
