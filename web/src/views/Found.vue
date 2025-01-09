@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="min-h-screen">
     <div class="fixed w-full top-0">
       <Header />
     </div>
@@ -56,9 +56,9 @@
 <script setup>
 import MainMenu from "../components/Main-Menu.vue";
 import ItemCard from "../components/Item-Card.vue";
-import ButtonAdd from "../components/Button-Add.vue";
+import ButtonAdd from "../components/Button-Add-Found.vue";
 import Header from "../components/Header.vue";
-import SubMenu from "../components/Sub-Menu.vue";
+import SubMenu from "../components/Sub-Menu-Found.vue";
 import imagem1 from "/src/assets/images/carteira.png";
 import imagem2 from "/src/assets/images/bone.png";
 import imagem3 from "/src/assets/images/caneta.png";

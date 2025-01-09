@@ -1,4 +1,4 @@
-<template>about!</template>
+<template>chats</template>
 
 <script setup></script>
 

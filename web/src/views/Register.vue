@@ -1,4 +1,4 @@
-<template>about!</template>
+<template>register</template>
 
 <script setup></script>
 
