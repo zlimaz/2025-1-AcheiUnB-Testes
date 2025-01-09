@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from users.models import Item
+
 
 class ChatRoom(models.Model):
     """Representa uma sala de chat entre dois usuários."""
@@ -11,9 +13,9 @@ class ChatRoom(models.Model):
     participant_2 = models.ForeignKey(
         User, related_name="chatrooms_as_participant_2", on_delete=models.CASCADE
     )
-    item_description = models.CharField(
-        max_length=255, blank=True, null=True
-    )  # Descrição do item perdido (opcional)
+    item = models.ForeignKey(
+        Item, related_name="chatrooms", on_delete=models.CASCADE, null=True, blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
