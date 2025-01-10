@@ -1,7 +1,13 @@
 import cloudinary.uploader
 from rest_framework import serializers
 
-from .models import Brand, Category, Color, Item, ItemImage
+from .models import Brand, Category, Color, Item, ItemImage, Location
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = ["id", "name", "location_id"]
 
 
 class ColorSerializer(serializers.ModelSerializer):
@@ -31,6 +37,9 @@ class ItemSerializer(serializers.ModelSerializer):
     )
     image_urls = serializers.SerializerMethodField(read_only=True)
     barcode = serializers.CharField(read_only=True)  # Código único do item
+    location = serializers.PrimaryKeyRelatedField(
+        queryset=Location.objects.all(), required=False
+    )
 
     class Meta:
         model = Item
