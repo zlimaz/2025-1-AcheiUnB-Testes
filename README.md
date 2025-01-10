@@ -78,6 +78,16 @@ make install
 Para iniciar o projeto, use o comando:
 
 ```bash
+make run
+```
+
+ou utilize os seguintes comandos:
+
+```bash
+cd API/
+```
+
+```bash
 docker compose up
 ```
 
@@ -130,7 +140,7 @@ docker exec django-api python3 ./manage.py updatedb -a
 
 | Serviço    | URL                     |
 |------------|--------------------------|
-| Frontend   | http://localhost:3000    |
+| Frontend   | http://localhost:5173    |
 | Backend    | http://localhost:8000    |
 
 ### 📍 Migrations
