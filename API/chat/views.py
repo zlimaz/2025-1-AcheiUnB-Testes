@@ -4,9 +4,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from users.models import Item
-
 from chat.models import ChatRoom, Message
+from users.models import Item
 
 from .serializers import ChatRoomSerializer, MessageSerializer
 
