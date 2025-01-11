@@ -19,13 +19,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Brand, Category, Color, Item, ItemImage, UserProfile
+from .models import Brand, Category, Color, Item, ItemImage, Location, UserProfile
 from .serializers import (
     BrandSerializer,
     CategorySerializer,
     ColorSerializer,
     ItemImageSerializer,
     ItemSerializer,
+    LocationSerializer,
 )
 
 # Configurações do MSAL
@@ -43,8 +44,8 @@ class ItemViewSet(ModelViewSet):
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["category", "color", "is_valuable", "status"]
-    search_fields = ["name", "location", "description"]
+    filterset_fields = ["category", "location", "color", "is_valuable", "status"]
+    search_fields = ["name", "description"]
     ordering_fields = ["created_at", "found_lost_date"]
 
     def perform_create(self, serializer):
@@ -54,6 +55,12 @@ class ItemViewSet(ModelViewSet):
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+class LocationViewSet(ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 

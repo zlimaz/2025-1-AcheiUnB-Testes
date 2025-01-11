@@ -1,4 +1,3 @@
-from django.db import models  # Certifique-se de importar models para usar Q
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -6,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from chat.models import ChatRoom, Message
+from users.models import Item
 
 from .serializers import ChatRoomSerializer, MessageSerializer
 
@@ -16,17 +16,31 @@ class ChatRoomViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        participant_1 = request.data.get("participant_1")
-        participant_2 = request.data.get("participant_2")
+        participant_1_id = request.data.get("participant_1")
+        participant_2_id = request.data.get("participant_2")
+        item_id = request.data.get("item_id")
 
-        # Verifica se a sala já existe
-        if ChatRoom.objects.filter(
-            (
-                models.Q(participant_1=participant_1, participant_2=participant_2)
-                | models.Q(participant_1=participant_2, participant_2=participant_1)
+        # Verifica se todos os dados necessários foram fornecidos
+        if not participant_1_id or not participant_2_id or not item_id:
+            raise ValidationError(
+                "Os campos participant_1, participant_2 e item são obrigatórios."
             )
+
+        # Verifica se o item existe
+        try:
+            item = Item.objects.get(id=item_id)
+        except Item.DoesNotExist:
+            raise ValidationError({"item": "Item não encontrado."})
+
+        # Verifica se já existe um chat para este item e participantes
+        if ChatRoom.objects.filter(
+            item=item,
+            participant_1__in=[participant_1_id, participant_2_id],
+            participant_2__in=[participant_1_id, participant_2_id],
         ).exists():
-            raise ValidationError("Já existe um chat entre esses participantes.")
+            raise ValidationError(
+                "Já existe um chat para este item com os mesmos participantes."
+            )
 
         return super().create(request, *args, **kwargs)
 

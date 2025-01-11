@@ -7,6 +7,7 @@ from .views import (
     ColorViewSet,
     ItemImageViewSet,
     ItemViewSet,
+    LocationViewSet,
     TestUserView,
     UserDetailView,
 )
@@ -14,6 +15,7 @@ from .views import (
 router = DefaultRouter()
 router.register(r"items", ItemViewSet, basename="item")
 router.register(r"categories", CategoryViewSet, basename="category")
+router.register(r"locations", LocationViewSet, basename="location")
 router.register(r"colors", ColorViewSet, basename="color")
 router.register(r"brands", BrandViewSet, basename="brand")
 router.register(r"items/(?P<item_id>[^/.]+)/images", ItemImageViewSet, basename="item-image")
