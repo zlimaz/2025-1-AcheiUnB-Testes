@@ -160,9 +160,11 @@
         </div>
       </p>
 
+      <input @change="onFileChange" type="file">
+
       <div>
         <input
-          type="submit"
+          @click="save"
           value="Enviar"
           class="flex items-center rounded-full bg-laranja px-5 py-3 text-md text-white w-full"
         >
@@ -172,7 +174,8 @@
     </template>
   
   <script>
-  import Item from "../models/Item.js"
+  import axios from "axios"
+
   export default {
     name: 'Form',
     data() {
@@ -191,6 +194,7 @@
           foundLostDate: null, 
           createdAt: new Date(), 
           barcode: '', 
+          images: []
         },
         errors: [],
       },
@@ -198,15 +202,46 @@
       
     };
   },
-    methods:{
-      save: function (e) {
-       this.entity = new Item(this.mainForm.value)
-       console.log(this.entity)
-  
-        e.preventDefault();
+    methods: {
+      save: async function () {
+      const formData = new FormData();
+      const formValue = this.mainForm.value
+      formData.append("name", formValue.name);
+      formData.append("description", formValue.description);
+      formData.append("category", 1);
+      formData.append("location", 1);
+      // formData.append("color", formValue.color);
+      // formData.append("brand", formValue.brand);
+      formData.append("is_valuable", 'true');
+      formData.append("status", 'found');
+     
+      formValue.images.forEach((image, index) => {
+        formData.append(`images`, image);
+      });
+
+      console.log(formData)
+
+      try {
+        const response = await axios.post("http://localhost:8000/api/items/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM2NTc1NjIwLCJpYXQiOjE3MzY1NzIwMjAsImp0aSI6Ijc3Njg0OTA5Y2M1NDQ2OWQ4M2U0NTQyM2Y1ZDk3YjZkIiwidXNlcl9pZCI6MX0.nDH8lnHb2ao09fvtN3WDitC905x-orYEUm1sO7CBqdw"
+          }
+        });
+        console.log('deu bom')
+        
+      } catch (error) {
+        console.log('deu ruim', error)
       }
+    },
+
+    onFileChange(event) {
+      const files = Array.from(event.target.files);
+      this.mainForm.value.images.push(...files); 
     }
   }
+}
+  
   </script>
   
   <style scoped></style>

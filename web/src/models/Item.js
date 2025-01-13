@@ -12,6 +12,7 @@ export default class Item {
     foundLostDate = null,
     createdAt = new Date(),
     barcode = undefined,
+    images = [],
   }) {
     this.user = user;
     this.name = name;
@@ -25,5 +26,6 @@ export default class Item {
     this.foundLostDate = foundLostDate;
     this.createdAt = createdAt;
     this.barcode = barcode;
+    this.images = images;
   }
 }
