@@ -1,10 +1,10 @@
 <template>
   <div class="min-h-screen">
     <div class="fixed w-full top-0">
-      <Header />
+      <SearchHeader />
     </div>
 
-    <div class="pt-20 pb-8">
+    <div class="pt-24 pb-8">
       <SubMenu />
     </div>
 
@@ -57,7 +57,7 @@
 import MainMenu from "../components/Main-Menu.vue";
 import ItemCard from "../components/Item-Card.vue";
 import ButtonAdd from "../components/Button-Add-Lost.vue";
-import Header from "../components/Header.vue";
+import SearchHeader from "../components/Search-Header.vue";
 import SubMenu from "../components/Sub-Menu-Lost.vue";
 import imagem1 from "/src/assets/images/carteira.png";
 import imagem2 from "/src/assets/images/bone.png";
