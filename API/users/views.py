@@ -9,8 +9,6 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
 from msal import ConfidentialClientApplication
 from rest_framework import status
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -123,7 +121,6 @@ class ItemImageViewSet(ModelViewSet):
 
 class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]
-
 
     def get(self, request):
         user = request.user
