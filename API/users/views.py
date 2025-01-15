@@ -44,7 +44,7 @@ class ItemViewSet(ModelViewSet):
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["category", "location", "color", "is_valuable", "status"]
+    filterset_fields = ["category", "location", "color", "status"]
     search_fields = ["name", "description"]
     ordering_fields = ["created_at", "found_lost_date"]
 
@@ -124,25 +124,7 @@ class ItemImageViewSet(ModelViewSet):
 class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @swagger_auto_schema(
-        operation_description="Retorna os dados do usuário autenticado",
-        responses={
-            200: openapi.Response(
-                description="Usuário autenticado",
-                examples={
-                    "application/json": {
-                        "id": 2,
-                        "username": "testuser",
-                        "email": "231026714@aluno.unb.br",
-                        "first_name": "Euller",
-                        "last_name": "Silva",
-                        "matricula": "231026714",
-                        "foto": "https://foto.unb.br/user-picture.jpg",
-                    }
-                },
-            )
-        },
-    )
+
     def get(self, request):
         user = request.user
         social_account = SocialAccount.objects.filter(user=user, provider="microsoft").first()

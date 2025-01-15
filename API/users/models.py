@@ -64,7 +64,6 @@ class Item(models.Model):
     brand = models.ForeignKey(
         Brand, on_delete=models.SET_NULL, null=True, blank=True
     )  # Marca do item (opcional)
-    is_valuable = models.BooleanField(default=False)  # Indica se o item é valioso
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default="lost"
     )  # Diferencia entre Achado ou Perdido
@@ -78,8 +77,7 @@ class Item(models.Model):
         location_id = self.location.location_id if self.location else "00"
         color_id = self.color.color_id if self.color else "00"
         brand_id = self.brand.brand_id if self.brand else "00"
-        is_valuable = "1" if self.is_valuable else "0"  # 1 se é valioso e 0 se não
-        return f"{category_id}{location_id}{color_id}{brand_id}{is_valuable}"
+        return f"{category_id}{location_id}{color_id}{brand_id}"
 
     def __str__(self):
         return f"{self.name} ({self.location})"
