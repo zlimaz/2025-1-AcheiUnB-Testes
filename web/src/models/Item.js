@@ -1,31 +1,40 @@
 export default class Item {
-  constructor({
+  constructor(
     user = null,
     name = "",
-    description = "",
     category = null,
-    location = "",
+    location = null,
     color = null,
     brand = null,
-    isValuable = false,
-    status = "lost",
-    foundLostDate = null,
+    description = null,
+    images = null,
+    status = "",
+    foundLostDate = "",
     createdAt = new Date(),
-    barcode = undefined,
-    images = [],
-  }) {
+    barcode = "",
+    requiredFields = [
+      "name",
+      "category",
+      "location",
+      "color",
+      "brand",
+      "description",
+      "status",
+      "foundLostDate",
+    ]
+  ) {
     this.user = user;
     this.name = name;
-    this.description = description;
     this.category = category;
     this.location = location;
     this.color = color;
     this.brand = brand;
-    this.isValuable = isValuable;
+    this.description = description;
+    this.images = images;
     this.status = status;
     this.foundLostDate = foundLostDate;
     this.createdAt = createdAt;
     this.barcode = barcode;
-    this.images = images;
+    this.requiredFields = requiredFields;
   }
 }
