@@ -9,8 +9,6 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
 from msal import ConfidentialClientApplication
 from rest_framework import status
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -44,7 +42,7 @@ class ItemViewSet(ModelViewSet):
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["category", "location", "color", "is_valuable", "status"]
+    filterset_fields = ["category", "location", "color", "status"]
     search_fields = ["name", "description"]
     ordering_fields = ["created_at", "found_lost_date"]
 
@@ -96,8 +94,9 @@ class ItemImageViewSet(ModelViewSet):
             return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Valida o limite de imagens
-        max_images = 3
-        if item.images.count() >= max_images:
+        MAX_IMAGES = (os.getenv("MAX_IMAGES"),)
+
+        if item.images.count() >= MAX_IMAGES:
             return Response(
                 {"error": "Você pode adicionar no máximo 3 imagens por item."},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -124,25 +123,6 @@ class ItemImageViewSet(ModelViewSet):
 class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
-    @swagger_auto_schema(
-        operation_description="Retorna os dados do usuário autenticado",
-        responses={
-            200: openapi.Response(
-                description="Usuário autenticado",
-                examples={
-                    "application/json": {
-                        "id": 2,
-                        "username": "testuser",
-                        "email": "231026714@aluno.unb.br",
-                        "first_name": "Euller",
-                        "last_name": "Silva",
-                        "matricula": "231026714",
-                        "foto": "https://foto.unb.br/user-picture.jpg",
-                    }
-                },
-            )
-        },
-    )
     def get(self, request):
         user = request.user
         social_account = SocialAccount.objects.filter(user=user, provider="microsoft").first()
