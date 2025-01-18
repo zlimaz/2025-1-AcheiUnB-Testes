@@ -6,6 +6,8 @@ import Found from "../views/Found.vue";
 import Register from "../views/Register.vue";
 import User from "../views/User.vue";
 import Chats from "../views/Chats.vue";
+import ItemFound from "../views/ItemFound.vue"
+import ItemLost from "../views/ItemLost.vue"
 
 const routes = [
   {
@@ -42,6 +44,16 @@ const routes = [
     path: "/chats",
     name: "Chats",
     component: Chats,
+  },
+  {
+    path: "/item-found",
+    name: "ItemFound",
+    component: ItemFound,
+  },
+  {
+    path: "/item-lost",
+    name: "ItemLost",
+    component: ItemLost,
   },
 ];
 
