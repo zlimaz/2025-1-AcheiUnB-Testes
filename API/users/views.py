@@ -94,8 +94,9 @@ class ItemImageViewSet(ModelViewSet):
             return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Valida o limite de imagens
-        max_images = 3
-        if item.images.count() >= max_images:
+        MAX_IMAGES = (os.getenv("MAX_IMAGES"),)
+
+        if item.images.count() >= MAX_IMAGES:
             return Response(
                 {"error": "Você pode adicionar no máximo 3 imagens por item."},
                 status=status.HTTP_400_BAD_REQUEST,
