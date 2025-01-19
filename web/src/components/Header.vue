@@ -1,6 +1,7 @@
 <template>
     <div
-    class="h-full bg-verde shadow-md rounded-b-xl flex items-center justify-between text-white gap-x-9 p-4"
+    class=" bg-verde shadow-md rounded-b-xl flex items-center justify-etween text-white gap-x-9 p-4"
+    style="height: 5.25rem;"
     >
       <div class="flex-1">
         <SearchBar />
