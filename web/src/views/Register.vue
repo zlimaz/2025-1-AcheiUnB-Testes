@@ -3,7 +3,7 @@
     <Header />
   </div>
 
-  <div class="px-6 py-[120px]" style="z-index: 2">
+  <div class="px-6 py-[140px]" style="z-index: 2">
     <Form />
   </div>
 
