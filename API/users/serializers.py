@@ -58,6 +58,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "images",  # Para retornar imagens associadas ao item
             "image_urls",  # Para fazer upload de imagens
         ]
+        
 
     def create(self, validated_data):
         # Extrai as imagens
