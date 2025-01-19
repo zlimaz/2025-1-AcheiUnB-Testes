@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Possíveis Matches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background-color: #1a237e;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .matches-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .match-item {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #1a237e;
+        }
+        
+        .match-details {
+            margin-top: 8px;
+            color: #666;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .link-button {
+            display: inline-block;
+            background-color: #1a237e;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        
+        .link-button:hover {
+            background-color: #283593;
+        }
+    </style>
+</head>
+<body>
+    <h1>Possíveis matches para o seu item perdido: {{ item_name }}</h1>
+    <p>Olá, encontramos alguns itens que podem ser o que você perdeu. Confira abaixo:</p>
+    <ul>
+        {% for match in matches %}
+            <li>
+                <strong>{{ match.name }}</strong> encontrado em 
+                {{ match.location}}
+                <br>
+                Descrição: {{ match.description|default:"Sem descrição" }}
+                <br>
+                Data: {{ match.found_lost_date|date:"d/m/Y" }}
+            </li>
+        {% endfor %}
+    </ul>
+    <p>Acesse o AcheiUnB para mais detalhes.</p>
+</body>
+</html>
