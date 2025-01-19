@@ -1,3 +1,4 @@
+from .match import find_and_notify_matches
 import logging
 import os
 from datetime import datetime
@@ -52,10 +53,7 @@ class ItemViewSet(ModelViewSet):
             user=self.request.user if self.request.user.is_authenticated else None
         )
 
-        if item.status == "lost":
-            from .match import find_and_notify_matches
-
-            find_and_notify_matches(item)
+        find_and_notify_matches(item)
 
 
 class MatchItemViewSet(APIView):

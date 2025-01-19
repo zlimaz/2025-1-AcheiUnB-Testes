@@ -1,3 +1,4 @@
+from django.db.models import Q
 from .models import Item
 from .utils import send_match_notification
 
@@ -11,7 +12,6 @@ def find_and_notify_matches(target_item: Item, max_distance=2):
     """encontra possiveis matches para o item fornecido"""
 
     # Filtrar itens de status oposto a mesma categoria
-    from django.db.models import Q
 
     potential_items = Item.objects.filter(
         ~Q(status=target_item.status),
