@@ -1,7 +1,15 @@
+import os
+
 import cloudinary.uploader
 from rest_framework import serializers
 
-from .models import Brand, Category, Color, Item, ItemImage
+from .models import Brand, Category, Color, Item, ItemImage, Location
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = ["id", "name", "location_id"]
 
 
 class ColorSerializer(serializers.ModelSerializer):
@@ -31,6 +39,9 @@ class ItemSerializer(serializers.ModelSerializer):
     )
     image_urls = serializers.SerializerMethodField(read_only=True)
     barcode = serializers.CharField(read_only=True)  # Código único do item
+    location = serializers.PrimaryKeyRelatedField(
+        queryset=Location.objects.all(), required=False
+    )
 
     class Meta:
         model = Item
@@ -43,7 +54,6 @@ class ItemSerializer(serializers.ModelSerializer):
             "location",
             "color",
             "brand",
-            "is_valuable",
             "status",
             "found_lost_date",
             "created_at",
@@ -54,7 +64,7 @@ class ItemSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # Extrai as imagens
         images = validated_data.pop("images", [])
-        MAX_IMAGES = 3
+        MAX_IMAGES = (os.getenv("MAX_IMAGES"),)
 
         if len(images) > MAX_IMAGES:
             raise serializers.ValidationError("Você pode adicionar no máximo 3 imagens.")
