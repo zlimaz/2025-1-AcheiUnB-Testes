@@ -30,7 +30,7 @@
         v-model="item.category"
         name="category"
       >
-        <option value="" disabled selected>Selecione</option>
+        <option disabled selected>Selecione</option>
         <option
           v-for="category of categories"
           :key="category.id"
@@ -194,6 +194,7 @@
     <!-- Enviar -->
     <div>
       <button
+        type="button"
         @click="save"
         class="inline-block text-center rounded-full bg-laranja px-5 py-3 text-md text-white w-full"
       >
@@ -280,11 +281,7 @@ export default {
       if (form.validate()) {
         const formData = form.toFormData();
         try {
-          await api.post("/items/", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+          await api.post("/items/", formData);
           console.log("Formulário enviado com sucesso");
         } catch (error) {
           console.log("Erro ao enviar formulário", error);

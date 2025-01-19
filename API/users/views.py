@@ -5,7 +5,7 @@ from datetime import datetime
 import cloudinary.uploader
 import requests
 from django.contrib.auth import get_user_model, login
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
@@ -18,6 +18,7 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import Brand, Category, Color, Item, ItemImage, Location, UserProfile
 from .serializers import (
@@ -255,8 +256,22 @@ def microsoft_callback(request):
             # Autenticar o usuário
             login(request, user)
 
-            # Redirecionar para a página desejada
-            return redirect("http://localhost:8000/#/found")
+            # Gerar JWT local
+            refresh = RefreshToken.for_user(user)
+            jwt_access = str(refresh.access_token)
+            str(refresh)
+
+            # Configurar cookies seguros
+            response = HttpResponseRedirect("http://localhost:8000/#/found")
+            response.set_cookie(
+                key="access_token",
+                value=jwt_access,
+                httponly=True,
+                secure=True,  # Ative apenas em HTTPS em produção
+                samesite="Strict",  # Para proteger contra CSRF
+                max_age=3600,  # 1 hora
+            )
+            return response
         else:
             logger.error("Falha ao adquirir token de acesso.")
             return JsonResponse({"error": "Falha ao adquirir token de acesso."}, status=400)
