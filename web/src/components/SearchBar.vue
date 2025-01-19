@@ -2,7 +2,7 @@
   <form
     class="absolute flex items-center"
     :class="{
-      'fixed w-full top-4 pr-8 z-50': isActive && !isMediumOrLarger, 
+      'fixed w-full top-6 pr-8 z-50': isActive && !isMediumOrLarger, 
       'relative w-auto': !isActive || isMediumOrLarger, 
     }"
   >
