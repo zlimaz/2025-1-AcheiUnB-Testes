@@ -8,6 +8,7 @@ from .views import (
     ItemImageViewSet,
     ItemViewSet,
     LocationViewSet,
+    MatchItemViewSet,
     TestUserView,
     UserDetailView,
 )
@@ -24,4 +25,5 @@ urlpatterns = [
     path("", include(router.urls)),  # Rotas para itens e categorias
     path("auth/user/", UserDetailView.as_view(), name="useer-detail"),
     path("test-user/", TestUserView.as_view(), name="test_user"),
+    path("items/<int:item_id>/matches/", MatchItemViewSet.as_view(), name="item-matches"),
 ]
