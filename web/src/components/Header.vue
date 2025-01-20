@@ -9,7 +9,7 @@
     />
     <div>
       <span class="font-inter font-semibold text-2xl">{{
-        text ?? "Cadastro de item perdido"
+        text ?? "Cadastro de item achado"
       }}</span>
     </div>
     <button class="ml-auto">
