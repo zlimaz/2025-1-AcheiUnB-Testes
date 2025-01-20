@@ -70,12 +70,18 @@ class Item(models.Model):
 
     # Calcula o código único (barcode) do item
     def save(self, *args, **kwargs):
-        category_id = self.category.category_id
-        location_id = self.location.location_id
+        category_id = self.category.category_id if self.category else "00"
+        location_id = self.location.location_id if self.location else "00"
         color_id = self.color.color_id if self.color else "00"
         brand_id = self.brand.brand_id if self.brand else "00"
         self.barcode = f"{category_id}{location_id}{color_id}{brand_id}"
         super().save(*args, **kwargs)
+
+    def delete_with_related_chats(self):
+        from chat.models import ChatRoom
+
+        ChatRoom.objects.filter(item=self).delete()
+        self.delete()
 
     def __str__(self):
         return f"{self.name} ({self.location})"
