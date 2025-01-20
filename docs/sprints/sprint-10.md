@@ -30,20 +30,16 @@ onde descartamos a ideia, por enquanto. Com isso, por fim, definimos todas as ta
 organizar melhor o nosso tempo (pelos cálculos, cada membro terá que realizar 3 tasks a partir da Sprint 11).
 
 ### Reunião 2
-Data: DD/MM/AAAA  
-Local: Local da reunião  
+Data: 20/01/2024  
+Local: Discord  
 **Ata:**
 
-
-### Reunião 3
-Data: DD/MM/AAAA  
-Local: Local da reunião  
-**Ata:**
+Iniciando com a review, a maioria dos membros mostrou as funcionalidades implementadas por eles na Sprint 10 para os outros integrantes, e o restante dos membros falou também sobre suas tarefas, dizendo o que foi feito, e também sobre suas dificuldades ao decorrer da semana. Indo para a retrospectiva, falamos sobre o desenvolver do trabalho, de maneira geral, onde ressaltamos "o que nos ajudou a avançar", "o que nos deteve" e "o que devemos fazer a seguir".
 
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_ (caso existam).
+> A maioria das atividades foi realizada com êxito, e como durante a Sprint 11 não haverão muitas atividades de outras disciplinas, o grupo resolveu deixar mais tasks para a ela.
 ---
 
 **Observações:**
-> Esse espaço deve ser utilizado para registrar qualquer observação que o time julgar pertinente.
+> Manter/aumentar o ritmo!
