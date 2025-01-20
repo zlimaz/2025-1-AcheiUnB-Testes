@@ -1,4 +1,3 @@
-from .match import find_and_notify_matches
 import logging
 import os
 from datetime import datetime
@@ -13,7 +12,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from msal import ConfidentialClientApplication
 from rest_framework import status
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -85,13 +84,13 @@ class MatchItemViewSet(APIView):
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 
 class LocationViewSet(ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 
 class ColorViewSet(ModelViewSet):
@@ -108,7 +107,7 @@ class ColorViewSet(ModelViewSet):
 class BrandViewSet(ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
 
 class ItemImageViewSet(ModelViewSet):

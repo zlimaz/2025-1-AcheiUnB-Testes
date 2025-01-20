@@ -50,14 +50,10 @@ class Item(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True
     )  # Quem registrou o item
-    name = models.CharField(max_length=100)  
-    description = models.TextField(max_length=250, blank=True)  
-    category = models.ForeignKey(
-        Category, on_delete=models.CASCADE
-    )  # Categoria do item
-    location = models.ForeignKey(
-        Location, on_delete=models.CASCADE 
-    )
+    name = models.CharField(max_length=100)
+    description = models.TextField(max_length=250, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
     color = models.ForeignKey(
         Color, on_delete=models.SET_NULL, null=True, blank=True
     )  # Cor do item (opcional)
@@ -75,7 +71,7 @@ class Item(models.Model):
     # Calcula o código único (barcode) do item
     def save(self, *args, **kwargs):
         category_id = self.category.category_id
-        location_id = self.location.location_id 
+        location_id = self.location.location_id
         color_id = self.color.color_id if self.color else "00"
         brand_id = self.brand.brand_id if self.brand else "00"
         self.barcode = f"{category_id}{location_id}{color_id}{brand_id}"
