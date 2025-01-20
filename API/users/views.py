@@ -1,4 +1,3 @@
-from .match import find_and_notify_matches
 import logging
 import os
 from datetime import datetime
