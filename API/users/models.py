@@ -50,13 +50,13 @@ class Item(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True
     )  # Quem registrou o item
-    name = models.CharField(max_length=100)  # Nome do item
-    description = models.TextField(max_length=250, blank=True)  # Descrição opcional
+    name = models.CharField(max_length=100)  
+    description = models.TextField(max_length=250, blank=True)  
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True
+        Category, on_delete=models.CASCADE
     )  # Categoria do item
     location = models.ForeignKey(
-        Location, on_delete=models.SET_NULL, null=True  # Local do item
+        Location, on_delete=models.CASCADE 
     )
     color = models.ForeignKey(
         Color, on_delete=models.SET_NULL, null=True, blank=True
@@ -70,14 +70,16 @@ class Item(models.Model):
     found_lost_date = models.DateTimeField(null=True, blank=True)  # Data personalizada
     created_at = models.DateTimeField(auto_now_add=True)  # Data de cadastro automático
 
+    barcode = models.CharField(max_length=10, editable=False, blank=True)
+
     # Calcula o código único (barcode) do item
-    @property
-    def barcode(self):
-        category_id = self.category.category_id if self.category else "00"
-        location_id = self.location.location_id if self.location else "00"
+    def save(self, *args, **kwargs):
+        category_id = self.category.category_id
+        location_id = self.location.location_id 
         color_id = self.color.color_id if self.color else "00"
         brand_id = self.brand.brand_id if self.brand else "00"
-        return f"{category_id}{location_id}{color_id}{brand_id}"
+        self.barcode = f"{category_id}{location_id}{color_id}{brand_id}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.name} ({self.location})"

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Possíveis Matches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #1a237e;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .intro {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .matches-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .match-item {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #1a237e;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .match-item h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #1a237e;
+        }
+
+        .match-details {
+            margin-top: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .link-button {
+            display: inline-block;
+            background-color: #1a237e;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .link-button:hover {
+            background-color: #283593;
+        }
+
+        .no-matches {
+            text-align: center;
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Possíveis Matches</h1>
+    </div>
+
+    <div class="intro">
+        <p>Olá, encontramos alguns itens que podem ser o que você perdeu. Confira abaixo:</p>
+    </div>
+
+    <ul class="matches-list">
+        {% if matches %}
+            {% for match in matches %}
+                <li class="match-item">
+                    <h3>{{ match.name }}</h3>
+                    <div class="match-details">
+                        <strong>Local:</strong> {{ match.location }}<br>
+                        <strong>Descrição:</strong> {{ match.description|default:"Sem descrição" }}<br>
+                        <strong>Data:</strong> {{ match.found_lost_date|date:"d/m/Y" }}
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            <div class="no-matches">
+                <p>Nenhum match encontrado para o item <strong>{{ item_name }}</strong> no momento.</p>
+            </div>
+        {% endif %}
+    </ul>
+
+    <div class="footer">
+        <p>Acesse o AcheiUnB para mais detalhes e interaja com o usuário que encontrou o item.</p>
+        <a href="https://acheiunb.com" class="link-button">Ver Mais Detalhes</a>
+    </div>
+</body>
+</html>

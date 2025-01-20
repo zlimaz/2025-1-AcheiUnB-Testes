@@ -1,5 +1,3 @@
-import os
-
 import cloudinary.uploader
 from rest_framework import serializers
 
@@ -60,11 +58,12 @@ class ItemSerializer(serializers.ModelSerializer):
             "images",  # Para retornar imagens associadas ao item
             "image_urls",  # Para fazer upload de imagens
         ]
+        
 
     def create(self, validated_data):
         # Extrai as imagens
         images = validated_data.pop("images", [])
-        MAX_IMAGES = (os.getenv("MAX_IMAGES"),)
+        MAX_IMAGES = 3
 
         if len(images) > MAX_IMAGES:
             raise serializers.ValidationError("Você pode adicionar no máximo 3 imagens.")

@@ -1,3 +1,4 @@
+from .match import find_and_notify_matches
 import logging
 import os
 from datetime import datetime
@@ -18,6 +19,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from .match import find_and_notify_matches
 from .models import Brand, Category, Color, Item, ItemImage, Location, UserProfile
 from .serializers import (
     BrandSerializer,
@@ -48,7 +50,36 @@ class ItemViewSet(ModelViewSet):
     ordering_fields = ["created_at", "found_lost_date"]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user if self.request.user.is_authenticated else None)
+        item = serializer.save(
+            user=self.request.user if self.request.user.is_authenticated else None
+        )
+
+        find_and_notify_matches(item)
+
+
+class MatchItemViewSet(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, item_id):
+        # retorna possiveis matches
+        try:
+            target_item = Item.objects.get(id=item_id, user=request.user)
+        except Item.DoesNotExist:
+            return Response({"error": "Item não encontrado."}, status=404)
+
+        matches = find_and_notify_matches(target_item)
+        data = [
+            {
+                "id": match.id,
+                "barcode": match.barcode,
+                "status": match.status,
+                "name": match.name,
+                "description": match.description,
+            }
+            for match in matches
+        ]
+
+        return Response(data, status=200)
 
 
 class CategoryViewSet(ModelViewSet):
@@ -95,7 +126,7 @@ class ItemImageViewSet(ModelViewSet):
             return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Valida o limite de imagens
-        MAX_IMAGES = (os.getenv("MAX_IMAGES"),)
+        MAX_IMAGES = 3
 
         if item.images.count() >= MAX_IMAGES:
             return Response(
