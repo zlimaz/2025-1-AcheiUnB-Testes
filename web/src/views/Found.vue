@@ -18,7 +18,7 @@
         :location="item.location"
         :time="formatTime(item.created_at)"
 
-        :image="item.image_urls[0] || 'web/src/assets/images/not-available.png'"
+        :image="item.image_urls[0] || NotAvailableImage"
       />
     </div>
 
@@ -53,6 +53,7 @@ import SubMenu from "../components/Sub-Menu-Found.vue";
 import { ref, onMounted, computed } from 'vue';
 import { fetchAllItems } from '@/services/apiItems';
 import { formatTime } from '@/utils/dateUtils';
+import NotAvailableImage from '@/assets/images/not-available.png';
 
 const allItems = ref([]);
 const lostItems = computed(() =>
