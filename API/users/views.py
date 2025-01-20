@@ -5,7 +5,7 @@ from datetime import datetime
 import cloudinary.uploader
 import requests
 from django.contrib.auth import get_user_model, login
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
@@ -16,7 +16,9 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
+from rest_framework_simplejwt.tokens import RefreshToken
 
+from .match import find_and_notify_matches
 from .models import Brand, Category, Color, Item, ItemImage, Location, UserProfile
 from .serializers import (
     BrandSerializer,
@@ -47,7 +49,36 @@ class ItemViewSet(ModelViewSet):
     ordering_fields = ["created_at", "found_lost_date"]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user if self.request.user.is_authenticated else None)
+        item = serializer.save(
+            user=self.request.user if self.request.user.is_authenticated else None
+        )
+
+        find_and_notify_matches(item)
+
+
+class MatchItemViewSet(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, item_id):
+        # retorna possiveis matches
+        try:
+            target_item = Item.objects.get(id=item_id, user=request.user)
+        except Item.DoesNotExist:
+            return Response({"error": "Item não encontrado."}, status=404)
+
+        matches = find_and_notify_matches(target_item)
+        data = [
+            {
+                "id": match.id,
+                "barcode": match.barcode,
+                "status": match.status,
+                "name": match.name,
+                "description": match.description,
+            }
+            for match in matches
+        ]
+
+        return Response(data, status=200)
 
 
 class CategoryViewSet(ModelViewSet):
@@ -94,7 +125,7 @@ class ItemImageViewSet(ModelViewSet):
             return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Valida o limite de imagens
-        MAX_IMAGES = (os.getenv("MAX_IMAGES"),)
+        MAX_IMAGES = 3
 
         if item.images.count() >= MAX_IMAGES:
             return Response(
@@ -235,8 +266,22 @@ def microsoft_callback(request):
             # Autenticar o usuário
             login(request, user)
 
-            # Redirecionar para a página desejada
-            return redirect("http://localhost:8000/#/found")
+            # Gerar JWT local
+            refresh = RefreshToken.for_user(user)
+            jwt_access = str(refresh.access_token)
+            str(refresh)
+
+            # Configurar cookies seguros
+            response = HttpResponseRedirect("http://localhost:8000/#/found")
+            response.set_cookie(
+                key="access_token",
+                value=jwt_access,
+                httponly=True,
+                secure=True,  # Ative apenas em HTTPS em produção
+                samesite="Strict",  # Para proteger contra CSRF
+                max_age=3600,  # 1 hora
+            )
+            return response
         else:
             logger.error("Falha ao adquirir token de acesso.")
             return JsonResponse({"error": "Falha ao adquirir token de acesso."}, status=400)

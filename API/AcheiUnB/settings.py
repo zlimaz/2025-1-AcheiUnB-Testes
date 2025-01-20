@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django_filters",
     "users",
     "rest_framework",
+    "rest_framework.authtoken",
     "AcheiUnB",
     "django_extensions",
     "channels",
@@ -65,7 +66,7 @@ ROOT_URLCONF = "AcheiUnB.urls"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "users.authentication.CookieJWTAuthentication",  # Caminho do módulo e classe
     ),
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",  # Apenas JSON será usado
@@ -159,6 +160,17 @@ cloudinary.config(
     api_secret=config("CLOUDINARY_API_SECRET"),
 )
 
+
+# Envio de mensagens
+
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
+EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_PORT = config("EMAIL_PORT", cast=int, default=587)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="acheiunb2024@gmail.com")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default=EMAIL_HOST_USER)
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -190,6 +202,7 @@ USE_I18N = True
 USE_TZ = True
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -211,7 +224,3 @@ LOGIN_REDIRECT_URL = "/certu"
 LOGOUT_REDIRECT_URL = ""
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 LANGUAGE_CODE = "pt-br"
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]

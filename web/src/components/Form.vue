@@ -1,211 +1,300 @@
 <template>
   <form id="app" @submit="save">
-    <!-- Nome do item -->
-    <div class="mb-4">
-      <label
-        for="name"
-        class="block text-azul text-sm font-bold font-inter mb-2"
-        >Item</label
-      >
-      <input
-        id="name"
-        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        v-model="item.name"
-        type="text"
-        name="name"
-        placeholder="Escreva o nome do item"
-      />
-    </div>
-
-    <!-- Categoria -->
-    <div class="block relative mb-4">
-      <label
-        for="category"
-        class="block text-azul text-sm font-bold font-inter mb-2"
-        >Categoria</label
-      >
-      <select
-        id="category"
-        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        v-model="item.category"
-        name="category"
-      >
-        <option value="" disabled selected>Selecione</option>
-        <option
-          v-for="category of categories"
-          :key="category.id"
-          :value="category.id"
-          class="block text-gray-700 text-sm"
+    <div class="grid md:grid-cols-4 gap-4">
+      <!-- Nome do item -->
+      <div class="mb-4 col-span-2">
+        <label
+          for="name"
+          class="font-inter block text-azul text-sm font-bold mb-2"
+          >Item <span class="text-red-500">*</span></label
         >
-          {{ category.name }}
-        </option>
-      </select>
-      <div
-        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
-      >
-        <img
-          src="../assets/icons/chevron-down.svg"
-          alt="chevron-down"
-          class="w-[15px] h-[15px]"
+        <input
+          id="name"
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          v-model="item.name"
+          type="text"
+          name="name"
+          placeholder="Escreva o nome do item"
         />
       </div>
-    </div>
 
-    <!-- Location -->
-    <div class="block relative mb-4">
-      <label
-        for="location"
-        class="block text-azul text-sm font-bold font-inter mb-2"
-        >Local</label
-      >
-      <select
-        id="location"
-        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        v-model="item.location"
-        name="location"
-      >
-        <option value="" disabled selected>Selecione</option>
-        <option
-          v-for="location of locations"
-          :key="location.id"
-          :value="location.id"
-          class="block text-gray-700 text-sm"
+      <!-- Categoria -->
+      <div class="block relative mb-4 col-span-2">
+        <label
+          for="category"
+          class="font-inter block text-azul text-sm font-bold mb-2"
+          >Categoria <span class="text-red-500">*</span></label
         >
-          {{ location.name }}
-        </option>
-      </select>
-      <div
-        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
-      >
-        <img
-          src="../assets/icons/chevron-down.svg"
-          alt="chevron-down"
-          class="w-[15px] h-[15px]"
+        <select
+          id="category"
+          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+          :class="item.category === '' ? 'text-gray-400' : 'text-gray-700'"
+          v-model="item.category"
+          @change="handleSelectChange"
+          name="category"
+        >
+          <option disabled value="">Selecione</option>
+          <option value="clear">Limpar seleção</option>
+          <option
+            v-for="category of categories"
+            :key="category.id"
+            :value="category.id"
+            class="block text-gray-700"
+          >
+            {{ category.name }}
+          </option>
+        </select>
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
+        >
+          <img
+            src="../assets/icons/chevron-down.svg"
+            alt="chevron-down"
+            class="w-[15px] h-[15px]"
+          />
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="block relative mb-4 col-span-2">
+        <label
+          for="location"
+          class="font-inter block text-azul text-sm font-bold mb-2"
+          >Local <span class="text-red-500">*</span></label
+        >
+        <select
+          id="location"
+          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+          :class="item.location === '' ? 'text-gray-400' : 'text-gray-700'"
+          v-model="item.location"
+          @change="handleSelectChange"
+          name="location"
+        >
+          <option value="" disabled selected>Selecione</option>
+          <option value="clear">Limpar seleção</option>
+          <option
+            v-for="location of locations"
+            :key="location.id"
+            :value="location.id"
+            class="block text-gray-700"
+          >
+            {{ location.name }}
+          </option>
+        </select>
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
+        >
+          <img
+            src="../assets/icons/chevron-down.svg"
+            alt="chevron-down"
+            class="w-[15px] h-[15px]"
+          />
+        </div>
+      </div>
+
+      <!-- Color -->
+      <div class="block relative mb-4 col-span-2">
+        <label
+          for="color"
+          class="font-inter block text-azul text-sm font-bold mb-2"
+          >Cor</label
+        >
+        <select
+          id="color"
+          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+          :class="item.color === '' ? 'text-gray-400' : 'text-gray-700'"
+          v-model="item.color"
+          @change="handleSelectChange"
+          name="color"
+        >
+          <option value="" disabled selected>Selecione</option>
+          <option value="clear">Limpar seleção</option>
+          <option
+            v-for="color of colors"
+            :key="color.id"
+            :value="color.id"
+            class="block text-gray-700"
+          >
+            {{ color.name }}
+          </option>
+        </select>
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
+        >
+          <img
+            src="../assets/icons/chevron-down.svg"
+            alt="chevron-down"
+            class="w-[15px] h-[15px] fill-current text-white"
+          />
+        </div>
+      </div>
+
+      <!-- Brand -->
+      <div class="block relative mb-4 col-span-2">
+        <label
+          for="color"
+          class="font-inter block text-azul text-sm font-bold mb-2"
+          >Marca</label
+        >
+        <select
+          id="brand"
+          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+          :class="item.brand === '' ? 'text-gray-400' : 'text-gray-700'"
+          v-model="item.brand"
+          @change="handleSelectChange"
+          name="color"
+        >
+          <option value="" disabled selected>Selecione</option>
+          <option value="clear">Limpar seleção</option>
+          <option
+            v-for="brand of brands"
+            :key="brand.id"
+            :value="brand.id"
+            class="block text-gray-700"
+          >
+            {{ brand.name }}
+          </option>
+        </select>
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
+        >
+          <img
+            src="../assets/icons/chevron-down.svg"
+            alt="chevron-down"
+            class="w-[15px] h-[15px] fill-current text-white"
+          />
+        </div>
+      </div>
+
+      <!-- Data -->
+      <div class="mb-4 col-span-2">
+        <label
+          for="foundLostDate"
+          class="font-inter block text-azul text-sm font-bold mb-2"
+          >Data em que foi achado</label
+        >
+        <input
+          id="foundLostDate"
+          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+          :class="item.foundLostDate === '' ? 'text-gray-400' : 'text-gray-700'"
+          v-model="item.foundLostDate"
+          type="date"
+          name="foundLostDate"
         />
       </div>
-    </div>
 
-    <!-- Color -->
-    <div class="block relative mb-4">
-      <label
-        for="color"
-        class="block text-azul text-sm font-bold font-inter mb-2"
-        >Cor</label
-      >
-      <select
-        id="color"
-        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        v-model="item.color"
-        name="color"
-      >
-        <option value="" disabled selected>Selecione</option>
-        <option
-          v-for="color of colors"
-          :key="color.id"
-          :value="color.id"
-          class="block text-gray-700 text-sm"
+      <!-- Horário -->
+      <div class="mb-4 col-span-2">
+        <label
+          for="foundTime"
+          class="font-inter block text-azul text-sm font-bold mb-2"
+          >Horário em que foi achado</label
         >
-          {{ color.name }}
-        </option>
-      </select>
-      <div
-        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
-      >
-        <img
-          src="../assets/icons/chevron-down.svg"
-          alt="chevron-down"
-          class="w-[15px] h-[15px] fill-current text-white"
+        <input
+          id="foundTime"
+          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+          :class="foundTime === '' ? 'text-gray-400' : 'text-gray-700'"
+          v-model="foundTime"
+          type="time"
+          name="foundTime"
         />
       </div>
-    </div>
 
-    <!-- Data -->
-    <div class="mb-4">
-      <label
-        for="foundLostDate"
-        class="block text-azul text-sm font-bold font-inter mb-2"
-        >Data</label
-      >
-      <input
-        id="foundLostDate"
-        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        v-model="item.foundLostDate"
-        type="text"
-        name="foundLostDate"
-        placeholder="Escreva a data de quando encontrou"
-      />
-    </div>
-
-    <!-- Brand -->
-    <div class="block relative mb-4">
-      <label
-        for="color"
-        class="block text-azul text-sm font-bold font-inter mb-2"
-        >Marca</label
-      >
-      <select
-        id="color"
-        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        v-model="item.brand"
-        name="color"
-      >
-        <option value="" disabled selected>Selecione</option>
-        <option
-          v-for="brand of brands"
-          :key="brand.id"
-          :value="brand.id"
-          class="block text-gray-700 text-sm"
+      <!-- Descrição -->
+      <div class="mb-4 col-span-2">
+        <label
+          for="description"
+          class="font-inter block text-azul text-sm font-bold mb-2"
         >
-          {{ brand.name }}
-        </option>
-      </select>
-      <div
-        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
-      >
-        <img
-          src="../assets/icons/chevron-down.svg"
-          alt="chevron-down"
-          class="w-[15px] h-[15px] fill-current text-white"
-        />
+          Descrição
+        </label>
+        <textarea
+          id="description"
+          v-model="item.description"
+          name="description"
+          rows="4"
+          placeholder="Descreva detalhadamente o item"
+          class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        ></textarea>
       </div>
-    </div>
 
-    <!-- Descrição -->
-    <div class="relative w-full min-w-[200px] mb-4">
-      <textarea
-        id="description"
-        v-model="item.description"
-        class="peer h-full min-h-[100px] w-full resize-none rounded-[7px] border border-slate-300 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-slate-300 placeholder-shown:border-t-slate-300 focus:border-2 focus:border-slate-300 focus:border-t-transparent focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"
-        placeholder=" "
-        name="description"
-      ></textarea>
-      <label
-        class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-slate-300 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-slate-300 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-gray-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-gray-700 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-slate-300 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-slate-300 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-700"
-      >
-        Descrição
-      </label>
-    </div>
+      <div>
+        <!-- Upload de arquivo -->
+        <label
+          for="images"
+          class="flex bg-azul text-white text-base px-5 py-3 outline-none rounded cursor-pointer font-inter"
+          :class="
+            item.images?.length > 1 ? 'opacity-50 cursor-not-allowed' : ''
+          "
+        >
+          <img src="../assets/icons/add-item-white.svg" alt="" class="mr-2" />
+          Adicionar imagens
+          <input
+            type="file"
+            id="images"
+            class="hidden"
+            @change="onFileChange"
+            :disabled="item.images?.length > 1"
+          />
+        </label>
+      </div>
 
-    <!-- Upload de arquivo -->
-    <div class="mb-4">
-      <input @change="onFileChange" type="file" />
-    </div>
+      <div class="flex flex-wrap gap-4 col-span-3">
+        <!-- Loop de Imagens -->
+        <div
+          v-for="(image, index) in previews"
+          :key="index"
+          class="w-64 h-64 border rounded relative"
+        >
+          <!-- Imagem de Pré-visualização -->
+          <img
+            :src="image"
+            alt="Preview"
+            class="w-full h-full object-cover rounded"
+          />
 
-    <!-- Enviar -->
-    <div>
-      <button
-        @click="save"
-        class="inline-block text-center rounded-full bg-laranja px-5 py-3 text-md text-white w-full"
-      >
-        Enviar
-      </button>
+          <!-- Botão Remover -->
+          <div
+            class="absolute p-1 bottom-2 border-2 border-laranja right-2 w-12 h-12 bg-white flex items-center justify-center text-xs rounded-full cursor-pointer"
+            @click="removeImage(index)"
+          >
+            <img src="../assets/icons/trash.svg" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Enviar -->
+      <div class="col-span-4">
+        <button
+          type="button"
+          @click="save"
+          class="inline-block text-center rounded-full bg-laranja px-5 py-3 text-md text-white w-full"
+        >
+          Enviar
+        </button>
+      </div>
     </div>
   </form>
+
+  <Alert
+    v-if="submitError"
+    type="error"
+    :message="alertMessage"
+    @closed="submitError = false"
+  />
+
+  <Alert
+    v-if="formSubmitted"
+    type="success"
+    message="Item publicado com sucesso"
+    @closed="formSubmitted = false"
+  />
 </template>
 
 <script>
 import Form from "../models/Form";
 import Item from "../models/Item";
+import Alert from "./Alert.vue";
 import api from "../services/api";
 
 export default {
@@ -213,6 +302,11 @@ export default {
   data() {
     return {
       item: new Item(),
+      foundTime: "",
+      previews: [],
+      submitError: false,
+      formSubmitted: false,
+      alertMessage: "",
       categories: [],
       locations: [],
       colors: [],
@@ -269,38 +363,75 @@ export default {
     async save() {
       this.item.status = "found";
 
-      if (this.item.foundLostDate) {
+      const form = new Form(this.item);
+
+      if (!form.validate()) {
+        this.alertMessage = "Verifique os campos marcados com *.";
+        this.submitError = true;
+        return;
+      }
+
+      if (form.foundLostDate) {
         this.setFoundLostDate();
       }
 
-      console.log("Valores dos campos", this.item);
+      const formData = form.toFormData();
+      console.log(process.env.VUE_APP_BASE_URL);
+      try {
+        await api.post("/items/", formData);
+        this.formSubmitted = true;
 
-      const form = new Form(this.item);
-
-      if (form.validate()) {
-        const formData = form.toFormData();
-        try {
-          await api.post("/items/", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          console.log("Formulário enviado com sucesso");
-        } catch (error) {
-          console.log("Erro ao enviar formulário", error);
-        }
+        setTimeout(() => {
+          window.location.replace(`http://localhost:8000/#/found`);
+        }, 2000);
+      } catch (error) {
+        this.alertMessage = "Erro ao publicar item.";
+        this.submitError = true;
       }
     },
 
     onFileChange(event) {
+      if (!this.item.images) {
+        this.item.images = [];
+      }
+
       const files = Array.from(event.target.files);
-      this.item.images = [];
       this.item.images.push(...files);
+
+      files.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.previews.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
     },
 
     setFoundLostDate() {
-      const [day, month, year] = this.item.foundLostDate.split("/").map(Number);
-      this.item.foundLostDate = new Date(year, month - 1, day);
+      const [day, month, year] = this.item.foundLostDate.split("-").map(Number);
+
+      const [hours, minutes] = this.lostTime.split(":").map(Number);
+
+      this.item.foundLostDate = new Date(
+        year,
+        month - 1,
+        day,
+        hours ?? 0,
+        minutes ?? 0
+      );
+    },
+
+    removeImage(index) {
+      this.previews.splice(index, 1);
+      this.item.images.splice(index, 1);
+    },
+
+    handleSelectChange(event) {
+      const element = event.target;
+
+      if (element.value == "clear") {
+        this.item[`${element.id}`] = "";
+      }
     },
   },
 };
