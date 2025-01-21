@@ -11,24 +11,15 @@
     <div
       class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-10"
     >
-      <ItemCard :image="imagem1" time="Agora a pouco" />
-      <ItemCard :image="imagem2" time="Há uma hora" />
-      <ItemCard :image="imagem3" time="Há 2 seg" />
-      <ItemCard :image="imagem3" time="Agora a pouco" />
-      <ItemCard :image="imagem5" time="Há uma hora" />
-      <ItemCard :image="imagem4" time="Agora a pouco" />
-      <ItemCard :image="imagem5" time="Agora a pouco" />
-      <ItemCard :image="imagem6" time="Há uma hora" />
-      <ItemCard :image="imagem4" time="Há 2 seg" />
-      <ItemCard :image="imagem5" time="Agora a pouco" />
-      <ItemCard :image="imagem6" time="Há uma hora" />
-      <ItemCard :image="imagem1" time="Há 2 seg" />
-      <ItemCard :image="imagem2" time="Há uma hora" />
-      <ItemCard :image="imagem6" time="Há uma hora" />
-      <ItemCard :image="imagem1" time="Há uma hora" />
-      <ItemCard :image="imagem2" time="Agora a pouco" />
-      <ItemCard :image="imagem3" time="Há 2 seg" />
-      <ItemCard :image="imagem4" time="Há uma hora" />
+    <ItemCard
+        v-for="item in lostItems"
+        :key="item.id"
+        :name="item.name"
+        :location="item.location"
+        :time="formatTime(item.created_at)"
+
+        :image="item.image_urls[0] || NotAvailableImage"
+      />
     </div>
 
     <div
@@ -59,12 +50,22 @@ import ItemCard from "../components/Item-Card.vue";
 import ButtonAdd from "../components/Button-Add-Lost.vue";
 import SearchHeader from "../components/Search-Header.vue";
 import SubMenu from "../components/Sub-Menu-Lost.vue";
-import imagem1 from "/src/assets/images/carteira.png";
-import imagem2 from "/src/assets/images/bone.png";
-import imagem3 from "/src/assets/images/caneta.png";
-import imagem4 from "/src/assets/images/gloss.png";
-import imagem5 from "/src/assets/images/not-available.png";
-import imagem6 from "/src/assets/images/sombrinha.png";
+import { ref, onMounted, computed } from 'vue';
+import { fetchAllItems } from '@/services/apiItems';
+import { formatTime } from '@/utils/dateUtils';
+import NotAvailableImage from '@/assets/images/not-available.png';
+
+const allItems = ref([]);
+const lostItems = computed(() =>
+  allItems.value.filter((item) => item.status === 'lost')
+);
+
+const fetchItems = async () => {
+  allItems.value = await fetchAllItems(); // Chama a função centralizada
+};
+
+// Buscar os itens quando o componente for montado
+onMounted(fetchItems);
 </script>
 
 <style scoped></style>
