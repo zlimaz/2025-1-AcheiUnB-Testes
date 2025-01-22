@@ -2,6 +2,7 @@ import logging
 import os
 from datetime import datetime
 
+from .filters import ItemFilter
 import cloudinary.uploader
 import requests
 from django.contrib.auth import get_user_model, login
@@ -40,13 +41,13 @@ User = get_user_model()
 
 
 class ItemViewSet(ModelViewSet):
-    queryset = Item.objects.all()
+    queryset = Item.objects.select_related("category", "location", "color", "brand").prefetch_related("images")
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["category", "location", "color", "status"]
-    search_fields = ["name", "description"]
-    
+    filterset_class = ItemFilter
+    search_fields = ["name", "description", "category__name", "location__name"]
+
     ordering_fields = ["created_at", "found_lost_date"]
 
     def perform_create(self, serializer):
