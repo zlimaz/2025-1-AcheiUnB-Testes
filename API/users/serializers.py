@@ -3,10 +3,12 @@ from rest_framework import serializers
 
 from .models import Brand, Category, Color, Item, ItemImage, Location
 
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ["id", "name", "category_id"]
+
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,7 +33,6 @@ class ItemImageSerializer(serializers.ModelSerializer):
         model = ItemImage
         fields = ["id", "image_url", "item"]
         extra_kwargs = {"item": {"read_only": True}}
-
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -78,7 +79,9 @@ class ItemSerializer(serializers.ModelSerializer):
         MAX_IMAGES = 2
 
         if len(images) > MAX_IMAGES:
-            raise serializers.ValidationError(f"Você pode adicionar no máximo {MAX_IMAGES} imagens.")
+            raise serializers.ValidationError(
+                f"Você pode adicionar no máximo {MAX_IMAGES} imagens."
+            )
         item = super().create(validated_data)
 
         for image in images:
@@ -94,20 +97,18 @@ class ItemSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError({"images": str(e)})
 
         return item
+
     def get_category_name(self, obj):
         return obj.category.name if obj.category else None
-    
+
     def get_location_name(self, obj):
         return obj.location.name if obj.location else None
-    
+
     def get_color_name(self, obj):
         return obj.color.name if obj.color else None
-    
+
     def get_brand_name(self, obj):
         return obj.brand.name if obj.brand else None
-    
+
     def get_image_urls(self, obj):
         return [image.image_url for image in obj.images.all()]
-        
-
-

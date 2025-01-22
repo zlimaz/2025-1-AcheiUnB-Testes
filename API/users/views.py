@@ -2,7 +2,6 @@ import logging
 import os
 from datetime import datetime
 
-from .filters import ItemFilter
 import cloudinary.uploader
 import requests
 from django.contrib.auth import get_user_model, login
@@ -19,6 +18,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from .filters import ItemFilter
 from .match import find_and_notify_matches
 from .models import Brand, Category, Color, Item, ItemImage, Location, UserProfile
 from .serializers import (
@@ -41,7 +41,9 @@ User = get_user_model()
 
 
 class ItemViewSet(ModelViewSet):
-    queryset = Item.objects.select_related("category", "location", "color", "brand").prefetch_related("images")
+    queryset = Item.objects.select_related(
+        "category", "location", "color", "brand"
+    ).prefetch_related("images")
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]

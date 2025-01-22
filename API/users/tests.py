@@ -5,6 +5,8 @@ from django.core import mail
 from django.core.management import call_command
 from django.test import TestCase
 from django.utils.timezone import now
+from rest_framework import status
+from rest_framework.test import APITestCase
 
 from chat.models import ChatRoom
 
@@ -228,3 +230,71 @@ class MatchNotificationTestCase(TestCase):
         assert self.item_found.name in email.body
         assert "Biblioteca" in email.body
         assert email.to == [self.user.email]
+
+class APITestItemFilters(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="testuser", password="password")
+        self.category1 = Category.objects.create(name="Acessórios", category_id="01")
+        self.category2 = Category.objects.create(name="Eletrônicos", category_id="02")
+        self.color1 = Color.objects.create(name="Preto", color_id="01")
+        self.color2 = Color.objects.create(name="Branco", color_id="02")
+
+        self.item1 = Item.objects.create(
+            user=self.user,
+            name="Relógio",
+            category=self.category1,
+            color=self.color1,
+            status="found",
+        )
+        self.item2 = Item.objects.create(
+            user=self.user,
+            name="Celular",
+            category=self.category2,
+            color=self.color2,
+            status="lost",
+        )
+
+    def test_filter_by_category_name(self):
+        response = self.client.get("/api/items/?category_name=Acessórios")
+        print("Resposta da API (Categoria):", response.data)
+        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert response.data["results"][0]["category_name"] == "Acessórios"
+
+    def test_filter_by_color_name(self):
+        response = self.client.get("/api/items/?color_name=Preto")
+        print("Resposta da API (Cor):", response.data)
+        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert response.data["results"][0]["color_name"] == "Preto"
+
+    def test_filter_by_status(self):
+        response = self.client.get("/api/items/?status=found")
+        print("Resposta da API (Status 'found'):", response.data)
+        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert response.data["results"][0]["status"] == "found"
+
+        response = self.client.get("/api/items/?status=lost")
+        print("Resposta da API (Status 'lost'):", response.data)
+        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert response.data["results"][0]["status"] == "lost"
+
+    def test_filter_by_multiple_parameters(self):
+        response = self.client.get("/api/items/?category_name=Acessórios&color_name=Preto")
+        print("Resposta da API (Filtros múltiplos):", response.data)
+        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert response.data["results"][0]["category_name"] == "Acessórios"
+        assert response.data["results"][0]["color_name"] == "Preto"
+
+        response = self.client.get("/api/items/?category_name=Acessórios&color_name=Branco")
+        print("Resposta da API (Filtros múltiplos sem resultados):", response.data)
+        assert len(response.data["results"]) == 0  # Nenhum item deve ser retornado
+
+    def test_no_filters(self):
+        response = self.client.get("/api/items/")
+        print("Resposta da API (Sem filtros):", response.data)
+        assert len(response.data["results"]) == 2  # Todos os itens devem ser retornados
+
+    def test_no_results(self):
+        response = self.client.get("/api/items/?category_name=NãoExiste")
+        print("Resposta da API (Sem resultados):", response.data)
+        assert len(response.data["results"]) == 0  # Nenhum item deve ser retornado
+
