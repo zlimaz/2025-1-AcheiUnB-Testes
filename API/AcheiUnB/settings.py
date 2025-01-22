@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     "channels",
     "chat",
     "corsheaders",
+    'django_celery_beat',
+
 ]
 
 MIDDLEWARE = [
@@ -224,3 +226,12 @@ LOGIN_REDIRECT_URL = "/certu"
 LOGOUT_REDIRECT_URL = ""
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 LANGUAGE_CODE = "pt-br"
+
+
+# Configurações do Celery
+CELERY_BROKER_URL = 'redis://redis:6379/0'  # URL do Redis
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+# Backend para armazenar resultados (opcional)
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
