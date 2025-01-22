@@ -75,16 +75,16 @@ class ItemSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # Extrai as imagens
         images = validated_data.pop("images", [])
-        MAX_IMAGES = 3
+        MAX_IMAGES = 2
 
         if len(images) > MAX_IMAGES:
-            raise serializers.ValidationError("Você pode adicionar no máximo 3 imagens.")
+            raise serializers.ValidationError(f"Você pode adicionar no máximo {MAX_IMAGES} imagens.")
         item = super().create(validated_data)
 
         for image in images:
             if item.images.count() >= MAX_IMAGES:
                 raise serializers.ValidationError(
-                    "O item já possui o número máximo de 3 imagens."
+                    f"O item já possui o número máximo de {MAX_IMAGES} imagens."
                 )
             try:
                 upload_result = cloudinary.uploader.upload(image)
