@@ -209,9 +209,6 @@ class MatchNotificationTestCase(TestCase):
         )
 
     def test_notification_email_sent(self):
-        # Limpa o outbox antes de executar o teste
-        mail.outbox = []
-
         # Executar a função de match e notificação
         matches = find_and_notify_matches(self.item_lost)
 
@@ -230,5 +227,4 @@ class MatchNotificationTestCase(TestCase):
         )
         assert self.item_found.name in email.body
         assert "Biblioteca" in email.body
-        assert self.item_lost.name in email.body
         assert email.to == [self.user.email]

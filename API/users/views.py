@@ -46,6 +46,7 @@ class ItemViewSet(ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ["category", "location", "color", "status"]
     search_fields = ["name", "description"]
+    
     ordering_fields = ["created_at", "found_lost_date"]
 
     def perform_create(self, serializer):
