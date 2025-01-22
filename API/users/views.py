@@ -18,6 +18,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from .filters import ItemFilter
 from .match import find_and_notify_matches
 from .models import Brand, Category, Color, Item, ItemImage, Location, UserProfile
 from .serializers import (
@@ -40,12 +41,15 @@ User = get_user_model()
 
 
 class ItemViewSet(ModelViewSet):
-    queryset = Item.objects.all()
+    queryset = Item.objects.select_related(
+        "category", "location", "color", "brand"
+    ).prefetch_related("images")
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["category", "location", "color", "status"]
-    search_fields = ["name", "description"]
+    filterset_class = ItemFilter
+    search_fields = ["name", "description", "category__name", "location__name"]
+
     ordering_fields = ["created_at", "found_lost_date"]
 
     def perform_create(self, serializer):
@@ -125,11 +129,11 @@ class ItemImageViewSet(ModelViewSet):
             return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Valida o limite de imagens
-        MAX_IMAGES = 3
+        MAX_IMAGES = 2
 
         if item.images.count() >= MAX_IMAGES:
             return Response(
-                {"error": "Você pode adicionar no máximo 3 imagens por item."},
+                {"error": f"Você pode adicionar no máximo {MAX_IMAGES} imagens por item."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
