@@ -5,7 +5,6 @@ from django.core import mail
 from django.core.management import call_command
 from django.test import TestCase
 from django.utils.timezone import now
-from rest_framework import status
 from rest_framework.test import APITestCase
 
 from chat.models import ChatRoom
@@ -231,22 +230,23 @@ class MatchNotificationTestCase(TestCase):
         assert "Biblioteca" in email.body
         assert email.to == [self.user.email]
 
+
 class APITestItemFilters(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="testuser", password="password")
-        
+
         # Criar categorias
         self.category1 = Category.objects.create(name="Acessórios", category_id="01")
         self.category2 = Category.objects.create(name="Eletrônicos", category_id="02")
-        
+
         # Criar cores
         self.color1 = Color.objects.create(name="Preto", color_id="01")
         self.color2 = Color.objects.create(name="Branco", color_id="02")
-        
+
         # Criar localizações
         self.location1 = Location.objects.create(name="Biblioteca", location_id="01")
         self.location2 = Location.objects.create(name="Sala de Aula", location_id="02")
-        
+
         # Criar itens
         self.item1 = Item.objects.create(
             user=self.user,
@@ -264,7 +264,6 @@ class APITestItemFilters(APITestCase):
             location=self.location2,  # Atribuir localização
             status="lost",
         )
-
 
     def test_filter_by_category_name(self):
         response = self.client.get("/api/items/?category_name=Acessórios")
@@ -310,7 +309,6 @@ class APITestItemFilters(APITestCase):
         print("Resposta da API (Sem resultados):", response.data)
         assert len(response.data["results"]) == 0  # Nenhum item deve ser retornado
 
-
     def test_update_item(self):
         self.client.force_authenticate(user=self.user)
         data = {"name": "Relógio Atualizado"}
@@ -318,7 +316,7 @@ class APITestItemFilters(APITestCase):
         assert response.status_code == 200
         self.item1.refresh_from_db()
         assert self.item1.name == "Relógio Atualizado"
-        
+
     def test_pagination(self):
         response = self.client.get("/api/items/?page=1")
         assert response.status_code == 200
@@ -326,7 +324,7 @@ class APITestItemFilters(APITestCase):
         assert "count" in response.data
         assert "next" in response.data or "previous" in response.data
         assert len(response.data["results"]) <= 10  # Supondo um limite de 10 itens por página
-            
+
     def test_search_by_name(self):
         response = self.client.get("/api/items/?search=Relógio")
         assert response.status_code == 200
@@ -342,7 +340,6 @@ class APITestItemFilters(APITestCase):
         assert len(response.data["results"]) >= 1
         assert response.data["results"][0]["description"] == "Celular encontrado"
 
-
     def test_search_by_category_name(self):
         response = self.client.get("/api/items/?search=Acessórios")
         assert response.status_code == 200
@@ -354,8 +351,6 @@ class APITestItemFilters(APITestCase):
         assert response.status_code == 200
         assert len(response.data["results"]) >= 1
         assert response.data["results"][0]["location_name"] == "Biblioteca"
-
-
 
     def test_ordering_by_created_at(self):
         response = self.client.get("/api/items/?ordering=created_at")
@@ -379,7 +374,6 @@ class APITestItemFilters(APITestCase):
         results = [r for r in results if r["found_lost_date"] is not None]
         assert len(results) >= 2
         assert results[0]["found_lost_date"] <= results[1]["found_lost_date"]
-
 
     def test_reverse_ordering(self):
         response = self.client.get("/api/items/?ordering=-created_at")
