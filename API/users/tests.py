@@ -1,4 +1,5 @@
 from datetime import timedelta
+from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.core import mail
@@ -6,14 +7,11 @@ from django.core.management import call_command
 from django.test import TestCase
 from django.utils.timezone import now
 from rest_framework.test import APITestCase
-from django.test import TestCase
-from django.contrib.auth.models import User
-from users.models import Item, ItemImage, Category, Location, Color, Brand
-from unittest.mock import patch
+
 from chat.models import ChatRoom
+from users.models import Brand, Category, Color, Item, ItemImage, Location
 
 from .match import find_and_notify_matches, hamming_distance
-from .models import Brand, Category, Color, Item, Location
 
 
 class CleanOldItemsTest(TestCase):
@@ -385,6 +383,7 @@ class APITestItemFilters(APITestCase):
         assert len(results) == 2
         assert results[0]["created_at"] >= results[1]["created_at"]
 
+
 class TestCloudinaryImageDeletion(TestCase):
     def setUp(self):
         # Criar usuário
@@ -410,11 +409,11 @@ class TestCloudinaryImageDeletion(TestCase):
         # Criar imagem vinculada ao item
         self.image = ItemImage.objects.create(
             item=self.item,
-            image_url="https://res.cloudinary.com/demo/image/upload/v12345/test_image.jpg"
+            image_url="https://res.cloudinary.com/demo/image/upload/v12345/test_image.jpg",
         )
 
     @patch("cloudinary.uploader.destroy")
     def test_image_deleted_from_cloudinary(self, mock_destroy):
         # Deletar a imagem e verificar se o Cloudinary foi chamado
         self.image.delete()
-        mock_destroy.assert_called_once_with("test_image")  # 
+        mock_destroy.assert_called_once_with("test_image")  #
