@@ -59,6 +59,9 @@ class ItemViewSet(ModelViewSet):
 
         find_and_notify_matches(item)
 
+    def perform_update(self, serializer):
+        serializer.save()
+
 
 class MatchItemViewSet(APIView):
     permission_classes = [IsAuthenticated]

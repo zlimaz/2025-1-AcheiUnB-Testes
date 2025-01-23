@@ -41,7 +41,11 @@ class ItemSerializer(serializers.ModelSerializer):
         write_only=True,
         required=False,
     )
+    remove_images = serializers.ListField(
+        child=serializers.IntegerField(), write_only=True, required=False
+    )  # IDs das imagens a serem removidas
     image_urls = serializers.SerializerMethodField(read_only=True)
+    image_ids = serializers.SerializerMethodField(read_only=True)
     barcode = serializers.CharField(read_only=True)  # Código único do item
     category_name = serializers.SerializerMethodField()
     location_name = serializers.SerializerMethodField()
@@ -70,8 +74,18 @@ class ItemSerializer(serializers.ModelSerializer):
             "found_lost_date",
             "created_at",
             "images",  # Para retornar imagens associadas ao item
-            "image_urls",  # Para fazer upload de imagens
+            "remove_images",  # Para remover imagens associadas ao item
+            "image_urls",
+            "image_ids"  # Para fazer upload de imagens
         ]
+
+    def validate_images(self, value):
+        for image in value:
+            if not hasattr(image, "file"):
+                raise serializers.ValidationError(
+                    "Cada item em 'images' deve ser um arquivo válido."
+                )
+        return value
 
     def create(self, validated_data):
         # Extrai as imagens
@@ -98,6 +112,32 @@ class ItemSerializer(serializers.ModelSerializer):
 
         return item
 
+    def update(self, instance, validated_data):
+        # Remover imagens existentes
+        remove_images = validated_data.pop("remove_images", [])
+        if remove_images:
+            ItemImage.objects.filter(id__in=remove_images, item=instance).delete()
+
+        # Adicionar novas imagens
+        images = validated_data.pop("images", [])
+        MAX_IMAGES = 2
+
+        if instance.images.count() + len(images) > MAX_IMAGES:
+            raise serializers.ValidationError(
+                f"Você pode adicionar no máximo {MAX_IMAGES} imagens."
+            )
+
+        for image in images:
+            try:
+                upload_result = cloudinary.uploader.upload(image)
+                image_url = upload_result.get("secure_url")
+                ItemImage.objects.create(item=instance, image_url=image_url)
+            except Exception as e:
+                raise serializers.ValidationError({"images": str(e)})
+
+        # Atualizar outros campos
+        return super().update(instance, validated_data)
+
     def get_category_name(self, obj):
         return obj.category.name if obj.category else None
 
@@ -112,3 +152,6 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def get_image_urls(self, obj):
         return [image.image_url for image in obj.images.all()]
+    
+    def get_image_ids(self, obj):
+        return [image.id for image in obj.images.all()]
