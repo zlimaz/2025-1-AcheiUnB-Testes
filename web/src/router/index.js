@@ -6,6 +6,8 @@ import Found from "../views/Found.vue";
 import Register from "../views/Register.vue";
 import User from "../views/User.vue";
 import Chats from "../views/Chats.vue";
+import ListItem from "../views/ListItem.vue"
+
 
 const routes = [
   {
@@ -42,6 +44,11 @@ const routes = [
     path: "/chats",
     name: "Chats",
     component: Chats,
+  },
+  {
+    path: "/list-item",
+    name: "ListItem",
+    component: ListItem,
   },
 ];
 

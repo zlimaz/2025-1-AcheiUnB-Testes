@@ -128,9 +128,8 @@ class ItemImageViewSet(ModelViewSet):
         except Item.DoesNotExist:
             return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        # Valida o limite de imagens
         MAX_IMAGES = 2
-
+        
         if item.images.count() >= MAX_IMAGES:
             return Response(
                 {"error": f"Você pode adicionar no máximo {MAX_IMAGES} imagens por item."},
