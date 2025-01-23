@@ -38,18 +38,11 @@
       {{ item.description }}
     </p>
 
-    <!-- Botões diretamente no fluxo -->
     <button
-      class="w-full py-3 text-center text-white font-semibold rounded-lg bg-laranja hover:bg-laranja active:bg-laranja focus:ring-2 focus:ring-laranja"
-      @click="viewMatches"
+      class="w-full md:w-1/3 py-3 text-center text-white font-semibold rounded-lg bg-laranja hover:bg-laranja active:bg-laranja focus:ring-2 focus:ring-laranja"
+      @click="navigateToChat"
     >
-      {{ itemStatus === 'found' ? 'Ver possíveis matches' : 'Reportar possível match' }}
-    </button>
-    <button
-      class="w-full py-3 text-center text-white font-semibold rounded-lg bg-verde hover:bg-verde active:bg-verde focus:ring-2 focus:ring-verde"
-      @click="confirmItem"
-    >
-      {{ itemStatus === 'found' ? 'Achei este item' : 'Confirmar que é meu item' }}
+      {{ itemStatus === 'found' ? 'É meu item' : 'Confirmar que é meu item' }}
     </button>
   </div>
 
@@ -67,11 +60,13 @@ import { ref, onMounted } from "vue";
 import api from "../services/api"; // Importa o arquivo api.js
 import ItemHeader from "../components/Item-Header.vue";
 import MainMenu from "../components/Main-Menu.vue";
+import { useRouter } from "vue-router";
 
 const item = ref(null);
 const itemStatus = ref("");
 const locationName = ref("");
 const labels = ref([]);
+const router = useRouter();
 
 async function fetchItem() {
   try {
@@ -125,8 +120,12 @@ function viewMatches() {
   alert(itemStatus.value === 'found' ? "Exibindo possíveis matches!" : "Reportando possível match!");
 }
 
-function confirmItem() {
-  alert(itemStatus.value === 'found' ? "Confirmando que o item foi encontrado." : "Confirmando que é o item perdido.");
+function navigateToChat() {
+  if (item.value && item.value.id) {
+    router.push(`/chatroom=${item.value.id}`);
+  } else {
+    console.error("ID do item não encontrado.");
+  }
 }
 
 // Carrega os dados do item e os detalhes relacionados quando o componente é montado
