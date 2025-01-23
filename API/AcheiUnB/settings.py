@@ -22,9 +22,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL = "auth.User"
 MEDIA_URL = "/media/"  # Prefixo da URL para os arquivos
-MEDIA_ROOT = os.path.join(
-    BASE_DIR, "/home/pedroubu/Imagens/AcheiUnBFt"
-)  # Diretório onde os arquivos serão salvos
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # Diretório onde os arquivos serão salvos
 
 # Application definition
 
