@@ -7,12 +7,10 @@ export default class FormModel {
     for (const requiredFieldKey of this.entity.requiredFields) {
       const field = this.entity[requiredFieldKey];
       if (!field || field === "") {
-        console.log(`Erro: O campo '${requiredFieldKey}' é obrigatório.`);
         return false;
       }
     }
 
-    console.log("Formula´rio válido");
     return true;
   }
 
@@ -26,7 +24,7 @@ export default class FormModel {
             formData.append(`${key}[${index}]`, elemento);
           });
         } else {
-          formData.append(key, value);
+          formData.append(key, value ?? null);
         }
       }
     }
