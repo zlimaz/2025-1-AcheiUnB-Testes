@@ -22,9 +22,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 AUTH_USER_MODEL = "auth.User"
 MEDIA_URL = "/media/"  # Prefixo da URL para os arquivos
-MEDIA_ROOT = os.path.join(
-    BASE_DIR, "/home/pedroubu/Imagens/AcheiUnBFt"
-)  # Diretório onde os arquivos serão salvos
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # Diretório onde os arquivos serão salvos
 
 # Application definition
 
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
     "channels",
     "chat",
     "corsheaders",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -224,3 +223,12 @@ LOGIN_REDIRECT_URL = "/certu"
 LOGOUT_REDIRECT_URL = ""
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 LANGUAGE_CODE = "pt-br"
+
+
+# Configurações do Celery
+CELERY_BROKER_URL = "redis://redis:6379/0"  # URL do Redis
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+
+# Backend para armazenar resultados (opcional)
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
