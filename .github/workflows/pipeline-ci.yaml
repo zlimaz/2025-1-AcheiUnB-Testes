@@ -28,8 +28,10 @@ jobs:
 
       - name: Check code format with Black
         run: docker compose run --rm web black . --check
+        working-directory: ./API
       - name: Lint code with Ruff
         run: docker compose run --rm web ruff . --exit-zero
+        working-directory: ./API
       
 
       #- name: Set up Docker
