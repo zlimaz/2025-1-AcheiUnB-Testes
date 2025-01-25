@@ -67,6 +67,7 @@ class ItemViewSet(ModelViewSet):
         )
         self.schedule_match_task(item)
 
+
 # Match de itens caso o usuário queira ver os possíveis matches pelo site:
 
 # class MatchItemViewSet(APIView):
