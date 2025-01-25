@@ -28,6 +28,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # Diretório onde os arquivos ser�
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -239,5 +240,32 @@ CELERY_BEAT_SCHEDULE = {
     "delete_old_items_and_chats": {
         "task": "users.tasks.delete_old_items_and_chats",
         "schedule": crontab(hour=3, minute=0),  # Executar todos os dias às 3h da manhã
+    },
+}
+
+# Configurações do Django celery results
+INSTALLED_APPS += ["django_celery_results"]
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "AcheiUnB Admin",
+    "site_header": "AcheiUnB",
+    "welcome_sign": "Bem-vindo ao painel do AcheiUnB!",
+    "search_model": "auth.User",
+    "user_avatar": None,
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "icons": {
+        "auth.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+    "custom_links": {
+        "users": [
+            {
+                "name": "Celery Tasks",
+                "url": "/admin/django_celery_results/taskresult/",
+                "icon": "fas fa-tasks",
+            }
+        ],
     },
 }
