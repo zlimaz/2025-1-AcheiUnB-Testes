@@ -6,7 +6,7 @@ on:
   push:
     branches: 
       - main # Executa o workflow ao push na branch 'main'
-      - ajustar-workflow
+      - 154-taskautomação-pipeline-ci-com-testes
   pull_request:
     branches: 
       - main # Executa o workflow ao abrir um PR na branch 'main'
