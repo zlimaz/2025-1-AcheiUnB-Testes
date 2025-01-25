@@ -76,7 +76,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "images",  # Para retornar imagens associadas ao item
             "remove_images",  # Para remover imagens associadas ao item
             "image_urls",
-            "image_ids"  # Para fazer upload de imagens
+            "image_ids",  # Para fazer upload de imagens
         ]
 
     def validate_images(self, value):
@@ -152,6 +152,6 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def get_image_urls(self, obj):
         return [image.image_url for image in obj.images.all()]
-    
+
     def get_image_ids(self, obj):
         return [image.id for image in obj.images.all()]
