@@ -20,6 +20,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build Docker images
+        run: docker compose build
+
+      - name: Check code format with Black
+        run: docker compose run --rm web black . --check
+      - name: Lint code with Ruff
+        run: docker compose run --rm web ruff . --exit-zero
+      
+
       #- name: Set up Docker
        # uses: docker/setup-buildx-action@v2
 
