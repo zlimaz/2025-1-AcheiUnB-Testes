@@ -8,11 +8,15 @@ black .  # Executa o Black para formatar o código
 echo "Executando Ruff para verificar a formatação do código..."
 ruff . --fix
 
-echo "Gerando novas migrações..."
-python manage.py makemigrations  # Cria novas migrações com base nos modelos
+if [ "$1" = "python" ] && [ "$2" = "manage.py" ]; then
+  echo "Gerando novas migrações..."
+  python manage.py makemigrations  # Cria novas migrações com base nos modelos
 
-echo "Iniciando migrações do banco de dados..."
-python manage.py migrate  # Executa o migrate automaticamente
+  echo "Iniciando migrações do banco de dados..."
+  python manage.py migrate  # Executa o migrate automaticamente
 
-echo "Migrações concluídas. Iniciando o servidor Django..."
-exec python manage.py runserver 0.0.0.0:8000  # Inicia o servidor Django
+  echo "Migrações concluídas."
+fi
+
+# Executa o comando recebido
+exec "$@"

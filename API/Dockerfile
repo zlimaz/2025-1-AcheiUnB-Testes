@@ -22,12 +22,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app/
 
 # Copia o entrypoint.sh e define como executável
-
 COPY --chmod=755 entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
-# Exponha a porta que o Django usará
-EXPOSE 8000
-
-# Use o entrypoint.sh como ponto de entrada
 ENTRYPOINT ["/app/entrypoint.sh"]
