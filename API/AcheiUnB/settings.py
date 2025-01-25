@@ -4,6 +4,7 @@ from pathlib import Path
 
 import cloudinary
 import cloudinary.uploader
+from celery.schedules import crontab
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -226,9 +227,17 @@ LANGUAGE_CODE = "pt-br"
 
 
 # Configurações do Celery
-CELERY_BROKER_URL = "redis://redis:6379/0"  # URL do Redis
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")  # URL do Redis
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
 # Backend para armazenar resultados (opcional)
-CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER_URL")
+
+# Celery Beat Configuration
+CELERY_BEAT_SCHEDULE = {
+    "delete_old_items_and_chats": {
+        "task": "users.tasks.delete_old_items_and_chats",
+        "schedule": crontab(hour=3, minute=0),  # Executar todos os dias às 3h da manhã
+    },
+}
