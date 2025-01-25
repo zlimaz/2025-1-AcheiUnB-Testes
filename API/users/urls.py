@@ -11,6 +11,7 @@ from .views import (
     MatchItemViewSet,
     TestUserView,
     UserDetailView,
+    UserValidateView,
 )
 
 router = DefaultRouter()
@@ -23,6 +24,7 @@ router.register(r"items/(?P<item_id>[^/.]+)/images", ItemImageViewSet, basename=
 
 urlpatterns = [
     path("", include(router.urls)),  # Rotas para itens e categorias
+    path("auth/validate/", UserValidateView.as_view(), name="useer-detail"),
     path("auth/user/", UserDetailView.as_view(), name="useer-detail"),
     path("test-user/", TestUserView.as_view(), name="test_user"),
     path("items/<int:item_id>/matches/", MatchItemViewSet.as_view(), name="item-matches"),

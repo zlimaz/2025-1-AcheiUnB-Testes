@@ -7,8 +7,8 @@ import RegisterLost from "../views/Register-Lost.vue";
 import RegisterFound from "../views/Register-Found.vue";
 import User from "../views/User.vue";
 import Chats from "../views/Chats.vue";
-import ListItem from "../views/ListItem.vue"
-
+import ListItem from "../views/ListItem.vue";
+import api from "@/services/api";
 
 const routes = [
   {
@@ -20,47 +20,70 @@ const routes = [
     path: "/about",
     name: "About",
     component: About,
+    meta: { requiresAuth: true },
   },
   {
     path: "/lost",
     name: "Lost",
     component: Lost,
+    meta: { requiresAuth: true },
   },
   {
     path: "/found",
     name: "Found",
     component: Found,
+    meta: { requiresAuth: true },
   },
   {
     path: "/register-lost",
     name: "RegisterLost",
     component: RegisterLost,
+    meta: { requiresAuth: true },
   },
   {
     path: "/register-found",
     name: "RegisterFound",
     component: RegisterFound,
+    meta: { requiresAuth: true },
   },
   {
     path: "/user",
     name: "User",
     component: User,
+    meta: { requiresAuth: true },
   },
   {
     path: "/chats",
     name: "Chats",
     component: Chats,
+    meta: { requiresAuth: true },
   },
   {
     path: "/list-item",
     name: "ListItem",
     component: ListItem,
+    meta: { requiresAuth: true },
   },
+  { path: "/:catchAll(.*)", name: "NotFound", component: Login },
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(), // Usar histórico do navegador
+  history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach(async (to) => {
+  if (to.meta.requiresAuth) {
+    try {
+      await api.get("/auth/validate", {
+        withCredentials: true,
+      });
+      return true;
+    } catch {
+      return { name: "Login" };
+    }
+  }
+  return true;
 });
 
 export default router;
