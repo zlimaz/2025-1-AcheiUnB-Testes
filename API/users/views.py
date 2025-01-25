@@ -60,8 +60,11 @@ class ItemViewSet(ModelViewSet):
         find_and_notify_matches_task.apply_async((item.id,), countdown=10)
 
     def perform_update(self, serializer):
-        item = serializer.save(user=self.request.user if self.request.user.is_authenticated else None)
+        item = serializer.save(
+            user=self.request.user if self.request.user.is_authenticated else None
+        )
         find_and_notify_matches_task.apply_async((item.id,), countdown=10)
+
 
 # Match de itens caso o usuário queira ver os possíveis matches pelo site:
 
