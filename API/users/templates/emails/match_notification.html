@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <body
@@ -63,14 +65,11 @@
             "
             >Ver detalhes do item</a
           >
-        </td>
-        <td style="width: 40%; text-align: center">
-          <img
-            src="{{ match.image_url }}"
-            alt="Sem imagem"
-            style="max-width: 100%; border-radius: 8px"
-          />
-        </td>
+          <td style="width: 40%; text-align: center">
+            {% if match.image_url %}
+              <img src="{{ match.image_url }}" alt="Imagem do Match" style="max-width: 100%; border-radius: 8px">
+            {% endif %}
+          </td>          
       </tr>
     </table>
     {% endfor %} {% else %}
