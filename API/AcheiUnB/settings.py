@@ -73,7 +73,7 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",  # Apenas JSON será usado
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 10,
+    "PAGE_SIZE": 27,
 }
 
 SIMPLE_JWT = {
@@ -228,12 +228,12 @@ LANGUAGE_CODE = "pt-br"
 
 
 # Configurações do Celery
-CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")  # URL do Redis
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
 # Backend para armazenar resultados (opcional)
-CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
 
 # Celery Beat Configuration
 CELERY_BEAT_SCHEDULE = {
