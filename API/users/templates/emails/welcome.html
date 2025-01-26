@@ -2,26 +2,122 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bem-vindo ao AcheiUnB</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #1a237e;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .intro {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .welcome-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #1a237e;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section h2 {
+            font-size: 20px;
+            color: #1a237e;
+            margin-top: 0;
+        }
+
+        .welcome-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .welcome-section ul li {
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .link-button {
+            display: inline-block;
+            background-color: #1a237e;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .link-button:hover {
+            background-color: #283593;
+        }
+
+        .support {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bem-vindo ao AcheiUnB, {{ name }}!</h1>
-    <p>
-        Estamos felizes por você estar aqui! O AcheiUnB foi criado para ajudar
-        estudantes a encontrar e recuperar itens perdidos de forma rápida e organizada.
-    </p>
-    <h2>Como começar?</h2>
-    <ul>
-        <li><strong>Cadastrar itens:</strong> Adicione informações sobre os itens perdidos ou encontrados.</li>
-        <li><strong>Buscar itens:</strong> Use a barra de pesquisa para procurar itens na plataforma.</li>
-        <li><strong>Entrar em contato:</strong> Converse com outros usuários diretamente pela plataforma.</li>
-    </ul>
-    <p>
-        Caso tenha dúvidas ou sugestões, não hesite em nos contatar.
-    </p>
-    <p>
-        Boa sorte e conte com a gente!<br>
-        Equipe AcheiUnB
-    </p>
+    <div class="header">
+        <h1>Bem-vindo ao AcheiUnB, {{ name }}!</h1>
+    </div>
+
+    <div class="intro">
+        <p>Estamos muito felizes por ter você aqui! O <strong>AcheiUnB</strong> é o lugar ideal para ajudar estudantes da UnB a encontrar e recuperar itens perdidos de forma rápida e organizada.</p>
+    </div>
+
+    <div class="welcome-section">
+        <h2>Como começar?</h2>
+        <ul>
+            <li><strong>Cadastrar itens:</strong> Adicione informações sobre itens que você perdeu ou encontrou.</li>
+            <li><strong>Buscar itens:</strong> Use nossa barra de pesquisa para encontrar o que perdeu ou devolver o que encontrou.</li>
+            <li><strong>Conectar com outros:</strong> Converse diretamente com outros usuários pelo nosso chat integrado.</li>
+        </ul>
+    </div>
+
+    <div class="support">
+        <p>Se precisar de ajuda, <strong>nossa equipe está sempre à disposição</strong>. Não hesite em entrar em contato.</p>
+    </div>
+
+    <div class="footer">
+        <p>Acesse o AcheiUnB agora e aproveite!</p>
+        <a href="https://acheiunb.com" class="link-button">Acessar AcheiUnB</a>
+    </div>
 </body>
 </html>
