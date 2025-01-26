@@ -207,6 +207,13 @@ class ItemImageViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+class UserValidateView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({"message": "Token válido"})
+
+
 class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]
 

@@ -10,6 +10,7 @@ from .views import (
     LocationViewSet,
     TestUserView,
     UserDetailView,
+    UserValidateView,
 )
 
 router = DefaultRouter()
@@ -24,6 +25,7 @@ urlpatterns = [
     path("items/found/", ItemViewSet.as_view({"get": "list"}), name="found-items"),
     path("items/lost/", ItemViewSet.as_view({"get": "list"}), name="lost-items"),
     path("", include(router.urls)),  # Rotas para itens e categorias
+    path("auth/validate/", UserValidateView.as_view(), name="useer-detail"),
     path("auth/user/", UserDetailView.as_view(), name="useer-detail"),
     path("test-user/", TestUserView.as_view(), name="test_user"),
     # endpoint para matches
