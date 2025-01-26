@@ -60,6 +60,17 @@
             font-size: 14px;
         }
 
+        .match-image {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .match-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
         .footer {
             margin-top: 30px;
             text-align: center;
@@ -112,6 +123,11 @@
                         <strong>Descrição:</strong> {{ match.description|default:"Sem descrição" }}<br>
                         <strong>Data:</strong> {{ match.found_lost_date|date:"d/m/Y" }}
                     </div>
+                    {% if match.image_url %}
+                        <div class="match-image">
+                            <img src="{{ match.image_url }}" alt="Imagem do item {{ match.name }}">
+                        </div>
+                    {% endif %}
                 </li>
             {% endfor %}
         {% else %}

@@ -21,6 +21,8 @@ router.register(r"brands", BrandViewSet, basename="brand")
 router.register(r"items/(?P<item_id>[^/.]+)/images", ItemImageViewSet, basename="item-image")
 
 urlpatterns = [
+    path("items/found/", ItemViewSet.as_view({"get": "list"}), name="found-items"),
+    path("items/lost/", ItemViewSet.as_view({"get": "list"}), name="lost-items"),
     path("", include(router.urls)),  # Rotas para itens e categorias
     path("auth/user/", UserDetailView.as_view(), name="useer-detail"),
     path("test-user/", TestUserView.as_view(), name="test_user"),

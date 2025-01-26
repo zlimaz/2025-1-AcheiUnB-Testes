@@ -19,7 +19,7 @@ def find_and_notify_matches(target_item: Item, max_distance=2):
         ~Q(status=target_item.status),
         category=target_item.category,
         location=target_item.location,
-    ).only("id", "barcode", "status", "name", "description", "found_lost_date")
+    ).prefetch_related("images")
 
     # Calcular a distancia de Hamming entre os barcodes
     matches = []
@@ -37,7 +37,12 @@ def find_and_notify_matches(target_item: Item, max_distance=2):
                 "location": (
                     match.location.name if match.location else "Local não especificado"
                 ),
-                "found_lost_date": match.found_lost_date,
+                "found_lost_date": (
+                    match.found_lost_date.strftime("%d/%m/%Y")
+                    if match.found_lost_date
+                    else "Data não especificada"
+                ),
+                "image_url": match.images.first().image_url if match.images.exists() else None,
             }
             for match in matches
         ]
