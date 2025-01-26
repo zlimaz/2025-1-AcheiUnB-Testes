@@ -32,6 +32,7 @@ def find_and_notify_matches(target_item: Item, max_distance=2):
     if matches:
         match_data = [
             {
+                "id": match.id,
                 "name": match.name,
                 "description": match.description,
                 "location": (
