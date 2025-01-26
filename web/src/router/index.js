@@ -7,8 +7,7 @@ import RegisterLost from "../views/Register-Lost.vue";
 import RegisterFound from "../views/Register-Found.vue";
 import User from "../views/User.vue";
 import Chats from "../views/Chats.vue";
-import ListItem from "../views/ListItem.vue"
-
+import ListItem from "../views/ListItem.vue";
 
 const routes = [
   {
@@ -59,7 +58,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(), // Usar histórico do navegador
+  history: createWebHashHistory(), 
   routes,
 });
 

@@ -4,7 +4,7 @@
       <SearchHeader />
     </div>
 
-    <div class="pt-20 pb-8">
+    <div class="pt-24 pb-8">
       <SubMenu />
     </div>
 
@@ -17,9 +17,9 @@
         :name="item.name"
         :location="item.location"
         :time="formatTime(item.created_at)"
-
         :image="item.image_urls[0] || NotAvailableImage"
-      />
+        :id="item.id"
+      ></ItemCard>
     </div>
 
     <div
@@ -50,21 +50,20 @@ import ItemCard from "../components/Item-Card.vue";
 import ButtonAdd from "../components/Button-Add-Found.vue";
 import SearchHeader from "../components/Search-Header.vue";
 import SubMenu from "../components/Sub-Menu-Found.vue";
-import { ref, onMounted, computed } from 'vue';
-import { fetchAllItems } from '@/services/apiItems';
-import { formatTime } from '@/utils/dateUtils';
-import NotAvailableImage from '@/assets/images/not-available.png';
+import { ref, onMounted, computed } from "vue";
+import { fetchAllItems } from "@/services/apiItems";
+import { formatTime } from "@/utils/dateUtils";
+import NotAvailableImage from "@/assets/images/not-available.png";
 
 const allItems = ref([]);
 const lostItems = computed(() =>
-  allItems.value.filter((item) => item.status === 'found')
+  allItems.value.filter((item) => item.status === "found")
 );
 
 const fetchItems = async () => {
-  allItems.value = await fetchAllItems(); // Chama a função centralizada
+  allItems.value = await fetchAllItems();
 };
 
-// Buscar os itens quando o componente for montado
 onMounted(fetchItems);
 </script>
 

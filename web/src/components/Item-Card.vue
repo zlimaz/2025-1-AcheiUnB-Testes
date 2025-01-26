@@ -1,6 +1,7 @@
 <template>
   <div
     class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col"
+    @click="viewItemDetails()"
   >
     <!--imagem-->
     <div
@@ -13,7 +14,7 @@
     <div class="h-[2px] w-1/4 bg-laranja mt-4"></div>
 
     <!--textos-->
-    <div class="text-azul font-bold font-inter mt-1">{{name}}</div>
+    <div class="text-azul font-bold font-inter mt-1">{{ name }}</div>
     <div class="flex items-start">
       <img
         src="../assets/icons/locale.svg"
@@ -32,10 +33,16 @@
 export default {
   name: "ItemCard",
   props: {
+    id: Number,
     image: String,
     name: String,
     time: String,
     location: String,
+  },
+  methods: {
+    viewItemDetails() {
+      this.$router.push({ name: "ListItem", query: { idItem: this.id } });
+    },
   },
 };
 </script>
