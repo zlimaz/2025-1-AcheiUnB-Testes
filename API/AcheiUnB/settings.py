@@ -4,6 +4,7 @@ from pathlib import Path
 
 import cloudinary
 import cloudinary.uploader
+from celery.schedules import crontab
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,6 +28,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # Diretório onde os arquivos ser�
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -71,7 +73,7 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",  # Apenas JSON será usado
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 10,
+    "PAGE_SIZE": 27,
 }
 
 SIMPLE_JWT = {
@@ -226,9 +228,44 @@ LANGUAGE_CODE = "pt-br"
 
 
 # Configurações do Celery
-CELERY_BROKER_URL = "redis://redis:6379/0"  # URL do Redis
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
 # Backend para armazenar resultados (opcional)
-CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
+
+# Celery Beat Configuration
+CELERY_BEAT_SCHEDULE = {
+    "delete_old_items_and_chats": {
+        "task": "users.tasks.delete_old_items_and_chats",
+        "schedule": crontab(hour=3, minute=0),  # Executar todos os dias às 3h da manhã
+    },
+}
+
+# Configurações do Django celery results
+INSTALLED_APPS += ["django_celery_results"]
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "AcheiUnB Admin",
+    "site_header": "AcheiUnB",
+    "welcome_sign": "Bem-vindo ao painel do AcheiUnB!",
+    "search_model": "auth.User",
+    "user_avatar": None,
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "icons": {
+        "auth.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+    "custom_links": {
+        "users": [
+            {
+                "name": "Celery Tasks",
+                "url": "/admin/django_celery_results/taskresult/",
+                "icon": "fas fa-tasks",
+            }
+        ],
+    },
+}

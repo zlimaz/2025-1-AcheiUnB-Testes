@@ -1,8 +1,11 @@
+from datetime import timedelta
+
 import cloudinary.uploader
 from celery import shared_task
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.utils.timezone import now
 
 from .models import Item, ItemImage
 
@@ -67,3 +70,20 @@ def remove_images_from_item(image_ids):
         ItemImage.objects.filter(id__in=image_ids).delete()
     except Exception as e:
         print(f"Erro ao remover imagens com IDs {image_ids}: {e}")
+
+
+@shared_task
+def delete_old_items_and_chats():
+    """Exclui itens com mais de 2 semanas e os chats vinculados automaticamente."""
+    cutoff_date = now() - timedelta(weeks=2)
+
+    # Filtrar itens antigos
+    old_items = Item.objects.filter(created_at__lt=cutoff_date)
+
+    item_ids = [item.id for item in old_items]
+    print(f"Itens encontrados para exclusão: {item_ids}")
+
+    count = old_items.count()
+    old_items.delete()
+
+    return f"{count} itens e seus chats vinculados foram excluídos."

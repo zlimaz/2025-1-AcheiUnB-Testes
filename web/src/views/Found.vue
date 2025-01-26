@@ -12,10 +12,10 @@
       class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-10"
     >
       <ItemCard
-        v-for="item in lostItems"
+        v-for="item in foundItems"
         :key="item.id"
         :name="item.name"
-        :location="item.location"
+        :location="item.location_name"
         :time="formatTime(item.created_at)"
         :image="item.image_urls[0] || NotAvailableImage"
         :id="item.id"
@@ -27,13 +27,15 @@
     >
       <img
         src="../assets/icons/arrow-left.svg"
-        alt=""
-        class="w-[30px] h-[30px]"
+        alt="Anterior"
+        class="w-[30px] h-[30px] cursor-pointer"
+        @click="goToPreviousPage"
       />
       <img
         src="../assets/icons/arrow-right.svg"
-        alt=""
-        class="w-[30px] h-[30px]"
+        alt="Próximo"
+        class="w-[30px] h-[30px] cursor-pointer"
+        @click="goToNextPage"
       />
     </div>
 
@@ -50,21 +52,39 @@ import ItemCard from "../components/Item-Card.vue";
 import ButtonAdd from "../components/Button-Add-Found.vue";
 import SearchHeader from "../components/Search-Header.vue";
 import SubMenu from "../components/Sub-Menu-Found.vue";
-import { ref, onMounted, computed } from "vue";
-import { fetchAllItems } from "@/services/apiItems";
+import { ref, onMounted } from "vue";
+import { fetchFoundItems } from "@/services/apiItems";
 import { formatTime } from "@/utils/dateUtils";
 import NotAvailableImage from "@/assets/images/not-available.png";
 
-const allItems = ref([]);
-const lostItems = computed(() =>
-  allItems.value.filter((item) => item.status === "found")
-);
+// Estado para os itens achados e controle de paginação
+const foundItems = ref([]);
+const currentPage = ref(1);
+const totalPages = ref(1);
 
-const fetchItems = async () => {
-  allItems.value = await fetchAllItems();
+// Função para buscar itens achados com base na página
+const fetchItems = async (page = 1) => {
+  const response = await fetchFoundItems(page);
+  foundItems.value = response.results;
+  totalPages.value = Math.ceil(response.count / 27); // 20 itens por página
 };
 
-onMounted(fetchItems);
+// Navegação de páginas
+const goToPreviousPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value -= 1;
+    fetchItems(currentPage.value);
+  }
+};
+
+const goToNextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value += 1;
+    fetchItems(currentPage.value);
+  }
+};
+
+onMounted(() => fetchItems(currentPage.value));
 </script>
 
 <style scoped></style>

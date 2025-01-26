@@ -12,6 +12,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from msal import ConfidentialClientApplication
 from rest_framework import status
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -40,10 +41,19 @@ logger = logging.getLogger(__name__)
 User = get_user_model()
 
 
+class FoundItemPagination(PageNumberPagination):
+    """Paginação personalizada para itens achados."""
+
+    page_size = 27
+
+
+class LostItemPagination(PageNumberPagination):
+    """Paginação personalizada para itens perdidos."""
+
+    page_size = 27
+
+
 class ItemViewSet(ModelViewSet):
-    queryset = Item.objects.select_related(
-        "category", "location", "color", "brand"
-    ).prefetch_related("images")
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
@@ -51,6 +61,39 @@ class ItemViewSet(ModelViewSet):
     search_fields = ["name", "description", "category__name", "location__name"]
 
     ordering_fields = ["created_at", "found_lost_date"]
+
+    def get_queryset(self):
+
+        self.request.query_params.get("status", None)
+        if "found" in self.request.path:
+            return (
+                Item.objects.filter(status="found")
+                .select_related("category", "location", "color", "brand")
+                .prefetch_related("images")
+            )
+        elif "lost" in self.request.path:
+            return (
+                Item.objects.filter(status="lost")
+                .select_related("category", "location", "color", "brand")
+                .prefetch_related("images")
+            )
+
+        # Retorna todos os itens caso nenhum endpoint específico seja usado
+        return Item.objects.select_related(
+            "category", "location", "color", "brand"
+        ).prefetch_related("images")
+
+    def get_paginated_response(self, data):
+        total_found = Item.objects.filter(status="found").count()
+        total_lost = Item.objects.filter(status="lost").count()
+        paginated_response = super().get_paginated_response(data)
+        paginated_response.data.update(
+            {
+                "total_found": total_found,
+                "total_lost": total_lost,
+            }
+        )
+        return paginated_response
 
     def schedule_match_task(self, item):
         find_and_notify_matches_task.apply_async((item.id,), countdown=10)
