@@ -46,10 +46,9 @@
           </h3>
           <p><strong>Local:</strong> {{ match.location }}</p>
           <p>
-            <strong>Descrição:</strong> {{ match.description|default:"Sem
-            descrição" }}
+            <strong>Descrição:</strong> {{ match.description|default:"Sem descrição" }}
           </p>
-          <p><strong>Data:</strong> {{ match.found_lost_date|date:"d/m/Y" }}</p>
+          <p><strong>Data:</strong> {{ match.found_lost_date|date:"d/m/Y"|default:'Não especificada' }}</p>
           <a
             href="http://localhost:8000/#/list-item?idItem={{ match.id }}"
             style="
