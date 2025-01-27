@@ -1,6 +1,7 @@
 <template>
   <div
     class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col relative"
+    @click="viewItemDetails()"
   >
     <!--imagem-->
     <div
@@ -55,6 +56,16 @@ export default {
     isMyItem: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    viewItemDetails() {
+      this.$router.push({ name: "ListItem", query: { idItem: this.id } });
+    },
+  },
+  methods: {
+    viewItemDetails() {
+      this.$router.push({ name: "ListItem", query: { idItem: this.id } });
     },
   },
 };

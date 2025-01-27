@@ -376,14 +376,13 @@ export default {
       }
 
       const formData = form.toFormData();
-      console.log(process.env.VUE_APP_BASE_URL);
       try {
         await api.post("/items/", formData);
         this.formSubmitted = true;
 
         setTimeout(() => {
           window.location.replace(`http://localhost:8000/#/lost`);
-        }, 2000);
+        }, 1000);
       } catch (error) {
         this.alertMessage = "Erro ao publicar item.";
         this.submitError = true;
