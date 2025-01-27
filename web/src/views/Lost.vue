@@ -18,6 +18,7 @@
         :location="item.location_name"
         :time="formatTime(item.created_at)"
         :image="item.image_urls[0] || NotAvailableImage"
+        :id="item.id"
       />
     </div>
 
@@ -51,10 +52,10 @@ import ItemCard from "../components/Item-Card.vue";
 import ButtonAdd from "../components/Button-Add-Lost.vue";
 import SearchHeader from "../components/Search-Header.vue";
 import SubMenu from "../components/Sub-Menu-Lost.vue";
-import { ref, watch ,onMounted } from 'vue';
-import { fetchLostItems } from '@/services/apiItems';
-import { formatTime } from '@/utils/dateUtils';
-import NotAvailableImage from '@/assets/images/not-available.png';
+import { ref, watch, onMounted } from "vue";
+import { fetchLostItems } from "@/services/apiItems";
+import { formatTime } from "@/utils/dateUtils";
+import NotAvailableImage from "@/assets/images/not-available.png";
 import { filtersState } from "@/store/filters";
 
 // Estado para os itens perdidos e controle de paginação
@@ -64,7 +65,6 @@ const totalPages = ref(1);
 
 // Função para buscar itens perdidos com base na página
 const fetchItems = async (page = 1) => {
-
   const { searchQuery, activeCategory, activeLocation } = filtersState;
 
   const response = await fetchLostItems({
@@ -94,7 +94,11 @@ const goToNextPage = () => {
 };
 
 watch(
-  () => [filtersState.searchQuery, filtersState.activeCategory, filtersState.activeLocation],
+  () => [
+    filtersState.searchQuery,
+    filtersState.activeCategory,
+    filtersState.activeLocation,
+  ],
   () => {
     currentPage.value = 1; // Reseta para a primeira página ao mudar os filtros
     fetchItems(); // Atualiza os itens na tela
