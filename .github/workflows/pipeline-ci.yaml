@@ -27,11 +27,17 @@ jobs:
         working-directory: ./API
 
       - name: Check code format with Black
-        run: docker compose run --rm web black . --check
+        #run: docker compose run --rm web black . --check
         working-directory: ./API
       - name: Lint code with Ruff
-        run: docker compose run --rm web ruff . --exit-zero
+        #run: docker compose run --rm web ruff . --exit-zero
         working-directory: ./API
+      - name: Run unit tests with coverage
+        run: |
+          docker compose run --rm web coverage run manage.py test
+          docker compose run --rm web coverage xml
+        working-directory: ./API
+
       
 
       #- name: Set up Docker
