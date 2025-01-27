@@ -30,6 +30,12 @@ export const fetchFoundItems = async ({ page = 1, search = "", category_name = "
 };
 
 export const fetchMyItemsFound = async () => {
-  const response = await axios.get(`${API_BASE_URL}/found/my-items/`);
-  return response.data;
+  try {
+    const response = await axios.get(`${API_BASE_URL}/found/my-items/`);
+    console.log("Foi")
+    return response.data; // Retorna os dados da resposta
+  } catch (error) {
+    console.error("Erro ao buscar itens encontrados:", error);
+    throw error; // Lança o erro para ser tratado onde a função for chamada
+  }
 };

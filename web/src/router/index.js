@@ -8,9 +8,9 @@ import RegisterFound from "../views/Register-Found.vue";
 import User from "../views/User.vue";
 import Chats from "../views/Chats.vue";
 import ListItem from "../views/ListItem.vue";
-import myItems from "@/views/myItemsFound.vue";
+import UserItemsLost from "../views/UserItems-Lost.vue";
+import UserItemsFound from "../views/UserItems-Found.vue";
 import api from "@/services/api";
-import MyItemsFound from "@/views/myItemsFound.vue";
 
 const routes = [
   {
@@ -67,11 +67,15 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-  path: "/myItemsFound",
-  name: "myItemsFound",
-  component: MyItemsFound,
-  meta: { requiresAuth: true},
-},
+    path: "/user-items-lost",
+    name: "UserItemsLost",
+    component: UserItemsLost,
+  },
+  {
+    path: "/user-items-found",
+    name: "UserItemsFound",
+    component: UserItemsFound,
+  },
   { path: "/:catchAll(.*)", name: "NotFound", component: Login },
 ];
 
