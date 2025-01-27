@@ -50,20 +50,16 @@ devem ser feitas até o final do projeto, as serem feitas nessa Sprint, além di
 
 
 ### Reunião 2
-Data: DD/MM/AAAA  
-Local: Local da reunião  
+Data: 27/01/2025  
+Local: Discord  
 **Ata:**
 
-
-### Reunião 3
-Data: DD/MM/AAAA  
-Local: Local da reunião  
-**Ata:**
+Iniciamos a review com todos os membros mostrando suas implementações feitas durante a sprint, onde a grande maioria das tasks foram feitas com êxito. Na retrospectiva, destacamos os maiores problemas ao decorrer da Sprint 11, e além disso, decidimos rever o escopo na planning da Sprint 12 para conseguirmos entregar os entregáveis da Release 2.
 
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_ (caso existam).
+> Embora a Sprint 11 tenha tido muitas tasks, comparada às sprints anteriores, os times, tanto Front como Back, conseguiram fazer quase todas as tasks!
 ---
 
 **Observações:**
-> Esse espaço deve ser utilizado para registrar qualquer observação que o time julgar pertinente.
+> Equipe num ritmo excelente!
