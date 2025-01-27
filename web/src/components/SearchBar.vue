@@ -1,6 +1,5 @@
 <template>
   <form
-    @submit.prevent="handleSearch"
     class="absolute flex items-center"
     :class="{
       'fixed w-full top-6 pr-8 z-50': isActive && !isMediumOrLarger, 
@@ -29,11 +28,11 @@
       </svg>
     </button>
     <input
-      v-model="searchQuery"
+      v-model="filtersState.searchQuery"
       class="input bg-gray-200 rounded-full px-10 py-2 my-1 border-2 border-transparent focus:outline-none focus:border-laranja placeholder-gray-500 text-gray-700 transition-all duration-300 shadow-md pr-10 w-full z-40"
       placeholder="Pesquise seu item"
-      required
       type="text"
+      @input="setSearchQuery(filtersState.searchQuery)"
       @focus="isActive = true"
       @blur="isActive = false; showFilters = false"
     />
@@ -81,7 +80,7 @@
         <button
           v-for="(filter, index) in categories"
           :key="index"
-          @click="toggleFilter('category', index)"
+          @click="toggleFilter('category', index), setActiveCategory(filter.label)"
           :class="[
             'px-4 py-2 rounded-full border text-sm',
             filter.active ? 'bg-laranja text-azul border-black' : 'bg-gray-200 text-azul border-black',
@@ -99,7 +98,7 @@
         <button
           v-for="(filter, index) in locations"
           :key="index"
-          @click="toggleFilter('location',index)"
+          @click="toggleFilter('location',index), setActiveLocation(filter.label)"
           :class="[
             'px-4 py-2 rounded-full border text-sm',
             filter.active ? 'bg-laranja text-azul border-black' : 'bg-gray-200 text-azul border-black',
@@ -113,11 +112,22 @@
 </template>
 
 <script>
+import { filtersState, setSearchQuery, setActiveCategory, setActiveLocation } from "@/store/filters";
+
 export default {
   name: "SearchBar",
+
+  setup() {
+    return {
+      filtersState,
+      setSearchQuery,
+      setActiveCategory,
+      setActiveLocation,
+    };
+  },
+
   data() {
     return {
-      searchQuery: "",
       showFilters: false,
       isActive: false,
       categories: [
@@ -145,6 +155,11 @@ export default {
   computed: {
     isMediumOrLarger() {
       return window.innerWidth >= 768; // Breakpoint para telas médias ou maiores
+    },
+    searchQueryWithoutAccents() {
+      return this.searchQuery
+        ? this.searchQuery.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        : "";
     },
   },
   methods: {
@@ -177,17 +192,17 @@ export default {
     }
   },
 
-  handleSearch() {
-    const query = this.searchQuery;
+  // handleSearch() {
+  //   const query = this.searchQuery;
 
-    const activeCategory = this.categories.find((filter) => filter.active);
-    const activeLocation = this.locations.find((filter) => filter.active);
+  //   const activeCategory = this.categories.find((filter) => filter.active);
+  //   const activeLocation = this.locations.find((filter) => filter.active);
 
     
-    console.log("Pesquisa:", query);
-    console.log("Categoria selecionada:", activeCategory ? activeCategory.label : "Nenhuma");
-    console.log("Local selecionado:", activeLocation ? activeLocation.label : "Nenhum");
-  },
+  //   console.log("Pesquisa:", query);
+  //   console.log("Categoria selecionada:", activeCategory ? activeCategory.label : "Nenhuma");
+  //   console.log("Local selecionado:", activeLocation ? activeLocation.label : "Nenhum");
+  // },
 
   },
 };
