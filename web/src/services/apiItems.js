@@ -28,3 +28,32 @@ export const fetchFoundItems = async ({ page = 1, search = "", category_name = "
   const response = await axios.get(`${API_BASE_URL}/found/`, { params });
   return response.data;
 };
+
+export const fetchMyItemsFound = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/found/my-items/`);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar itens encontrados:", error);
+    throw error;
+  }
+};
+
+export const fetchMyItemsLost = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/lost/my-items/`);
+    return response.data; // Retorna os dados da resposta
+  } catch (error) {
+    console.error("Erro ao buscar itens encontrados:", error);
+    throw error; // Lança o erro para ser tratado onde a função for chamada
+  }
+};
+
+export const deleteItem = async (itemId) => {
+  try {
+    await axios.delete(`${API_BASE_URL}/${itemId}/`);
+  } catch (error) {
+    console.error('Erro ao deletar o item:', error);
+    throw error;
+  }
+};
