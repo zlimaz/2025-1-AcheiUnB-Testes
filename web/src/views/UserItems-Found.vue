@@ -13,10 +13,13 @@
         <ItemCard
             v-for="item in myItemsFound"
             :key="item.id"
+            :id="item.id"
             :name="item.name"
             :location="item.location_name"
             :time="formatTime(item.created_at)"
             :image="item.image_urls[0] || NotAvailableImage"
+            :isMyItem="true" 
+            @delete="handleDelete"
         />
     </div>
 
@@ -28,7 +31,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { fetchMyItemsFound } from '@/services/apiItems';
+import { fetchMyItemsFound, deleteItem } from '@/services/apiItems';
 import { formatTime } from '@/utils/dateUtils';
 import MainMenu from "../components/Main-Menu.vue";
 import SubMenu from "../components/Sub-Menu-UserFound.vue";
@@ -37,10 +40,23 @@ import NotAvailableImage from '@/assets/images/not-available.png';
 
 const myItemsFound = ref([]);
 
+
 const fetchItems = async () => {
     const response = await fetchMyItemsFound();
     myItemsFound.value = response;
-}
+};
+
+
+const handleDelete = async (itemId) => {
+    try {
+        await deleteItem(itemId); // Chama o serviço para deletar o item no backend
+        myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId); // Atualiza a lista removendo o item excluído
+    } catch (error) {
+        console.error('Erro ao deletar o item:', error);
+    }
+};
+
+
 onMounted(() => fetchItems());
 </script>
 

@@ -4,9 +4,25 @@
             <img src="../assets/icons/arrow-left-white.svg" alt="Voltar" class="w-[30px] h-[30px] text-white" />
         </router-link>
     </div>
+
     <div class="pb-8">
         <SubMenu />
     </div>
+
+    <div class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-10">
+        <ItemCard
+            v-for="item in myItemsLost"
+            :key="item.id"
+            :id="item.id"
+            :name="item.name"
+            :location="item.location_name"
+            :time="formatTime(item.created_at)"
+            :image="item.image_urls[0] || NotAvailableImage"
+            :isMyItem="true" 
+            @delete="handleDelete"
+        />
+    </div>
+
     <ButtonAdd />
     <div class="fixed bottom-0 w-full">
         <MainMenu activeIcon="search" />
@@ -14,8 +30,34 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
+import { fetchMyItemsLost, deleteItem } from '@/services/apiItems';
+import { formatTime } from '@/utils/dateUtils';
 import MainMenu from "../components/Main-Menu.vue";
 import SubMenu from "../components/Sub-Menu-UserLost.vue";
+import ItemCard from '@/components/Item-Card.vue';
+import NotAvailableImage from '@/assets/images/not-available.png';
+
+const myItemsLost = ref([]);
+
+
+const fetchItems = async () => {
+    const response = await fetchMyItemsLost();
+    myItemsLost.value = response;
+};
+
+
+const handleDelete = async (itemId) => {
+    try {
+        await deleteItem(itemId);
+        myItemsLost.value = myItemsLost.value.filter(item => item.id !== itemId); // Atualiza a lista removendo o item excluído
+    } catch (error) {
+        console.error('Erro ao deletar o item:', error);
+    }
+};
+
+
+onMounted(() => fetchItems());
 </script>
 
 <style scoped></style>
