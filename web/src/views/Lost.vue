@@ -66,14 +66,14 @@ const totalPages = ref(1);
 const fetchItems = async (page = 1) => {
 
   const { searchQuery, activeCategory, activeLocation } = filtersState;
-  console.log("Parâmetros da requisição:", {
-    page: currentPage.value,
+
+  const response = await fetchLostItems({
+    page,
     search: searchQuery,
     category_name: activeCategory,
     location_name: activeLocation,
   });
 
-  const response = await fetchLostItems(page);
   lostItems.value = response.results;
   totalPages.value = Math.ceil(response.count / 27);
 };
