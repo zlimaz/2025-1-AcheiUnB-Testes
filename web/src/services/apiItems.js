@@ -28,3 +28,8 @@ export const fetchFoundItems = async ({ page = 1, search = "", category_name = "
   const response = await axios.get(`${API_BASE_URL}/found/`, { params });
   return response.data;
 };
+
+export const fetchMyItemsFound = async () => {
+  const response = await axios.get(`${API_BASE_URL}/found/my-items/`);
+  return response.data;
+};

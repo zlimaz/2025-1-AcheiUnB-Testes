@@ -8,7 +8,9 @@ import RegisterFound from "../views/Register-Found.vue";
 import User from "../views/User.vue";
 import Chats from "../views/Chats.vue";
 import ListItem from "../views/ListItem.vue";
+import myItems from "@/views/myItemsFound.vue";
 import api from "@/services/api";
+import MyItemsFound from "@/views/myItemsFound.vue";
 
 const routes = [
   {
@@ -64,6 +66,12 @@ const routes = [
     component: ListItem,
     meta: { requiresAuth: true },
   },
+  {
+  path: "/myItemsFound",
+  name: "myItemsFound",
+  component: MyItemsFound,
+  meta: { requiresAuth: true},
+},
   { path: "/:catchAll(.*)", name: "NotFound", component: Login },
 ];
 
