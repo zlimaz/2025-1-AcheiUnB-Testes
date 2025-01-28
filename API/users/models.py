@@ -44,8 +44,8 @@ class Brand(models.Model):
 
 class Item(models.Model):
     STATUS_CHOICES = [
-        ("found", "Achado"),
-        ("lost", "Perdido"),
+        ("found", "Found"),
+        ("lost", "Lost"),
     ]
 
     user = models.ForeignKey(
@@ -68,6 +68,9 @@ class Item(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # Data de cadastro automático
 
     barcode = models.CharField(max_length=10, editable=False, blank=True)
+    matches = models.ManyToManyField(
+        "self", symmetrical=False, blank=True, related_name="matched_with"
+    )
 
     # Calcula o código único (barcode) do item
     def save(self, *args, **kwargs):
