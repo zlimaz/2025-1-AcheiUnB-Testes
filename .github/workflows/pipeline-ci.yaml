@@ -1,47 +1,85 @@
-name: Django CI
+# Nome do workflow
+name: CI/CD Workflow
 
+# Definir quando o workflow será executado
 on:
   push:
-    branches:
-      - main
+    branches: 
+      - main # Executa o workflow ao push na branch 'main'
       - 154-taskautomação-pipeline-ci-com-testes
   pull_request:
-    branches:
-      - main
+    branches: 
+      - main # Exgsfdghdfecuta o workflow ao abrir um PR na branch 'main'
 
+# Definindo os jobs
 jobs:
-  build:
+  # Job para rodar os testes
+  test:
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: testdb
-        ports:
-          - 5432:5432
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build Docker images
+        run: docker compose build
         working-directory: ./API
 
-      - name: Run linter
-        run: black .
+      - name: Export GitHub secrets
+        run: |
+          echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> $GITHUB_ENV
+          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> $GITHUB_ENV
+          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> $GITHUB_ENV
+
+      - name: Check code format with Black
+        run: docker compose run --rm web black . --check
+        working-directory: ./API
+      - name: Lint code with Ruff
+        run: docker compose run --rm web ruff . --exit-zero
+        working-directory: ./API
+      - name: Run unit tests with coverage
+        run: |
+          docker compose run --rm web coverage run manage.py test
+          docker compose run --rm web coverage xml
         working-directory: ./API
 
-      - name: Run unit tests
-        env:
-          DATABASE_URL: postgres://postgres:password@localhost:5432/testdb
-        run: python manage.py test
-        working-directory: ./API
+      
+
+      #- name: Set up Docker
+       # uses: docker/setup-buildx-action@v2
+
+      #- name: Install Docker Compose
+       # run: |
+        #  sudo apt-get update
+         # sudo apt-get install -y docker-compose
+
+      #- name: Set up Docker Compose
+       # run: |
+        #  docker-compose -f API/docker-compose.yml up -d --build
+          
+      #- name: Run migrations
+       # run: |
+        #  docker-compose -f API/docker-compose.yml exec web python manage.py migrate
+
+      #- name: Run tests with coverage
+       # run: |
+        #  docker-compose -f API/docker-compose.yml exec web coverage run --source='.' manage.py test
+
+      #- name: Generate coverage report
+       # run: |
+        #  docker-compose -f API/docker-compose.yml exec web coverage xml
+       # # Gera o relatório em XML, necessário para o Codecov
+
+      #- name: Upload coverage to Codecov
+      #  uses: codecov/codecov-action@v3
+       # with:
+        #  files: ./web/coverage.xml  # Caminho do relatório XML gerado
+         # token: ${{ secrets.CODECOV_TOKEN }}  # O token Codecov é armazenado nos secrets do GitHub
+          #flags: unittests
+          #name: Django Tests
+
+      #- name: Tear down Docker Compose
+       # if: always()
+       # run: |
+        #  docker-compose down
