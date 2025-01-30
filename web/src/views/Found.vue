@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen">
-    <div class="fixed w-full top-0">
+    <div class="fixed w-full top-0 z-10">
       <SearchHeader />
     </div>
 

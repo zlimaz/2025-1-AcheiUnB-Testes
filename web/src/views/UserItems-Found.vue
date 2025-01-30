@@ -1,6 +1,6 @@
 <template>
     <div
-  class="fixed w-full top-0 h-[100px] bg-verde shadow-md rounded-b-xl flex items-center justify-between px-6 text-white"
+  class="fixed w-full top-0 h-[100px] bg-verde shadow-md rounded-b-xl flex items-center justify-between px-6 text-white z-10"
 >
   <!-- Botão de voltar -->
   <router-link to="/user" class="inline-block">
@@ -30,7 +30,7 @@
       <SubMenu />
     </div>
   
-    <div class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-10">
+    <div class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-24">
       <ItemCard
         v-for="item in myItemsFound"
         :key="item.id"

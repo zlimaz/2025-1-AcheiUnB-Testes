@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col relative -z-10"
+    class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col relative z-0"
     @click="viewItemDetails()"
   >
     <!--imagem-->
@@ -11,13 +11,14 @@
     </div>
 
     <!-- Botão de excluir no canto inferior direito -->
-    <div
-      v-if="isMyItem"
-      class="absolute p-1 bottom-2 border-2 border-laranja right-2 w-10 h-10 bg-white flex items-center justify-center text-xs rounded-full cursor-pointer"
-      @click="$emit('delete', id)"
-    >
-      <img src="../assets/icons/trash.svg" alt="Excluir" />
-    </div>
+    <button
+  v-if="isMyItem"
+  class="absolute p-1 bottom-2 border-2 border-laranja right-2 w-10 h-10 bg-white flex items-center justify-center text-xs rounded-full cursor-pointer"
+  @click.stop="$emit('delete', id)"
+>
+  <img src="../assets/icons/trash.svg" alt="Excluir" />
+</button>
+
 
     <!--linha-->
     <div class="h-[2px] w-1/4 bg-laranja mt-4"></div>
