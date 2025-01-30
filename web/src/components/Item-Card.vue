@@ -7,7 +7,7 @@
     <div
       class="w-full h-[120px] bg-cinza2 rounded-sm flex justify-center items-start"
     >
-      <img :src="image" class="rounded-sm w-full h-full object-cover" />
+      <img :src="image" class="rounded-sm w-full h-full max-w-full max-h-full object-cover " />
     </div>
 
     <!-- Botão de excluir no canto inferior direito -->
@@ -23,7 +23,7 @@
     <div class="h-[2px] w-1/4 bg-laranja mt-4"></div>
 
     <!--textos-->
-    <div class="text-azul font-bold font-inter mt-1">{{ name }}</div>
+    <div class="text-azul font-bold font-inter mt-1 truncate">{{ name }}</div>
     <div class="flex items-start">
       <img
         src="../assets/icons/locale.svg"
