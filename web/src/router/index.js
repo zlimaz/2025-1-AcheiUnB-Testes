@@ -1,3 +1,4 @@
+index.js
 import { createRouter, createWebHashHistory } from "vue-router";
 import Login from "../views/Login.vue";
 import About from "../views/About.vue";
@@ -10,7 +11,8 @@ import Chats from "../views/Chats.vue";
 import ListItem from "../views/ListItem.vue";
 import UserItemsLost from "../views/UserItems-Lost.vue";
 import UserItemsFound from "../views/UserItems-Found.vue";
-import api from "@/services/api";
+import Message from "../views/Message.vue";
+
 
 const routes = [
   {
@@ -76,6 +78,24 @@ const routes = [
     name: "UserItemsFound",
     component: UserItemsFound,
   },
+  /*{
+    path: "/message",
+    name: "Message",
+    component: Message,
+  },*/
+  {
+    path: "/chat/new",
+    name: "NewChat",
+    component: Message, // A mesma tela de chat será usada para criar um novo chat
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/chat/:chatroomId",
+    name: "Chat",
+    component: Message,
+    meta: { requiresAuth: true },
+    props: true, // Permite passar o `chatroomId` como propriedade
+  },
   { path: "/:catchAll(.*)", name: "NotFound", component: Login },
 ];
 
@@ -84,18 +104,17 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async (to) => {
+// Middleware para proteger rotas que exigem autenticação
+/*router.beforeEach(async (to) => {
   if (to.meta.requiresAuth) {
     try {
-      await api.get("/auth/validate", {
-        withCredentials: true,
-      });
+      await api.get("/auth/validate", { withCredentials: true });
       return true;
     } catch {
       return { name: "Login" };
     }
   }
   return true;
-});
+});*/
 
 export default router;
