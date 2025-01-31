@@ -1,4 +1,3 @@
-message.vue
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";

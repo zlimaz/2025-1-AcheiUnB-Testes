@@ -1,4 +1,3 @@
-ListItem
 <template>
   <!-- Header fixo no topo -->
   <div class="fixed w-full top-0" style="z-index: 1">
