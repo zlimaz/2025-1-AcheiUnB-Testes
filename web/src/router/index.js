@@ -1,4 +1,3 @@
-index.js
 import { createRouter, createWebHashHistory } from "vue-router";
 import Login from "../views/Login.vue";
 import About from "../views/About.vue";
@@ -103,18 +102,5 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
-
-// Middleware para proteger rotas que exigem autenticação
-/*router.beforeEach(async (to) => {
-  if (to.meta.requiresAuth) {
-    try {
-      await api.get("/auth/validate", { withCredentials: true });
-      return true;
-    } catch {
-      return { name: "Login" };
-    }
-  }
-  return true;
-});*/
 
 export default router;
