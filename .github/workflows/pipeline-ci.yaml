@@ -16,7 +16,24 @@ jobs:
   # Job para rodar os testes
   test:
     runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:15
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        ports:
+          - 5432:5432
+        # O GitHub Actions faz bind automático e a URL do serviço fica "localhost"
+    
     env:
+      # Variáveis que o Django (settings.py) vai ler via decouple.config()
+      DB_NAME: ${{ secrets.POSTGRES_DB }}
+      DB_USER: ${{ secrets.POSTGRES_USER }}
+      DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      DB_HOST: localhost
+      DB_PORT: '5432'
       CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
       CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
       CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
