@@ -33,11 +33,19 @@ jobs:
           echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> $GITHUB_ENV
 
       - name: Check code format with Black
-        run: docker compose run --rm web black . --check
+        run: docker compose run --rm \
+            --env CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }} \
+            --env CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }} \
+            --env CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }} \
+            web black . --check
         working-directory: ./API
-      #- name: Lint code with Ruff
-       # run: docker compose run --rm web ruff . --exit-zero
-        #working-directory: ./API
+      - name: Lint code with Ruff
+        run: docker compose run --rm \
+            --env CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }} \
+            --env CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }} \
+            --env CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }} \
+            web ruff . --exit-zero
+        working-directory: ./API
       - name: Run unit tests with coverage
         run: |
           docker compose run --rm \
