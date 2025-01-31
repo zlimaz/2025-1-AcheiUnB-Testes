@@ -29,6 +29,24 @@ def send_match_notification(to_email, item_name, matches):
         html_message=html_message,
     )
 
+@shared_task
+def send_welcome_email(user_email, user_name):
+    """Task assíncrona para enviar o e-mail de boas-vindas."""
+    try:
+        subject = "Bem-vindo ao AcheiUnB!"
+        html_message = render_to_string("emails/welcome.html", {"name": user_name})
+        plain_message = strip_tags(html_message)
+
+        send_mail(
+            subject,
+            plain_message,
+            "acheiunb2024@gmail.com",
+            [user_email],
+            html_message=html_message,
+        )
+    except Exception as e:
+        print(f"Erro ao enviar o e-mail de boas-vindas: {e}")
+
 
 @shared_task
 def find_and_notify_matches_task(target_item_id, max_distance=2):
