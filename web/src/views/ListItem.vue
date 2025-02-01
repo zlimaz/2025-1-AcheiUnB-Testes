@@ -1,62 +1,129 @@
 <template>
-  <!-- Header fixo no topo -->
-  <div class="fixed w-full top-0" style="z-index: 1">
+  <div class="fixed w-full top-0 z-[1]">
     <ItemHeader :title="itemStatus === 'found' ? 'Item Achado' : 'Item Perdido'" />
   </div>
 
-  <!-- Conteúdo principal -->
   <div class="px-6 py-[120px] flex flex-col items-center gap-6" v-if="item">
-    <!-- Imagem do Item -->
-    <img
-      :src="item.image"
-      alt="Imagem do Item"
-      class="w-full max-w-md h-64 md:h-80 object-cover rounded-lg"
-    />
+    <!-- Container de Imagens Responsivo -->
+    <div class="w-full max-w-md relative">
+      <!-- Imagem padrão quando não há fotos -->
+      <div v-if="!item.image_urls || item.image_urls.length === 0" class="w-full h-64">
+        <img
+          :src="notAvailableImage"
+          alt="Imagem não disponível"
+          class="w-full h-full object-contain"
+        />
+      </div>
 
-    <!-- Título, local e tags -->
-    <div class="text-center">
-      <h1 class="text-lg md:text-2xl font-bold">{{ item.name }}</h1>
-      <p class="text-sm md:text-base text-gray-500">
-        {{ itemStatus === "found" ? "Achado em:" : "Perdido em:" }}
-        {{ locationName || "Não especificado" }}
-      </p>
-
-      <!-- Labels dinâmicas -->
-      <div class="flex flex-wrap gap-2 justify-center mt-2">
-        <span
-          v-for="(label, index) in labels"
+      <!-- Grid para desktop -->
+      <div 
+        v-else
+        class="hidden md:grid"
+        :class="item.image_urls.length === 1 ? 'grid-cols-1 justify-items-center' : 'grid-cols-2 gap-4'"
+      >
+        <img
+          v-for="(url, index) in item.image_urls.slice(0,2)"
           :key="index"
-          :class="
-            label.type === 'category'
-              ? 'bg-blue-500'
-              : label.type === 'brand'
-                ? 'bg-laranja'
-                : 'bg-gray-500'
-          "
-          class="px-4 py-2 rounded-full text-sm font-medium text-white"
+          :src="url"
+          :alt="`Imagem ${index + 1} do item`"
+          class="h-64 object-cover rounded-lg"
+          :class="item.image_urls.length === 1 ? 'w-full' : ''"
+        />
+      </div>
+
+      <!-- Carrossel para mobile -->
+      <div 
+        v-if="item.image_urls && item.image_urls.length > 0"
+        class="md:hidden overflow-hidden relative"
+      >
+        <div
+          class="flex transition-transform duration-300 ease-out snap-x snap-mandatory"
+          :style="{ transform: `translateX(-${activeIndex * 100}%)` }"
         >
-          {{
-            label.type === "category"
-              ? "Categoria: "
-              : label.type === "brand"
-                ? "Marca: "
-                : "Cor: "
-          }}{{ label.name }}
-        </span>
+          <div
+            v-for="(url, index) in item.image_urls"
+            :key="index"
+            class="w-full flex-shrink-0 relative snap-start"
+          >
+            <img
+              :src="url"
+              :alt="`Imagem ${index + 1} do item`"
+              class="w-full h-64 object-cover rounded-lg"
+            />
+          </div>
+        </div>
+
+        <!-- Indicadores -->
+        <div v-if="item.image_urls.length > 1" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+          <div
+            v-for="(_, index) in item.image_urls"
+            :key="index"
+            class="w-2 h-2 rounded-full transition-colors duration-300"
+            :class="activeIndex === index ? 'bg-white' : 'bg-gray-300'"
+          />
+        </div>
+
+        <!-- Botões de navegação -->
+        <button
+          v-if="item.image_urls.length > 1"
+          @click="prevImage"
+          class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/30 rounded-full p-2 backdrop-blur-sm"
+        >
+          ←
+        </button>
+        <button
+          v-if="item.image_urls.length > 1"
+          @click="nextImage"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/30 rounded-full p-2 backdrop-blur-sm"
+        >
+          →
+        </button>
       </div>
     </div>
 
-    <!-- Descrição -->
-    <p class="text-sm md:text-base text-gray-700 text-center">
-      {{ item.description }}
-    </p>
+    <!-- Container de texto alinhado à esquerda -->
+    <div class="w-full max-w-md">
+      <h1 class="text-lg md:text-2xl font-bold text-left">{{ item.name }}</h1>
+      
+      <p class="text-sm md:text-base text-gray-500 text-left mt-2">
+        {{ itemStatus === "found" ? "Achado em:" : "Perdido em:" }}
+        {{ item.location_name || "Não especificado" }}
+      </p>
 
-    <!-- Botão para iniciar o chat -->
+      <div class="flex flex-wrap gap-2 justify-start mt-4">
+        <span
+          v-if="item.category_name"
+          class="px-4 py-2 rounded-full text-sm font-medium text-white bg-blue-500"
+        >
+          Categoria: {{ item.category_name }}
+        </span>
+        
+        <span
+          v-if="item.brand_name"
+          class="px-4 py-2 rounded-full text-sm font-medium text-white bg-laranja"
+        >
+          Marca: {{ item.brand_name }}
+        </span>
+        
+        <span
+          v-if="item.color_name"
+          class="px-4 py-2 rounded-full text-sm font-medium text-white bg-gray-500"
+        >
+          Cor: {{ item.color_name }}
+        </span>
+      </div>
+
+      <p class="text-sm md:text-base text-gray-700 text-left mt-4">
+        {{ item.description }}
+      </p>
+    </div>
+
+    <!-- Botão centralizado -->
     <button
-      class="w-full md:w-1/3 py-3 text-center text-white font-semibold rounded-lg bg-laranja hover:bg-laranja active:bg-laranja focus:ring-2 focus:ring-laranja"
+      class="w-full md:w-1/3 py-3 text-center text-white font-semibold rounded-full bg-laranja hover:bg-laranja active:bg-laranja focus:ring-2 focus:ring-laranja mt-8"
       @click="startChat"
     >
-      {{ itemStatus === "found" ? "É meu item" : "Este item é meu" }}
+      É meu item
     </button>
   </div>
 
@@ -70,127 +137,82 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import api from "../services/api"; // Importa o arquivo api.js
+import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
+import api from "../services/api";
 import ItemHeader from "../components/Item-Header.vue";
 import MainMenu from "../components/Main-Menu.vue";
 import { useRoute, useRouter } from "vue-router";
+import notAvailableImage from "@/assets/images/not-available.png";
 
-const item = ref(null);
-const itemStatus = ref("");
-const locationName = ref("");
-const labels = ref([]);
 const route = useRoute();
 const router = useRouter();
-const idItem = route.query.idItem;
-const participant_2 = ref(null);
-const currentUser = ref({ id: null });
+const item = ref(null);
+const itemStatus = ref("");
+const currentUser = ref(null);
+const activeIndex = ref(0);
+const isMobile = ref(window.innerWidth < 768);
 
-// 🔍 Busca os detalhes do item para obter o usuário correto (`participant_2`)
+// Carrossel
+const nextImage = () => {
+  activeIndex.value = (activeIndex.value + 1) % item.value.image_urls.length;
+};
+
+const prevImage = () => {
+  activeIndex.value = (activeIndex.value - 1 + item.value.image_urls.length) % item.value.image_urls.length;
+};
+
+// Responsividade
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 768;
+};
+
 async function fetchItem() {
   try {
-    console.log(`🔍 Buscando detalhes do item ID ${idItem}...`);
-    const response = await api.get(`/items/${idItem}/`);
+    const response = await api.get(`/items/${route.query.idItem}/`);
     item.value = response.data;
-
-    // Determina o status do item (achado ou perdido)
-    itemStatus.value = item.value.status === "found" ? "found" : "lost";
-
-    // ✅ Define `participant_2` corretamente baseado no status do item
-    if (itemStatus.value === "found") {
-      participant_2.value = response.data.user_id; // Quem encontrou o item
-    } else {
-      participant_2.value = currentUser.value.id; // Quem perdeu o item
-    }
-
-    if (!participant_2.value) {
-      console.error("❌ Erro: Não foi possível obter o participant_2.");
-    } else {
-      console.log(`✅ participant_2 encontrado: ${participant_2.value}`);
-    }
-
-    // Busca o nome do local
-    if (item.value.location) {
-      const locationResponse = await api.get(`/locations/${item.value.location}`);
-      locationName.value = locationResponse.data.name;
-    } else {
-      locationName.value = "Não especificado";
-    }
-
-    // Adiciona as labels dinamicamente
-    labels.value = [];
-
-    // Categoria
-    if (item.value.category) {
-      const categoryIds = Array.isArray(item.value.category)
-        ? item.value.category
-        : [item.value.category];
-      const categoryPromises = categoryIds.map((id) =>
-        api.get(`/categories/${id}`).then((res) => ({ name: res.data.name, type: "category" })),
-      );
-      const categories = await Promise.all(categoryPromises);
-      labels.value.push(...categories);
-    }
-
-    // Cor
-    if (item.value.color) {
-      const colorResponse = await api.get(`/colors/${item.value.color}`);
-      labels.value.push({ name: colorResponse.data.name, type: "color" });
-    }
-
-    // Marca
-    if (item.value.brand) {
-      const brandResponse = await api.get(`/brands/${item.value.brand}`);
-      labels.value.push({ name: brandResponse.data.name, type: "brand" });
+    itemStatus.value = item.value.status;
+    
+    if (item.value.image_urls && item.value.image_urls.length > 0) {
+      await nextTick();
     }
   } catch (error) {
     console.error("Erro ao carregar item:", error);
   }
 }
 
-// 🔍 Busca os dados do usuário logado (`participant_1`)
 async function fetchCurrentUser() {
   try {
-    console.log("🔍 Buscando usuário logado...");
     const response = await api.get(`/auth/user/`);
-    currentUser.value.id = response.data.id;
-    console.log("✅ Usuário logado:", response.data);
+    currentUser.value = response.data;
   } catch (error) {
-    console.error("Erro ao buscar usuário logado:", error);
+    console.error("Erro ao buscar usuário:", error);
   }
 }
 
-// 🚀 Criar o chatroom automaticamente e redirecionar
 async function startChat() {
   try {
-    if (!participant_2.value || !currentUser.value.id) {
-      console.error("❌ Erro: participant_2 ou currentUser.id não definido.");
-      return;
-    }
+    if (!currentUser.value?.id || !item.value?.user_id) return;
 
-    console.log(
-      `🛠 Criando chatroom entre usuário ${currentUser.value.id} e ${participant_2.value}...`,
-    );
-    const chatResponse = await api.post("/chat/chatrooms/", {
+    const chatData = {
       participant_1: currentUser.value.id,
-      participant_2: participant_2.value,
-      item_id: idItem,
-    });
+      participant_2: item.value.user_id,
+      item_id: route.query.idItem
+    };
 
-    console.log("✅ Chatroom criado:", chatResponse.data);
-
-    // 🔀 Redireciona para o chat correto
+    const chatResponse = await api.post("/chat/chatrooms/", chatData);
     router.push(`/chat/${chatResponse.data.id}`);
   } catch (error) {
-    console.error("Erro ao criar chatroom:", error);
+    console.error("Erro ao criar chat:", error.response?.data || error.message);
   }
 }
 
-// ⏳ Carrega os dados quando o componente é montado
 onMounted(async () => {
+  window.addEventListener('resize', handleResize);
   await fetchCurrentUser();
   await fetchItem();
 });
-</script>
 
-<style scoped></style>
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+});
+</script>
