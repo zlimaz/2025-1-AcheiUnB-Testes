@@ -25,15 +25,16 @@
       cadastrar um item que você encontrou.
     </span>
     
-    <div class="flex justify-center mt-6">
-      <a
-        href="https://unb-mds.github.io/2024-2-AcheiUnB/CONTRIBUTING/"
-        target="_blank"
-        class="bg-laranja text-white font-semibold px-6 py-2 rounded-full hover:bg-azulEscuro transition hover:text-white duration-300 shadow-md rounded-full hover:scale-110 transition-transform"
-      >
-        Como Contribuir?
-      </a>
-    </div>
+   <div class="flex justify-center mt-6">
+  <a
+    href="https://unb-mds.github.io/2024-2-AcheiUnB/CONTRIBUTING/"
+    target="_blank"
+    class="bg-laranja text-white font-semibold px-8 py-3 text-lg lg:text-xl rounded-full hover:bg-azulEscuro transition hover:text-white duration-300 shadow-md hover:scale-110 transition-transform"
+  >
+    Como Contribuir?
+  </a>
+</div>
+
 
     <div class="max-w-4xl mx-auto mt-10 p-5 pb-[140px]">
       <div class="text-azul text-lg text-center font-semibold mb-7">Criado por:</div>
