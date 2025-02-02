@@ -60,27 +60,6 @@
             font-size: 14px;
         }
 
-        .footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .link-button {
-            display: inline-block;
-            background-color: #1a237e;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-
-        .link-button:hover {
-            background-color: #666;
-        }
-
         .support {
             background-color: #fff3cd;
             color: #F59E0B;
@@ -88,6 +67,59 @@
             border-radius: 8px;
             text-align: center;
             margin-top: 20px;
+        }
+        .footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-top: 2px solid #008940;
+        border-radius: 0 0 12px 12px;
+        margin-top: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 20px;
+        }
+
+        .footer-text {
+            margin: 0;
+            color: black;
+            font-family: Arial, sans-serif;
+            font-size: 2rem;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .footer-bottom {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .link-button {
+            display: inline-block;
+            background-color: #1a237e;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .link-button:hover {
+            background-color: #005a32;
         }
     </style>
 </head>
@@ -106,28 +138,30 @@
             <li><strong>Login:</strong> A autenticação é feita pela Microsoft, logo, somente discentes dentro do domínio da UnB podem utilizar o site.</li>
             <li><strong>Cadastrar itens:</strong> O usuário é capaz de adicionar informações sobre itens perdidos ou encontrados preenchendo os campos destinados.</li>
             <li><strong>Buscar itens:</strong> É possível usar a nossa barra de pesquisa para encontrar o que foi perdido ou para devolver o que foi encontrado.</li>
+            <li><strong>Match inteligente de itens:</strong> Nossa plataforma analisa os itens cadastrados e <strong>envia notificações automáticas </strong>caso um item encontrado corresponda a um item perdido.</li>
             <li><strong>Conectar com outros:</strong> Os usuários são capazes de conversar diretamente uns com os outros pelo nosso chat integrado.</li>
-            <li><strong>Ver meus itens:</strong> O estudante pode visualizar seus itens postados, tanto perdidos, quanto encontrados.</li>
+            <li><strong>Gerenciar meus itens:</strong> O estudante pode visualizar seus itens postados, tanto perdidos, quanto encontrados.</li>
             <li><strong>Denunciar:</strong> Denúncias são possíveis de serem feitas pelo site, onde o usuário é direcionado ao envio de um email para a nossa equipe.</li>
         </ul>
     </div>
 
     <div class="support">
-        <p>Se precisar de ajuda, <strong>nossa equipe está sempre à disposição</strong>! Não hesite em entrar em contato.</p>
-    </div>
+        <p>🔔 <strong>Fique atento às notificações! </strong>Caso haja um <strong>match de itens</strong>, você será avisado automaticamente, tornando a recuperação ainda mais fácil.</p>
 
-<div class="footer" style="text-align: center;">
-    <p>Acesse agora o AcheiUnB e aproveite!</p>
-    <a href="https://acheiunb.com.br" style="color: white;" class="link-button">Acessar AcheiUnB</a>
-    <div style="display: flex; justify-content: center; align-items: center; gap: 0.25rem; margin-top: 20px;">
-        <h1 style="margin: 0; color: black; font-family: Arial, sans-serif;">
-            <span style="font-style: italic; font-size: 2rem;">Achei</span>
-        </h1>
-        <h1 style="margin: 0; color: black; font-family: Arial, sans-serif;">
-            <span style="font-weight: bold; font-size: 2rem;">UnB</span>
-        </h1>
     </div>
-</div>
+    
+    <div class="footer">
+        <p>Acesse agora o AcheiUnB e aproveite!</p>
+        <a href="https://acheiunb.com.br" class="link-button">Acessar AcheiUnB</a>
+        
+        <p>Se precisar de ajuda, <strong>nossa equipe está sempre à disposição</strong>! Não hesite em entrar em contato.</p>
+        
+        <div class="footer-logo">
+            <h1 class="footer-text">
+                <span class="italic">Achei</span><span class="bold">UnB</span>
+            </h1>
+        </div>
+    </div>
 
 </body>
 </html>
