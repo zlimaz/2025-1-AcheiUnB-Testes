@@ -1,59 +1,63 @@
-# Nome do workflow
-name: CI/CD Workflow
+name: Tests CI
 
-# Definir quando o workflow será executado
 on:
   push:
     branches: 
-      - main # Executa o workflow ao push na branch 'main'
-      - ajustar-workflow
+      - main
+      - 154-taskautomação-pipeline-ci-com-testes
   pull_request:
     branches: 
-      - main # Executa o workflow ao abrir um PR na branch 'main'
+      - main
 
-# Definindo os jobs
 jobs:
-  # Job para rodar os testes
   test:
     runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:15
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        ports:
+          - 5432:5432
+    
+    env:
+      DB_NAME: ${{ secrets.POSTGRES_DB }}
+      DB_USER: ${{ secrets.POSTGRES_USER }}
+      DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      DB_HOST: localhost
+      DB_PORT: '5432'
+      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      #- name: Set up Docker
-       # uses: docker/setup-buildx-action@v2
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r API/requirements.txt
 
-      #- name: Install Docker Compose
-       # run: |
-        #  sudo apt-get update
-         # sudo apt-get install -y docker-compose
-
-      #- name: Set up Docker Compose
-       # run: |
-        #  docker-compose -f API/docker-compose.yml up -d --build
+      - name: List project files (for debugging)
+        run: |
+          ls -R API/
+      
+      - name: Run tests with coverage
+        run: |
+          pytest API/ --cov=API --cov-report=xml
           
-      #- name: Run migrations
-       # run: |
-        #  docker-compose -f API/docker-compose.yml exec web python manage.py migrate
-
-      #- name: Run tests with coverage
-       # run: |
-        #  docker-compose -f API/docker-compose.yml exec web coverage run --source='.' manage.py test
-
-      #- name: Generate coverage report
-       # run: |
-        #  docker-compose -f API/docker-compose.yml exec web coverage xml
-       # # Gera o relatório em XML, necessário para o Codecov
-
-      #- name: Upload coverage to Codecov
-      #  uses: codecov/codecov-action@v3
-       # with:
-        #  files: ./web/coverage.xml  # Caminho do relatório XML gerado
-         # token: ${{ secrets.CODECOV_TOKEN }}  # O token Codecov é armazenado nos secrets do GitHub
-          #flags: unittests
-          #name: Django Tests
-
-      #- name: Tear down Docker Compose
-       # if: always()
-       # run: |
-        #  docker-compose down
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}  # Token do Codecov armazenado no GitHub Secrets
+          flags: unittests
+          name: Django Tests
