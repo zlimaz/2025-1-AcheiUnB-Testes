@@ -23,7 +23,7 @@
     </div>
 
     <div class="flex w-full justify-start sm:justify-center">
-      <div class="fixed bottom-32 ml-24 transform -translate-x-1/2 flex gap-4 z-10">
+      <div class="bottom-32 ml-24 transform -translate-x-1/2 flex gap-4 z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -47,7 +47,7 @@
           stroke-width="1.5"
           stroke="currentColor"
           class="size-10 text-azul hover:text-laranja transition duration-200 cursor-pointer"
-          @click="goToPreviousPage"
+          @click="goToNextPage"
         >
           <path
             stroke-linecap="round"
