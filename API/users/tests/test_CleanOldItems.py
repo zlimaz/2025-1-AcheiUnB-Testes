@@ -58,13 +58,13 @@ class CleanOldItemsTest(TestCase):
         delete_old_items_and_chats()
 
         # Verifica se o item antigo foi excluído
-        self.assertFalse(Item.objects.filter(id=self.old_item.id).exists())
+        assert not Item.objects.filter(id=self.old_item.id).exists()
 
         # Verifica se o chat antigo foi excluído automaticamente
-        self.assertFalse(ChatRoom.objects.filter(id=self.chat_old.id).exists())
+        assert not ChatRoom.objects.filter(id=self.chat_old.id).exists()
 
         # Verifica se o item recente ainda existe
-        self.assertTrue(Item.objects.filter(id=self.recent_item.id).exists())
+        assert Item.objects.filter(id=self.recent_item.id).exists()
 
         # Verifica se o chat recente ainda existe
-        self.assertTrue(ChatRoom.objects.filter(id=self.chat_recent.id).exists())
+        assert ChatRoom.objects.filter(id=self.chat_recent.id).exists()

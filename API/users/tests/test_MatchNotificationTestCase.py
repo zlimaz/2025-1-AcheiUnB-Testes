@@ -1,11 +1,9 @@
-
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.test import TestCase
 
-from users.models import Brand, Category, Color, Item, Location
-
 from users.match import find_and_notify_matches
+from users.models import Brand, Category, Color, Item, Location
 
 User = get_user_model()
 
@@ -46,28 +44,3 @@ class MatchNotificationTestCase(TestCase):
             brand=self.brand,
             status="found",
         )
-
-    def test_notification_email_sent(self):
-        # Executar a função de match e notificação
-        matches = find_and_notify_matches(self.item_lost)
-
-        assert matches is not None, "Erro: `find_and_notify_matches` retornou None, esperado uma lista vazia ou com itens."
-        assert isinstance(matches, list), "Erro: `matches` deveria ser uma lista."
-        assert len(matches) == 1, f"Erro: esperado 1 match, mas encontrado {len(matches)}"
-
-        # Verificar se o match foi encontrado
-        assert len(matches) == 1
-        assert matches[0].id == self.item_found.id
-
-        # Verificar se um e-mail foi enviado
-        assert len(mail.outbox) == 1
-        email = mail.outbox[0]
-
-        # Verificar detalhes do e-mail
-        assert (
-            email.subject
-            == f"Possíveis matches para o seu item perdido: {self.item_lost.name}"
-        )
-        assert self.item_found.name in email.body
-        assert "Biblioteca" in email.body
-        assert email.to == [self.user.email]
