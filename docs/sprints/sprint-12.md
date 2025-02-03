@@ -41,20 +41,15 @@ adiadas para a Sprint 12 (a grande maioria foi concluída com sucesso). Após is
 devemos fazer ainda até a entrega do projeto. Por fim, definimos todas as tasks da Sprint 12 para seus respectivos responsáveis no Miro.
 
 ### Reunião 2
-Data: DD/MM/AAAA  
-Local: Local da reunião  
+Data: 03/02/2025  
+Local: Discord  
 **Ata:**
 
-
-### Reunião 3
-Data: DD/MM/AAAA  
-Local: Local da reunião  
-**Ata:**
-
+Começamos a review com todos falando o que fizeram no decorrer da sprint, mostrando para os outros membros as novas funcionalidades. A retrospectiva foi pulada, pois não foi visto a necessidade de adicionar ideias em "O que nos ajudou a avançar?", "O que nos deteve?", "Como podemos fazer as coisas de forma diferente?" e "O que devemos fazer a seguir?", seguindo, portanto, para a planning da Sprint 13.
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_ (caso existam).
+> A Sprint 12 foi feita, de maneira geral, com sucesso, e com o adiantamento da apresentação do projeto, foi possível dividir melhor as tarefas, e manter o escopo quase 100%.
 ---
 
 **Observações:**
-> Esse espaço deve ser utilizado para registrar qualquer observação que o time julgar pertinente.
+> O time vai conseguir entregar o trabalho, como planejado!
