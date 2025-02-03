@@ -51,6 +51,10 @@ jobs:
           pip install --upgrade pip
           pip install -r API/requirements.txt
           pip install pytest pytest-django
+
+      - name: List project files (for debugging)
+        run: |
+          ls -R API/
       
       - name: Run tests
         run: |
