@@ -1,67 +1,140 @@
 <template>
-  <!-- Header fixo no topo -->
-  <div class="fixed w-full top-0" style="z-index: 1">
+  <div class="fixed w-full top-0 z-[1]" v-if="isLoaded">
     <ItemHeader :title="itemStatus === 'found' ? 'Item Achado' : 'Item Perdido'" />
   </div>
 
-  <!-- Conteúdo principal -->
   <div class="px-6 py-[120px] flex flex-col items-center gap-6" v-if="item">
-    <!-- Imagem do Item -->
-    <img
-      :src="item.image"
-      alt="Imagem do Item"
-      class="w-full max-w-md h-64 md:h-80 object-cover rounded-lg"
-    />
+    <!-- Container principal para desktop -->
+    <div class="w-full md:flex md:gap-8 md:max-w-4xl">
+      <!-- Container de Imagens (Esquerda) -->
+      <div class="w-full max-w-md md:max-w-none md:w-1/2 relative">
+        <!-- Imagem padrão quando não há fotos -->
+        <div v-if="!item.image_urls || item.image_urls.length === 0" class="w-full h-64">
+          <img
+            :src="notAvailableImage"
+            alt="Imagem não disponível"
+            class="w-full h-full object-contain"
+          />
+        </div>
 
-    <!-- Título, local e tags -->
-    <div class="text-center">
-      <h1 class="text-lg md:text-2xl font-bold">{{ item.name }}</h1>
-      <p class="text-sm md:text-base text-gray-500">
-        {{ itemStatus === "found" ? "Achado em:" : "Perdido em:" }}
-        {{ locationName || "Não especificado" }}
-      </p>
-
-      <!-- Labels dinâmicas -->
-      <div class="flex flex-wrap gap-2 justify-center mt-2">
-        <span
-          v-for="(label, index) in labels"
-          :key="index"
-          :class="
-            label.type === 'category'
-              ? 'bg-blue-500'
-              : label.type === 'brand'
-                ? 'bg-laranja'
-                : 'bg-gray-500'
-          "
-          class="px-4 py-2 rounded-full text-sm font-medium text-white"
+        <div
+          v-else
+          class="hidden md:grid"
+          :class="item.image_urls.length === 1 ? 'grid-cols-1' : 'grid-cols-2 gap-4'"
         >
-          {{
-            label.type === "category"
-              ? "Categoria: "
-              : label.type === "brand"
-                ? "Marca: "
-                : "Cor: "
-          }}{{ label.name }}
-        </span>
+          <img
+            v-for="(url, index) in item.image_urls.slice(0, 2)"
+            :key="index"
+            :src="url"
+            :alt="`Imagem ${index + 1} do item`"
+            class="h-64 w-full object-cover rounded-lg"
+          />
+        </div>
+
+        <div
+          v-if="item.image_urls && item.image_urls.length > 0"
+          class="md:hidden overflow-hidden relative"
+        >
+          <div
+            class="flex transition-transform duration-300 ease-out snap-x snap-mandatory"
+            :style="{ transform: `translateX(-${activeIndex * 100}%)` }"
+          >
+            <div
+              v-for="(url, index) in item.image_urls"
+              :key="index"
+              class="w-full flex-shrink-0 relative snap-start"
+            >
+              <img
+                :src="url"
+                :alt="`Imagem ${index + 1} do item`"
+                class="w-full h-64 object-cover rounded-lg"
+              />
+            </div>
+          </div>
+
+          <div
+            v-if="item.image_urls.length > 1"
+            class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2"
+          >
+            <div
+              v-for="(_, index) in item.image_urls"
+              :key="index"
+              class="w-2 h-2 rounded-full transition-colors duration-300"
+              :class="activeIndex === index ? 'bg-white' : 'bg-gray-300'"
+            />
+          </div>
+
+          <button
+            v-if="item.image_urls.length > 1"
+            @click="prevImage"
+            class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/30 rounded-full p-2 backdrop-blur-sm"
+          >
+            ←
+          </button>
+          <button
+            v-if="item.image_urls.length > 1"
+            @click="nextImage"
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/30 rounded-full p-2 backdrop-blur-sm"
+          >
+            →
+          </button>
+        </div>
+      </div>
+
+      <div class="w-full md:w-1/2 mt-6 md:mt-0">
+        <h1 class="text-lg md:text-2xl font-bold text-left">{{ item.name }}</h1>
+
+        <!-- Sempre exibe o local com o rótulo "Achado em:" -->
+        <p class="text-sm md:text-base text-gray-500 text-left mt-2">
+          Achado em: {{ item.location_name || "Não especificado" }}
+        </p>
+
+        <p
+          v-if="item.found_lost_date && itemStatus === 'found'"
+          class="text-sm md:text-base text-gray-500 text-left mt-1"
+        >
+          Data do achado: {{ formatDateTime(item.found_lost_date) }}
+        </p>
+        <p
+          v-else-if="item.found_lost_date && itemStatus === 'lost'"
+          class="text-sm md:text-base text-gray-500 text-left mt-1"
+        >
+          Data da perda: {{ formatDateTime(item.found_lost_date) }}
+        </p>
+
+        <div class="flex flex-wrap gap-2 justify-start mt-4">
+          <span
+            v-if="item.category_name"
+            class="px-4 py-2 rounded-full text-sm font-medium text-white bg-blue-500"
+          >
+            Categoria: {{ item.category_name }}
+          </span>
+          <span
+            v-if="item.brand_name"
+            class="px-4 py-2 rounded-full text-sm font-medium text-white bg-laranja"
+          >
+            Marca: {{ item.brand_name }}
+          </span>
+          <span
+            v-if="item.color_name"
+            class="px-4 py-2 rounded-full text-sm font-medium text-white bg-gray-500"
+          >
+            Cor: {{ item.color_name }}
+          </span>
+        </div>
+
+        <p class="text-sm md:text-base text-gray-700 text-left mt-4">
+          {{ item.description }}
+        </p>
       </div>
     </div>
 
-    <!-- Descrição -->
-    <p class="text-sm md:text-base text-gray-700 text-center">
-      {{ item.description }}
-    </p>
-
-    <!-- Botão para iniciar o chat -->
     <button
-      class="w-full md:w-1/3 py-3 text-center text-white font-semibold rounded-lg bg-laranja hover:bg-laranja active:bg-laranja focus:ring-2 focus:ring-laranja"
-      @click="startChat"
+      class="bg-laranja text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
+      @click="handleChat"
     >
-      {{ itemStatus === "found" ? "É meu item" : "Este item é meu" }}
+      É meu item
     </button>
-  </div>
-
-  <div v-else class="py-6 text-center">
-    <p class="text-gray-600">Carregando informações do item...</p>
   </div>
 
   <div class="fixed bottom-0 w-full">
@@ -70,127 +143,134 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import api from "../services/api"; // Importa o arquivo api.js
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import api from "../services/api";
 import ItemHeader from "../components/Item-Header.vue";
 import MainMenu from "../components/Main-Menu.vue";
 import { useRoute, useRouter } from "vue-router";
+import notAvailableImage from "@/assets/images/not-available.png";
 
-const item = ref(null);
-const itemStatus = ref("");
-const locationName = ref("");
-const labels = ref([]);
 const route = useRoute();
 const router = useRouter();
-const idItem = route.query.idItem;
-const participant_2 = ref(null);
-const currentUser = ref({ id: null });
+const item = ref(null);
+const itemStatus = ref("");
+const currentUser = ref(null);
+const activeIndex = ref(0);
+const isMobile = ref(window.innerWidth < 768);
+// Flag que indica se os dados foram carregados
+const isLoaded = ref(false);
 
-// 🔍 Busca os detalhes do item para obter o usuário correto (`participant_2`)
+const formatDateTime = (dateString) => {
+  const date = new Date(dateString);
+  return `${date.toLocaleDateString("pt-BR", {
+    timeZone: "America/Sao_Paulo"
+  })} às ${date.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "America/Sao_Paulo"
+  })}`;
+};
+
+const nextImage = () => {
+  activeIndex.value =
+    (activeIndex.value + 1) % item.value.image_urls.length;
+};
+
+const prevImage = () => {
+  activeIndex.value =
+    (activeIndex.value - 1 + item.value.image_urls.length) %
+    item.value.image_urls.length;
+};
+
+const handleResize = () => {
+  isMobile.value = window.innerWidth < 768;
+};
+
 async function fetchItem() {
   try {
-    console.log(`🔍 Buscando detalhes do item ID ${idItem}...`);
-    const response = await api.get(`/items/${idItem}/`);
+    const response = await api.get(`/items/${route.query.idItem}/`);
     item.value = response.data;
-
-    // Determina o status do item (achado ou perdido)
-    itemStatus.value = item.value.status === "found" ? "found" : "lost";
-
-    // ✅ Define `participant_2` corretamente baseado no status do item
-    if (itemStatus.value === "found") {
-      participant_2.value = response.data.user_id; // Quem encontrou o item
-    } else {
-      participant_2.value = currentUser.value.id; // Quem perdeu o item
-    }
-
-    if (!participant_2.value) {
-      console.error("❌ Erro: Não foi possível obter o participant_2.");
-    } else {
-      console.log(`✅ participant_2 encontrado: ${participant_2.value}`);
-    }
-
-    // Busca o nome do local
-    if (item.value.location) {
-      const locationResponse = await api.get(`/locations/${item.value.location}`);
-      locationName.value = locationResponse.data.name;
-    } else {
-      locationName.value = "Não especificado";
-    }
-
-    // Adiciona as labels dinamicamente
-    labels.value = [];
-
-    // Categoria
-    if (item.value.category) {
-      const categoryIds = Array.isArray(item.value.category)
-        ? item.value.category
-        : [item.value.category];
-      const categoryPromises = categoryIds.map((id) =>
-        api.get(`/categories/${id}`).then((res) => ({ name: res.data.name, type: "category" })),
-      );
-      const categories = await Promise.all(categoryPromises);
-      labels.value.push(...categories);
-    }
-
-    // Cor
-    if (item.value.color) {
-      const colorResponse = await api.get(`/colors/${item.value.color}`);
-      labels.value.push({ name: colorResponse.data.name, type: "color" });
-    }
-
-    // Marca
-    if (item.value.brand) {
-      const brandResponse = await api.get(`/brands/${item.value.brand}`);
-      labels.value.push({ name: brandResponse.data.name, type: "brand" });
-    }
+    itemStatus.value = item.value.status;
+    isLoaded.value = true;
+    console.log("Item carregado:", item.value);
   } catch (error) {
     console.error("Erro ao carregar item:", error);
   }
 }
 
-// 🔍 Busca os dados do usuário logado (`participant_1`)
 async function fetchCurrentUser() {
   try {
-    console.log("🔍 Buscando usuário logado...");
     const response = await api.get(`/auth/user/`);
-    currentUser.value.id = response.data.id;
-    console.log("✅ Usuário logado:", response.data);
+    currentUser.value = response.data;
+    console.log("Usuário atual:", currentUser.value);
   } catch (error) {
-    console.error("Erro ao buscar usuário logado:", error);
+    console.error("Erro ao buscar usuário:", error);
   }
 }
 
-// 🚀 Criar o chatroom automaticamente e redirecionar
-async function startChat() {
+const handleChat = async () => {
   try {
-    if (!participant_2.value || !currentUser.value.id) {
-      console.error("❌ Erro: participant_2 ou currentUser.id não definido.");
+    if (!item.value || !item.value.id) {
+      console.error("Item inválido ou não carregado:", item.value);
+      return;
+    }
+    if (!currentUser.value?.id || !item.value?.user_id) {
+      console.error("IDs de usuário inválidos:", {
+        currentUser: currentUser.value,
+        item: item.value
+      });
+      return;
+    }
+    console.log("Item atual (ID):", item.value.id);
+    console.log("Dono do item (user_id):", item.value.user_id);
+    console.log("Usuário atual (ID):", currentUser.value.id);
+
+    const searchParams = {
+      participant_1: currentUser.value.id,
+      participant_2: item.value.user_id,
+      item_id: item.value.id
+    };
+    console.log("Parâmetros para busca de chat:", searchParams);
+
+    const searchResponse = await api.get("/chat/chatrooms/", {
+      params: searchParams
+    });
+    const chatsEncontrados = searchResponse.data;
+    console.log("Chats encontrados:", chatsEncontrados);
+
+    if (chatsEncontrados && chatsEncontrados.length > 0) {
+      router.push(`/chat/${chatsEncontrados[0].id}?itemId=${item.value.id}`);
       return;
     }
 
-    console.log(
-      `🛠 Criando chatroom entre usuário ${currentUser.value.id} e ${participant_2.value}...`,
-    );
-    const chatResponse = await api.post("/chat/chatrooms/", {
+    const chatData = {
       participant_1: currentUser.value.id,
-      participant_2: participant_2.value,
-      item_id: idItem,
-    });
+      participant_2: item.value.user_id,
+      item_id: item.value.id
+    };
+    console.log("Dados para criação de chat:", chatData);
 
-    console.log("✅ Chatroom criado:", chatResponse.data);
+    const createResponse = await api.post("/chat/chatrooms/", chatData);
+    console.log("Resposta da criação de chat:", createResponse.data);
 
-    // 🔀 Redireciona para o chat correto
-    router.push(`/chat/${chatResponse.data.id}`);
+    if (createResponse.data?.id) {
+      router.push(`/chat/${createResponse.data.id}?itemId=${item.value.id}`);
+    } else {
+      throw new Error("Resposta inválida ao criar chatroom");
+    }
   } catch (error) {
-    console.error("Erro ao criar chatroom:", error);
+    console.error("Erro ao criar/aceder chat:", error.response?.data || error.message);
+    alert("Ocorreu um erro ao iniciar o chat. Por favor, tente novamente.");
   }
-}
+};
 
-// ⏳ Carrega os dados quando o componente é montado
 onMounted(async () => {
   await fetchCurrentUser();
   await fetchItem();
+  window.addEventListener("resize", handleResize);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", handleResize);
 });
 </script>
-
-<style scoped></style>

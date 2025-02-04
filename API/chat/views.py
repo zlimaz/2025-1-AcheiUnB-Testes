@@ -28,20 +28,21 @@ class ChatRoomViewSet(ModelViewSet):
 
         # Verifica se o item existe
         try:
-            item = Item.objects.get(id=item_id)
+            Item.objects.get(id=item_id)
         except Item.DoesNotExist:
             raise ValidationError({"item": "Item não encontrado."})
 
-        # Verifica se já existe um chat para este item e participantes
-        if ChatRoom.objects.filter(
-            item=item,
-            participant_1__in=[participant_1_id, participant_2_id],
-            participant_2__in=[participant_1_id, participant_2_id],
-        ).exists():
-            raise ValidationError(
-                "Já existe um chat para este item com os mesmos participantes."
-            )
+        # Verifica se já existe um chat para essa combinação
+        existing_chat = ChatRoom.objects.filter(
+            participant_1=participant_1_id, participant_2=participant_2_id, item_id=item_id
+        ).first()
 
+        if existing_chat:
+            # Se já existir, retorna o chat existente em vez de criar um novo
+            serializer = self.get_serializer(existing_chat)
+            return Response(serializer.data)
+
+        # Se não existir, cria o chat normalmente
         return super().create(request, *args, **kwargs)
 
 
