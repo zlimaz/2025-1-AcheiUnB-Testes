@@ -1,25 +1,25 @@
 <template>
   <div class="fixed top-0 left-0 w-full bg-verde shadow-md py-3 px-4 flex items-center z-10">
     
-    <!-- Seção Esquerda: Botão de Voltar, Dados do Usuário e Item -->
-    <div class="flex items-center space-x-2 min-w-[180px] md:min-w-[260px]">
-      <!-- Botão de Voltar -->
-      <img 
-        @click="goBack"
-        :src="LeftArrow"
-        alt="Voltar"
-        class="w-6 h-6 md:w-8 md:h-8 cursor-pointer"
-      />
-      
+    <!-- Botão de Voltar -->
+    <img 
+      @click="goBack"
+      :src="LeftArrow"
+      alt="Voltar"
+      class="w-6 h-6 md:w-8 md:h-8 cursor-pointer"
+    />
+    
+    <!-- Container do usuário e item com espaçamento adequado -->
+    <div class="flex items-center space-x-4 ml-2">
       <!-- Foto do Usuário -->
       <img
         :src="userImage || defaultAvatar"
         alt="Foto do usuário"
-        class="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover border-2 border-white"
+        class="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border-2 border-white"
       />
 
       <!-- Nome do Usuário -->
-      <span class="text-white font-semibold text-xs md:text-sm truncate max-w-[90px] md:max-w-[160px]">
+      <span class="text-white font-semibold text-sm md:text-base truncate max-w-[120px] md:max-w-[200px]">
         {{ userName || "Usuário" }}
       </span>
 
@@ -27,23 +27,25 @@
       <img
         :src="itemImage || notAvailableImage"
         alt="Imagem do item"
-        class="w-9 h-9 md:w-12 md:h-12 rounded-lg object-cover border-2 border-white"
+        class="w-8 h-8 md:w-10 md:h-10 rounded-lg object-cover border-2 border-white"
       />
     </div>
 
-    <div class="absolute left-1/2 transform -translate-x-1/2 top-2 md:top-3 lg:top-4 flex justify-center pointer-events-auto">
-      <router-link to="/about">
-        <Logo class="text-white w-2 h-1 sm:w-6 sm:h-2.5 md:w-4 md:h-1.5 lg:w-8 lg:h-3.5" />
+    <!-- Logo: alinhada à direita em telas menores, centralizada em telas maiores -->
+    <div class="ml-auto md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+      <router-link to="/about" class="no-underline text-white">
+        <Logo class="pr-4" sizeClass="text-2xl" />
       </router-link>
     </div>
-  </div>*/
+
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import api from "../services/api";
-//import Logo from "./Logo.vue";
+import Logo from "./Logo.vue"; // Importa a logo branca do projeto
 import defaultAvatar from "@/assets/images/default-avatar.png";
 import notAvailableImage from "@/assets/images/not-available.png";
 import LeftArrow from "@/assets/icons/arrow-left-white.svg";
