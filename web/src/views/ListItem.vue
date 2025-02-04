@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed w-full top-0 z-[1]">
+  <div class="fixed w-full top-0 z-[1]" v-if="isLoaded">
     <ItemHeader :title="itemStatus === 'found' ? 'Item Achado' : 'Item Perdido'" />
   </div>
 
@@ -8,7 +8,7 @@
     <div class="w-full md:flex md:gap-8 md:max-w-4xl">
       <!-- Container de Imagens (Esquerda) -->
       <div class="w-full max-w-md md:max-w-none md:w-1/2 relative">
-                <!-- Imagem padrão quando não há fotos -->
+        <!-- Imagem padrão quando não há fotos -->
         <div v-if="!item.image_urls || item.image_urls.length === 0" class="w-full h-64">
           <img
             :src="notAvailableImage"
@@ -17,14 +17,13 @@
           />
         </div>
 
-        <!-- Grid para desktop -->
-        <div 
+        <div
           v-else
           class="hidden md:grid"
           :class="item.image_urls.length === 1 ? 'grid-cols-1' : 'grid-cols-2 gap-4'"
         >
           <img
-            v-for="(url, index) in item.image_urls.slice(0,2)"
+            v-for="(url, index) in item.image_urls.slice(0, 2)"
             :key="index"
             :src="url"
             :alt="`Imagem ${index + 1} do item`"
@@ -32,8 +31,7 @@
           />
         </div>
 
-        <!-- Carrossel para mobile -->
-        <div 
+        <div
           v-if="item.image_urls && item.image_urls.length > 0"
           class="md:hidden overflow-hidden relative"
         >
@@ -54,8 +52,10 @@
             </div>
           </div>
 
-          <!-- Indicadores -->
-          <div v-if="item.image_urls.length > 1" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+          <div
+            v-if="item.image_urls.length > 1"
+            class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2"
+          >
             <div
               v-for="(_, index) in item.image_urls"
               :key="index"
@@ -64,7 +64,6 @@
             />
           </div>
 
-          <!-- Botões de navegação -->
           <button
             v-if="item.image_urls.length > 1"
             @click="prevImage"
@@ -82,26 +81,46 @@
         </div>
       </div>
 
-      <!-- Container de Informações (Direita) -->
       <div class="w-full md:w-1/2 mt-6 md:mt-0">
         <h1 class="text-lg md:text-2xl font-bold text-left">{{ item.name }}</h1>
-        
+
+        <!-- Sempre exibe o local com o rótulo "Achado em:" -->
         <p class="text-sm md:text-base text-gray-500 text-left mt-2">
-          {{ itemStatus === "found" ? "Achado em:" : "Perdido em:" }}
-          {{ item.location_name || "Não especificado" }}
+          Achado em: {{ item.location_name || "Não especificado" }}
         </p>
 
-        <!-- Data e horário com validação -->
-        <p 
-          v-if="shouldShowDateTime"
+        <p
+          v-if="item.found_lost_date && itemStatus === 'found'"
           class="text-sm md:text-base text-gray-500 text-left mt-1"
         >
-          {{ itemStatus === "found" ? "Data do achado:" : "Data da perda:" }}
-          {{ formatDateTime(item.found_lost_date) }}
+          Data do achado: {{ formatDateTime(item.found_lost_date) }}
+        </p>
+        <p
+          v-else-if="item.found_lost_date && itemStatus === 'lost'"
+          class="text-sm md:text-base text-gray-500 text-left mt-1"
+        >
+          Data da perda: {{ formatDateTime(item.found_lost_date) }}
         </p>
 
         <div class="flex flex-wrap gap-2 justify-start mt-4">
-          <!-- ... (tags de categoria/marca/cor mantidas) ... -->
+          <span
+            v-if="item.category_name"
+            class="px-4 py-2 rounded-full text-sm font-medium text-white bg-blue-500"
+          >
+            Categoria: {{ item.category_name }}
+          </span>
+          <span
+            v-if="item.brand_name"
+            class="px-4 py-2 rounded-full text-sm font-medium text-white bg-laranja"
+          >
+            Marca: {{ item.brand_name }}
+          </span>
+          <span
+            v-if="item.color_name"
+            class="px-4 py-2 rounded-full text-sm font-medium text-white bg-gray-500"
+          >
+            Cor: {{ item.color_name }}
+          </span>
         </div>
 
         <p class="text-sm md:text-base text-gray-700 text-left mt-4">
@@ -110,17 +129,12 @@
       </div>
     </div>
 
-    <!-- Botão com efeito hover -->
     <button
-    class="bg-laranja text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
-    @click="handleChat"
+      class="bg-laranja text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
+      @click="handleChat"
     >
       É meu item
     </button>
-  </div>
-
-  <div v-else class="py-6 text-center">
-    <p class="text-gray-600">Carregando informações do item...</p>
   </div>
 
   <div class="fixed bottom-0 w-full">
@@ -129,7 +143,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, nextTick, computed } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import api from "../services/api";
 import ItemHeader from "../components/Item-Header.vue";
 import MainMenu from "../components/Main-Menu.vue";
@@ -143,60 +157,42 @@ const itemStatus = ref("");
 const currentUser = ref(null);
 const activeIndex = ref(0);
 const isMobile = ref(window.innerWidth < 768);
+// Flag que indica se os dados foram carregados
+const isLoaded = ref(false);
 
-// Validação de datas para itens perdidos
-const isValidLostDate = (dateString) => {
-  const date = new Date(dateString);
-  const minDate = new Date('2023-01-01T00:00:00-03:00'); // Fuso horário de Brasília
-  const today = new Date();
-  
-  // Considera até o final do dia atual
-  const endOfToday = new Date();
-  endOfToday.setHours(23, 59, 59, 999);
-
-  return date >= minDate && date <= endOfToday;
-};
-
-const shouldShowDateTime = computed(() => {
-  if (!item.value.found_lost_date) return false;
-  
-  if (itemStatus.value === 'found') return true;
-  
-  return isValidLostDate(item.value.found_lost_date);
-});
-
-// Formatar data e hora
 const formatDateTime = (dateString) => {
   const date = new Date(dateString);
-  return `${date.toLocaleDateString('pt-BR', {
-    timeZone: 'America/Sao_Paulo'
-  })} às ${date.toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: 'America/Sao_Paulo'
+  return `${date.toLocaleDateString("pt-BR", {
+    timeZone: "America/Sao_Paulo"
+  })} às ${date.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "America/Sao_Paulo"
   })}`;
 };
 
-// Carrossel
 const nextImage = () => {
-  activeIndex.value = (activeIndex.value + 1) % item.value.image_urls.length;
+  activeIndex.value =
+    (activeIndex.value + 1) % item.value.image_urls.length;
 };
 
 const prevImage = () => {
-  activeIndex.value = (activeIndex.value - 1 + item.value.image_urls.length) % item.value.image_urls.length;
+  activeIndex.value =
+    (activeIndex.value - 1 + item.value.image_urls.length) %
+    item.value.image_urls.length;
 };
 
-// Responsividade
 const handleResize = () => {
   isMobile.value = window.innerWidth < 768;
 };
 
-// Função para buscar o item
 async function fetchItem() {
   try {
     const response = await api.get(`/items/${route.query.idItem}/`);
     item.value = response.data;
     itemStatus.value = item.value.status;
+    isLoaded.value = true;
+    console.log("Item carregado:", item.value);
   } catch (error) {
     console.error("Erro ao carregar item:", error);
   }
@@ -206,76 +202,75 @@ async function fetchCurrentUser() {
   try {
     const response = await api.get(`/auth/user/`);
     currentUser.value = response.data;
+    console.log("Usuário atual:", currentUser.value);
   } catch (error) {
     console.error("Erro ao buscar usuário:", error);
   }
 }
+
 const handleChat = async () => {
   try {
+    if (!item.value || !item.value.id) {
+      console.error("Item inválido ou não carregado:", item.value);
+      return;
+    }
     if (!currentUser.value?.id || !item.value?.user_id) {
-      console.error("Erro: IDs de usuário inválidos");
+      console.error("IDs de usuário inválidos:", {
+        currentUser: currentUser.value,
+        item: item.value
+      });
+      return;
+    }
+    console.log("Item atual (ID):", item.value.id);
+    console.log("Dono do item (user_id):", item.value.user_id);
+    console.log("Usuário atual (ID):", currentUser.value.id);
+
+    const searchParams = {
+      participant_1: currentUser.value.id,
+      participant_2: item.value.user_id,
+      item_id: item.value.id
+    };
+    console.log("Parâmetros para busca de chat:", searchParams);
+
+    const searchResponse = await api.get("/chat/chatrooms/", {
+      params: searchParams
+    });
+    const chatsEncontrados = searchResponse.data;
+    console.log("Chats encontrados:", chatsEncontrados);
+
+    if (chatsEncontrados && chatsEncontrados.length > 0) {
+      router.push(`/chat/${chatsEncontrados[0].id}?itemId=${item.value.id}`);
       return;
     }
 
-    // Verificar se já existe um chatroom
-    const existingRoom = await findExistingChatroom();
-    
-    if (existingRoom) {
-      // Redirecionar para o chat existente
-      router.push(`/chat/${existingRoom.id}`);
-      return;
-    }
-
-    // Criar novo chatroom
     const chatData = {
       participant_1: currentUser.value.id,
       participant_2: item.value.user_id,
       item_id: item.value.id
     };
+    console.log("Dados para criação de chat:", chatData);
 
-    const response = await api.post("/chat/chatrooms/", chatData);
-    
-    if (response.data?.id) {
-      // Redirecionar para o novo chat
-      router.push(`/chat/${response.data.id}`);
+    const createResponse = await api.post("/chat/chatrooms/", chatData);
+    console.log("Resposta da criação de chat:", createResponse.data);
+
+    if (createResponse.data?.id) {
+      router.push(`/chat/${createResponse.data.id}?itemId=${item.value.id}`);
     } else {
       throw new Error("Resposta inválida ao criar chatroom");
     }
-
   } catch (error) {
     console.error("Erro ao criar/aceder chat:", error.response?.data || error.message);
     alert("Ocorreu um erro ao iniciar o chat. Por favor, tente novamente.");
   }
 };
 
-// Função para buscar chatroom existente
-const findExistingChatroom = async () => {
-  try {
-    const response = await api.get("/chat/chatrooms/", {
-      params: {
-        participant_1: currentUser.value.id,
-        participant_2: item.value.user_id,
-        item_id: item.value.id
-      }
-    });
-
-    if (response.data?.results?.length > 0) {
-      return response.data.results[0];
-    }
-    return null;
-  } catch (error) {
-    console.error("Erro ao buscar chatrooms:", error);
-    return null;
-  }
-};
-
 onMounted(async () => {
-  window.addEventListener('resize', handleResize);
   await fetchCurrentUser();
   await fetchItem();
+  window.addEventListener("resize", handleResize);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
+  window.removeEventListener("resize", handleResize);
 });
 </script>
