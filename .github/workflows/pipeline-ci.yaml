@@ -20,11 +20,6 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     env:
       PYTHONPATH: ${{ github.workspace }}/API  # Caminho para o diretório API
@@ -51,18 +46,21 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r API/requirements.txt
+          pip install pytest pytest-django coverage
 
-      - name: Run migrations
-        working-directory: ./API  # Execute no diretório API
-        run: |
-          python manage.py migrate --noinput
 
-      - name: Run tests
+      - name: Run Black (formatação)
+        run: black --check .
+
+      - name: Run Ruff (linting)
+        run: ruff check .
+
+      - name: Run tests with coverage
         run: |
-          pytest API/AcheiUnB/tests/ --cov=AcheiUnB --cov-report=xml
+          coverage run -m pytest tests/
+          coverage report -m
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          files: ./coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
