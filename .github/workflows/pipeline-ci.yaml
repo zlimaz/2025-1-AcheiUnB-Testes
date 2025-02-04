@@ -49,7 +49,7 @@ jobs:
           pip install coverage
 
       - name: Run migrations
-        run: python manage.py migrate
+        run: python API/manage.py migrate
 
       # - name: Run Black (formatação)
       #   run: black --check .
