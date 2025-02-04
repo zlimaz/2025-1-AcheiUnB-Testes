@@ -48,6 +48,8 @@ jobs:
           pip install -r API/requirements.txt
           pip install coverage
 
+      - name: Run migrations
+        run: python manage.py migrate
 
       # - name: Run Black (formatação)
       #   run: black --check .
