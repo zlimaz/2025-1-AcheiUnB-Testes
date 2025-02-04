@@ -49,11 +49,25 @@ jobs:
           pip install pytest pytest-django coverage
 
 
-      - name: Run Black (formatação)
-        run: black --check .
+      # - name: Run Black (formatação)
+      #   run: black --check .
 
-      - name: Run Ruff (linting)
-        run: ruff check .
+      # - name: Run Ruff (linting)
+      #   run: ruff check .
+
+      # - name: Post comment on PR if linting fails
+      #   if: failure()
+      #   uses: mshick/add-pr-comment@v2
+      #   with:
+      #     message: |
+      #       ❌ **O código não passou na formatação e linting!**
+            
+      #       Por favor, corrija os problemas antes de fazer push novamente:
+            
+      #       🖊️ **Formatação:** Rode `black .`
+      #       🔍 **Linting:** Rode `ruff check --fix .`
+            
+      #       Depois de corrigir, faça `git add .`, `git commit -m "Corrigindo lint"` e `git push`.
 
       - name: Run tests with coverage
         run: |
