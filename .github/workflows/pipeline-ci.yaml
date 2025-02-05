@@ -8,80 +8,24 @@ on:
   pull_request:
     branches: 
       - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      db:
-        image: postgres:15
-        env:
-          POSTGRES_DB: ${{ secrets.DB_NAME }}
-          POSTGRES_USER: ${{ secrets.DB_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        ports:
-          - 5432:5432
-
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-
-
-    env:
-      REDIS_URL: redis://localhost:6379/0
-      PYTHONPATH: ${{ github.workspace }}/API  # Caminho para o diretório API
-      DJANGO_SETTINGS_MODULE: AcheiUnB.settings  # Ajustado para o módulo correto
-      DB_HOST: localhost
-      DB_PORT: 5432
-      DB_NAME: ${{ secrets.DB_NAME }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
-      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
-      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
+      - name: Set up Docker Compose
         run: |
-          pip install --upgrade pip
-          pip install -r API/requirements.txt
-          pip install coverage
-
-      - name: Run migrations
-        run: python API/manage.py migrate
-
-      # - name: Run Black (formatação)
-      #   run: black --check .
-
-      # - name: Run Ruff (linting)
-      #   run: ruff check .
-
-      # - name: Post comment on PR if linting fails
-      #   if: failure()
-      #   uses: mshick/add-pr-comment@v2
-      #   with:
-      #     message: |
-      #       ❌ **O código não passou na formatação e linting!**
-            
-      #       Por favor, corrija os problemas antes de fazer push novamente:
-            
-      #       🖊️ **Formatação:** Rode `black .`
-      #       🔍 **Linting:** Rode `ruff check --fix .`
-            
-      #       Depois de corrigir, faça `git add .`, `git commit -m "Corrigindo lint"` e `git push`.
-
-      - name: Run tests with coverage
+          docker-compose -f docker-compose.yml up -d --build
+          docker-compose run web python manage.py migrate
+          
+      - name: Run tests
         run: |
-          coverage run -m pytest
-          coverage report -m
+          docker-compose run web coverage run -m pytest
+          docker-compose run web coverage report -m
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
