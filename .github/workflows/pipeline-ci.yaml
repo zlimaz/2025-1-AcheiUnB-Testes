@@ -30,6 +30,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install Docker Compose  # 🚀 Adicionamos este passo
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
+
       - name: Set up Docker Compose
         run: docker-compose up -d  # Inicia os serviços do Docker em segundo plano
 
