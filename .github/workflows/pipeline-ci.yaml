@@ -21,6 +21,12 @@ jobs:
         ports:
           - 5432:5432
 
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+
+
     env:
       PYTHONPATH: ${{ github.workspace }}/API  # Caminho para o diretório API
       DJANGO_SETTINGS_MODULE: AcheiUnB.settings  # Ajustado para o módulo correto
