@@ -28,7 +28,7 @@ jobs:
 
 
     env:
-      REDIS_URL: redis://redis:6379/0
+      REDIS_URL: redis://localhost:6379/0
       PYTHONPATH: ${{ github.workspace }}/API  # Caminho para o diretório API
       DJANGO_SETTINGS_MODULE: AcheiUnB.settings  # Ajustado para o módulo correto
       DB_HOST: localhost
