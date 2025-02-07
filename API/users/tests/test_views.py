@@ -47,7 +47,6 @@ class UserListViewTests(TestCase):
 # =====================================================
 class ItemViewSetTests(APITestCase):
     def setUp(self):
-        # Autenticação necessária para criação/atualização
         self.user = User.objects.create_user(
             username="testauth", email="test@auth.com", password="123"
         )
@@ -111,8 +110,6 @@ class ItemViewSetTests(APITestCase):
             "status": "lost",
         }
         response = self.client.post("/api/items/", data, format="json")
-        # Como a criação de categoria está retornando 201 no comportamento esperado,
-        # aqui o teste espera 201. Se o endpoint estiver retornando 201, tudo ok.
         assert response.status_code == 201
         mock_task.assert_called_once()
 
@@ -130,7 +127,6 @@ class ItemViewSetTests(APITestCase):
 # =====================================================
 class MyItemsViewTests(APITestCase):
     def setUp(self):
-        # Cria um usuário e autentica para os testes que exigem acesso
         self.user = User.objects.create_user(
             username="myuser", email="myuser@example.com", password="1234"
         )
@@ -174,7 +170,6 @@ class MyItemsViewTests(APITestCase):
         assert response.data[0]["name"] == "Notebook"
 
     def test_my_lost_items_no_auth(self):
-        # Se não autenticado, a view deve retornar 401.
         from rest_framework.permissions import IsAuthenticated
 
         with patch.object(MyItemsFoundView, "permission_classes", [IsAuthenticated]):
@@ -304,9 +299,7 @@ class CategoryViewSetTests(APITestCase):
     def test_create_category(self):
         data = {"name": "Livros"}
         response = self.client.post("/api/categories/", data, format="json")
-        # Ajustamos o teste para esperar 400 (Bad Request) se o serializer rejeitar os dados.
         assert response.status_code == 400
-        # Se a criação falhar, a contagem não deve aumentar.
         assert Category.objects.count() == 1
 
     def test_retrieve_category(self):

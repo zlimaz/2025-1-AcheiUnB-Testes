@@ -40,7 +40,6 @@ class ViteAssetTagTests(TestCase):
         os.path.join(settings.BASE_DIR, "manifest.json"),
     )
     def test_vite_asset_js(self, mock_manifest):
-        """Testa se retorna o caminho correto do arquivo JS."""
         result = vite_asset("index.html", "js")
         assert result.startswith("/static/dist/")
         assert result.endswith(".js")
@@ -65,7 +64,6 @@ class ViteAssetTagTests(TestCase):
         os.path.join(settings.BASE_DIR, "manifest.json"),
     )
     def test_vite_asset_css(self, mock_manifest):
-        """Testa se retorna o caminho correto do arquivo CSS."""
         result = vite_asset("index.html", "css")
         assert result.startswith("/static/dist/")
         assert result.endswith(".css")
@@ -90,7 +88,6 @@ class ViteAssetTagTests(TestCase):
         os.path.join(settings.BASE_DIR, "manifest.json"),
     )
     def test_vite_asset_missing_entry(self, mock_manifest):
-        """Testa se retorna string vazia quando a entrada não está no manifest."""
         result = vite_asset("nonexistent.html", "js")
         assert result == ""
 
@@ -114,7 +111,6 @@ class ViteAssetTagTests(TestCase):
         os.path.join(settings.BASE_DIR, "manifest.json"),
     )
     def test_vite_asset_missing_css(self, mock_manifest):
-        """Testa se retorna string vazia quando não há CSS na entrada."""
         result = vite_asset("about.html", "css")
         assert result == ""
 
@@ -138,6 +134,5 @@ class ViteAssetTagTests(TestCase):
         os.path.join(settings.BASE_DIR, "manifest.json"),
     )
     def test_vite_asset_invalid_type(self, mock_manifest):
-        """Testa se retorna string vazia para um tipo de asset inválido."""
         result = vite_asset("index.html", "invalid")
         assert result == ""
