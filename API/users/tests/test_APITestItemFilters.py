@@ -27,7 +27,7 @@ class APITestItemFilters(APITestCase):
             name="Relógio",
             category=self.category1,
             color=self.color1,
-            location=self.location1, 
+            location=self.location1,
             status="found",
         )
         self.item2 = Item.objects.create(
@@ -35,7 +35,7 @@ class APITestItemFilters(APITestCase):
             name="Celular",
             category=self.category2,
             color=self.color2,
-            location=self.location2, 
+            location=self.location2,
             status="lost",
         )
 

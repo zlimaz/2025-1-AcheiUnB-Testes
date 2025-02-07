@@ -74,7 +74,7 @@ class MessageViewSetTests(APITestCase):
         response = self.client.get(f"/api/chat/messages/?room={self.chat_room.id}")
 
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data["results"]) == 2 
+        assert len(response.data["results"]) == 2
 
 
 class ClearChatsViewTests(APITestCase):
@@ -94,15 +94,15 @@ class ClearChatsViewTests(APITestCase):
         )
 
     def test_clear_chats_admin_success(self):
-        response = self.client.delete("/api/chat/clear_chats/")  
+        response = self.client.delete("/api/chat/clear_chats/")
 
         assert response.status_code == status.HTTP_200_OK
         assert ChatRoom.objects.count() == 0
         assert Message.objects.count() == 0
 
     def test_clear_chats_non_admin_forbidden(self):
-        self.client.force_authenticate(user=self.user)  
+        self.client.force_authenticate(user=self.user)
 
-        response = self.client.delete("/api/chat/clear_chats/")  
+        response = self.client.delete("/api/chat/clear_chats/")
 
         assert response.status_code == status.HTTP_403_FORBIDDEN
