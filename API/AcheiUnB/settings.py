@@ -77,9 +77,9 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "SIGNING_KEY": SECRET_KEY,  # Use a chave secreta do Django
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=365),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=365 * 10),
+    "SIGNING_KEY": SECRET_KEY,
     "ALGORITHM": "HS256",
 }
 
