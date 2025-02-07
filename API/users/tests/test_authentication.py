@@ -21,7 +21,6 @@ class CookieJWTAuthenticationTests(TestCase):
         self.token = str(AccessToken.for_user(self.user))
 
     def test_authenticate_with_cookie(self):
-        """Testa autenticação com token JWT armazenado no cookie."""
         request = self.factory.get("/")
         request.COOKIES["access_token"] = self.token
 
@@ -35,7 +34,6 @@ class CookieJWTAuthenticationTests(TestCase):
                 assert validated_token == self.token
 
     def test_authenticate_with_header(self):
-        """Testa autenticação com token JWT no cabeçalho Authorization."""
         request = self.factory.get("/")
         request.META["HTTP_AUTHORIZATION"] = f"Bearer {self.token}"
 
@@ -49,12 +47,10 @@ class CookieJWTAuthenticationTests(TestCase):
                 assert validated_token == self.token
 
     def test_authenticate_without_token(self):
-        """Testa requisição sem cookie ou header de autorização."""
         request = self.factory.get("/")
         assert self.authenticator.authenticate(request) is None
 
     def test_authenticate_invalid_token(self):
-        """Testa autenticação com token inválido."""
         request = self.factory.get("/")
         request.COOKIES["access_token"] = "invalid.token.value"
 
@@ -67,9 +63,8 @@ class CookieJWTAuthenticationTests(TestCase):
                 self.authenticator.authenticate(request)
 
     def test_authenticate_with_malformed_header(self):
-        """Testa autenticação com header malformado (sem 'Bearer ')."""
         request = self.factory.get("/")
-        request.META["HTTP_AUTHORIZATION"] = self.token  # Faltando 'Bearer '
+        request.META["HTTP_AUTHORIZATION"] = self.token
 
         with patch.object(
             CookieJWTAuthentication,

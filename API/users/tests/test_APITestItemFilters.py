@@ -13,25 +13,21 @@ class APITestItemFilters(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="testuser", password="password")
 
-        # Criar categorias
         self.category1 = Category.objects.create(name="Acessórios", category_id="01")
         self.category2 = Category.objects.create(name="Eletrônicos", category_id="02")
 
-        # Criar cores
         self.color1 = Color.objects.create(name="Preto", color_id="01")
         self.color2 = Color.objects.create(name="Branco", color_id="02")
 
-        # Criar localizações
         self.location1 = Location.objects.create(name="Biblioteca", location_id="01")
         self.location2 = Location.objects.create(name="Sala de Aula", location_id="02")
 
-        # Criar itens
         self.item1 = Item.objects.create(
             user=self.user,
             name="Relógio",
             category=self.category1,
             color=self.color1,
-            location=self.location1,  # Atribuir localização
+            location=self.location1, 
             status="found",
         )
         self.item2 = Item.objects.create(
@@ -39,53 +35,53 @@ class APITestItemFilters(APITestCase):
             name="Celular",
             category=self.category2,
             color=self.color2,
-            location=self.location2,  # Atribuir localização
+            location=self.location2, 
             status="lost",
         )
 
     def test_filter_by_category_name(self):
         response = self.client.get("/api/items/?category_name=Acessórios")
         print("Resposta da API (Categoria):", response.data)
-        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert len(response.data["results"]) == 1
         assert response.data["results"][0]["category_name"] == "Acessórios"
 
     def test_filter_by_color_name(self):
         response = self.client.get("/api/items/?color_name=Preto")
         print("Resposta da API (Cor):", response.data)
-        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert len(response.data["results"]) == 1
         assert response.data["results"][0]["color_name"] == "Preto"
 
     def test_filter_by_status(self):
         response = self.client.get("/api/items/?status=found")
         print("Resposta da API (Status 'found'):", response.data)
-        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert len(response.data["results"]) == 1
         assert response.data["results"][0]["status"] == "found"
 
         response = self.client.get("/api/items/?status=lost")
         print("Resposta da API (Status 'lost'):", response.data)
-        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert len(response.data["results"]) == 1
         assert response.data["results"][0]["status"] == "lost"
 
     def test_filter_by_multiple_parameters(self):
         response = self.client.get("/api/items/?category_name=Acessórios&color_name=Preto")
         print("Resposta da API (Filtros múltiplos):", response.data)
-        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert len(response.data["results"]) == 1
         assert response.data["results"][0]["category_name"] == "Acessórios"
         assert response.data["results"][0]["color_name"] == "Preto"
 
         response = self.client.get("/api/items/?category_name=Acessórios&color_name=Branco")
         print("Resposta da API (Filtros múltiplos sem resultados):", response.data)
-        assert len(response.data["results"]) == 0  # Nenhum item deve ser retornado
+        assert len(response.data["results"]) == 0
 
     def test_no_filters(self):
         response = self.client.get("/api/items/")
         print("Resposta da API (Sem filtros):", response.data)
-        assert len(response.data["results"]) == 2  # Todos os itens devem ser retornados
+        assert len(response.data["results"]) == 2
 
     def test_no_results(self):
         response = self.client.get("/api/items/?category_name=NãoExiste")
         print("Resposta da API (Sem resultados):", response.data)
-        assert len(response.data["results"]) == 0  # Nenhum item deve ser retornado
+        assert len(response.data["results"]) == 0
 
     def test_update_item(self):
         self.client.force_authenticate(user=self.user)
@@ -101,12 +97,12 @@ class APITestItemFilters(APITestCase):
         assert "results" in response.data
         assert "count" in response.data
         assert "next" in response.data or "previous" in response.data
-        assert len(response.data["results"]) <= 10  # Supondo um limite de 10 itens por página
+        assert len(response.data["results"]) <= 10
 
     def test_search_by_name(self):
         response = self.client.get("/api/items/?search=Relógio")
         assert response.status_code == 200
-        assert len(response.data["results"]) == 1  # Deve retornar apenas 1 item
+        assert len(response.data["results"]) == 1
         assert response.data["results"][0]["name"] == "Relógio"
 
     def test_search_by_description(self):
@@ -138,7 +134,6 @@ class APITestItemFilters(APITestCase):
         assert results[0]["created_at"] <= results[1]["created_at"]
 
     def test_ordering_by_found_lost_date(self):
-        # Garanta que os itens tenham uma `found_lost_date`
         self.item1.found_lost_date = now() - timedelta(days=1)
         self.item2.found_lost_date = now()
         self.item1.save()
@@ -147,8 +142,6 @@ class APITestItemFilters(APITestCase):
         response = self.client.get("/api/items/?ordering=found_lost_date")
         assert response.status_code == 200
         results = response.data["results"]
-
-        # Ignorar itens sem `found_lost_date`
         results = [r for r in results if r["found_lost_date"] is not None]
         assert len(results) >= 2
         assert results[0]["found_lost_date"] <= results[1]["found_lost_date"]
