@@ -1,6 +1,10 @@
 <template>
   <div class="fixed w-full top-0 z-[1]" v-if="isLoaded">
-    <ItemHeader :title="itemStatus === 'found' ? 'Item Achado' : 'Item Perdido'" />
+    <ItemHeader 
+      :title="itemStatus === 'found' ? 'Item Achado' : 'Item Perdido'"
+      :userId="currentUser.id"
+      :itemUserId="item.user_id"
+      />
   </div>
 
   <div class="px-6 py-[120px] flex flex-col items-center gap-6" v-if="item">
@@ -82,7 +86,7 @@
       </div>
 
       <div class="w-full md:w-1/2 mt-6 md:mt-0">
-        <h1 class="text-lg md:text-2xl font-bold text-left">{{ item.name }}</h1>
+        <h1 class="text-lg md:text-2xl font-bold break-words">{{ item.name }}</h1>
 
         <!-- Sempre exibe o local com o rótulo "Achado em:" -->
         <p class="text-sm md:text-base text-gray-500 text-left mt-2">

@@ -17,8 +17,24 @@
       </span>
     </div>
 
-    <!-- Logo à Direita -->
-    <div class="flex items-center w-1/4 justify-end">
+
+    <!-- Caso usuário atual seja criador do anúncio mostra o botão de editar item -->
+    <button
+    v-if="userId === itemUserId"
+    type="button"
+    
+    >
+      <img
+        src="@/assets/icons/EditarPerfil.svg" 
+        alt="Editar Item"
+        class="w-[25px] h-[25px] text-white cursor-pointer"
+        />
+    </button>
+
+    <!-- Logo à Direita somente caso usuário atual não seja criador do anúncio -->
+    <div
+     v-else
+    class="flex items-center w-1/4 justify-end">
       <router-link to="/about" class="no-underline text-white">
         <Logo class="pr-2 md:pr-4" sizeClass="text-xl md:text-2xl" />
       </router-link>
@@ -39,6 +55,8 @@ export default {
       type: String,
       required: true,
     },
+    userId: Number,
+    itemUserId: Number,
   },
   methods: {
     goBack() {
