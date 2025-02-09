@@ -8,7 +8,11 @@
       <SubMenu />
     </div>
 
+    <!-- Se não houver itens, exibir mensagem e imagem -->
+    <EmptyState v-if="lostItems.length === 0" message="está sem itens perdidos... Você pode adicionar um!" />
+
     <div
+      v-else
       class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-10"
     >
       <ItemCard
@@ -76,6 +80,7 @@ import { fetchLostItems } from "@/services/apiItems";
 import { formatTime } from "@/utils/dateUtils";
 import NotAvailableImage from "@/assets/images/not-available.png";
 import { filtersState } from "@/store/filters";
+import EmptyState from "@/components/Empty-State.vue";
 
 // Estado para os itens perdidos e controle de paginação
 const lostItems = ref([]);
