@@ -1,28 +1,28 @@
 <template>
-  <div>
-    <!-- Header -->
-    <div
-      class="fixed w-full top-0 h-[100px] bg-verde shadow-md rounded-b-xl flex items-center justify-between px-6 text-white z-10"
-    >
-      <!-- Botão de voltar -->
-      <router-link to="/user" class="inline-block">
-        <img
-          src="../assets/icons/arrow-left-white.svg"
-          alt="Voltar"
-          class="w-[30px] h-[30px] text-white"
-        />
+  <div
+    class="fixed w-full top-0 h-[100px] bg-verde shadow-md rounded-b-xl flex items-center justify-between px-6 text-white z-10"
+  >
+    <!-- Botão de voltar -->
+    <router-link to="/user" class="inline-block">
+      <img
+        src="../assets/icons/arrow-left-white.svg"
+        alt="Voltar"
+        class="w-[30px] h-[30px] text-white"
+      />
+    </router-link>
+
+    <!-- Título (Agora centralizado corretamente) -->
+    <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">
+      Meus Itens
+    </h1>
+
+    <!-- Logo (Clicável para ir para /about) -->
+    <button>
+      <router-link to="/about" class="no-underline text-white">
+        <Logo class="pr-4" sizeClass="text-2xl" />
       </router-link>
-
-      <!-- Título -->
-      <h1 class="text-2xl font-bold text-center flex-1">Meus Itens</h1>
-
-      <!-- Logo (Clicável para ir para /about) -->
-      <button>
-        <router-link to="/about" class="no-underline text-white"
-          ><Logo class="pr-4" sizeClass="text-2xl"
-        /></router-link>
-      </button>
-    </div>
+    </button>
+  </div>
 
     <!-- SubMenu -->
     <div class="pb-8 pt-24">
@@ -53,16 +53,6 @@
     <div class="fixed bottom-0 w-full">
       <MainMenu activeIcon="search" />
     </div>
-
-    <!-- Alertas -->
-    <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
-    <Alert
-      v-if="formSubmitted"
-      type="success"
-      message="Item deletado com sucesso."
-      @closed="formSubmitted = false"
-    />
-  </div>
 </template>
 
 <script setup>
@@ -93,9 +83,12 @@ const fetchItems = async () => {
 };
 
 // Função para confirmar exclusão
-const confirmDelete = (itemId) => {
-  if (confirm("Você tem certeza que deseja deletar este item?")) {
-    handleDelete(itemId);
+const confirmDelete = async (itemId) => {
+  try {
+    await deleteItem(itemId); // Chama a API para excluir o item
+    myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId); // Remove do estado
+  } catch (error) {
+    console.error("Erro ao excluir item:", error);
   }
 };
 
