@@ -1,18 +1,23 @@
 {
   "index.html": {
-    "file": "js/index-B3_bU_73.js",
+    "file": "js/index-BnoWY_TY.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-aaMZN4nb.css"
+      "assets/index-C9VhPuY6.css"
     ],
     "assets": [
-      "assets/Favicon-DZaE_dAz.png"
+      "assets/Favicon-DZaE_dAz.png",
+      "assets/found-and-lost-box-BB3OpleO.jpg"
     ]
   },
   "src/assets/icons/Favicon.png": {
     "file": "assets/Favicon-DZaE_dAz.png",
     "src": "src/assets/icons/Favicon.png"
+  },
+  "src/assets/icons/found-and-lost-box.jpg": {
+    "file": "assets/found-and-lost-box-BB3OpleO.jpg",
+    "src": "src/assets/icons/found-and-lost-box.jpg"
   }
 }
