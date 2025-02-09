@@ -29,8 +29,12 @@
       <SubMenu />
     </div>
 
+    <!-- Se não houver itens, exibir mensagem e imagem -->
+    <EmptyState v-if="myItemsLost.length === 0" message="perdidos registrados... Você pode adicionar um no" highlightText="AcheiUnB"/>
+
     <!-- Lista de Itens -->
     <div
+      v-else
       class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-24"
     >
       <ItemCard
@@ -65,6 +69,7 @@ import ItemCard from "@/components/Item-Card.vue";
 import Alert from "@/components/Alert.vue";
 import Logo from "@/components/Logo.vue";
 import NotAvailableImage from "@/assets/images/not-available.png";
+import EmptyState from "@/components/Empty-State-User.vue";
 
 const myItemsLost = ref([]);
 const submitError = ref(false);
