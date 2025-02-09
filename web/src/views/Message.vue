@@ -1,3 +1,5 @@
+<template></template>
+
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -28,7 +30,7 @@ watch(
 // Buscar usuário logado
 const fetchCurrentUser = async () => {
   try {
-    const response = await api.get(`/api/users/me/`);
+    const response = await api.get(`/auth/user/`);
     currentUser.value = {
       id: response.data.id,
       name: response.data.nome,
@@ -42,7 +44,7 @@ const fetchCurrentUser = async () => {
 // Buscar informações do usuário com quem está conversando
 const fetchChatUser = async (userId) => {
   try {
-    const response = await api.get(`/api/users/${userId}/`);
+    const response = await api.get(`/users/${userId}/`);
     return {
       id: response.data.id,
       name: response.data.nome,
