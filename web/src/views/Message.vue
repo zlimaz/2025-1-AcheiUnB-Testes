@@ -5,7 +5,7 @@
     <!-- Marca d'água (Watermark) sempre visível e responsiva -->
     <div class="flex absolute inset-0 justify-center items-center pointer-events-none z-0">
       <img
-        src="@/assets/icons/Lupa1.png"
+        src="@/assets/icons/Favicon.png"
         alt="Watermark"
         class="w-48 md:w-64 lg:w-80 opacity-20"
       />
