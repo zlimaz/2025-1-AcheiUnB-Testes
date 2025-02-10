@@ -1,0 +1,22 @@
+coverage:
+  status:
+    project:
+      default:
+        # "target": nível mínimo de cobertura que você deseja (por exemplo, 90%)
+        target: 90%
+
+        # "threshold": tolerância de queda de cobertura em pontos percentuais
+        # Exemplo: se threshold: 0.5, significa que uma queda
+        # de até 0.5% em relação ao base anterior ainda passa
+        threshold: 1
+
+        # "if_not_found": o que fazer se não for possível calcular a cobertura base
+        # 'success' => mesmo que o Codecov não encontre base anterior, não falha
+        if_not_found: success
+
+    patch:
+      default:
+        # Aqui você define a meta e a tolerância só para as linhas novas (diff/patch)
+        target: 90%
+        threshold: 1
+        if_not_found: success
