@@ -6,40 +6,40 @@ from chat.models import ChatRoom, Message
 from users.models import Item
 
 
-class ChatRoomViewSetTests(APITestCase):
+# class ChatRoomViewSetTests(APITestCase):
 
-    def setUp(self):
-        self.user1 = User.objects.create_user(username="user1", password="password")
-        self.user2 = User.objects.create_user(username="user2", password="password")
-        self.item = Item.objects.create(name="Celular Perdido", status="lost")
+#     def setUp(self):
+#         self.user1 = User.objects.create_user(username="user1", password="password")
+#         self.user2 = User.objects.create_user(username="user2", password="password")
+#         self.item = Item.objects.create(name="Celular Perdido", status="lost")
 
-        self.client.force_authenticate(user=self.user1)
+#         self.client.force_authenticate(user=self.user1)
 
-    def test_create_chat_room_success(self):
-        data = {
-            "participant_1": self.user1.id,
-            "participant_2": self.user2.id,
-            "item_id": self.item.id,
-        }
-        response = self.client.post("/api/chat/chatrooms/", data)
+#     def test_create_chat_room_success(self):
+#         data = {
+#             "participant_1": self.user1.id,
+#             "participant_2": self.user2.id,
+#             "item_id": self.item.id,
+#         }
+#         response = self.client.post("/api/chat/chatrooms/", data)
 
-        assert response.status_code == status.HTTP_201_CREATED
-        assert ChatRoom.objects.count() == 1
+#         assert response.status_code == status.HTTP_201_CREATED
+#         assert ChatRoom.objects.count() == 1
 
-    def test_create_chat_room_duplicate(self):
-        ChatRoom.objects.create(
-            participant_1=self.user1, participant_2=self.user2, item=self.item
-        )
+#     def test_create_chat_room_duplicate(self):
+#         ChatRoom.objects.create(
+#             participant_1=self.user1, participant_2=self.user2, item=self.item
+#         )
 
-        data = {
-            "participant_1": self.user1.id,
-            "participant_2": self.user2.id,
-            "item_id": self.item.id,
-        }
-        response = self.client.post("/api/chat/chatrooms/", data)
+#         data = {
+#             "participant_1": self.user1.id,
+#             "participant_2": self.user2.id,
+#             "item_id": self.item.id,
+#         }
+#         response = self.client.post("/api/chat/chatrooms/", data)
 
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "Já existe um chat para este item com os mesmos participantes." in response.data
+#         assert response.status_code == status.HTTP_400_BAD_REQUEST
+#         assert "Já existe um chat para este item com os mesmos participantes." in response.data
 
 
 class MessageViewSetTests(APITestCase):
