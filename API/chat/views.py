@@ -38,7 +38,7 @@ class ChatRoomViewSet(ModelViewSet):
         ).first()
 
         if existing_chat:
-            return Response(self.get_serializer(existing_chat).data)
+            raise ValidationError("Já existe um chat entre esses participantes para este item.")
 
         # 🔄 Se não existir, cria o chat normalmente
         return super().create(request, *args, **kwargs)
