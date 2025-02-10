@@ -26,7 +26,7 @@ AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Univ
 
 ## 👥 Equipe
 
-| [![Ana Elisa Marques](https://avatars.githubusercontent.com/u/78448515?v=4)](https://github.com/anaelisaramos) | [![Davi Camilo Menezes](https://avatars.githubusercontent.com/u/144080784?v=4)](https://github.com/DaviCamilo23) | [![Euller Júlio da Silva](https://avatars.githubusercontent.com/u/125329742?v=4)](https://github.com/potatoyz908) | [![Leonardo Ramiro Alves de Oliveira](https://avatars.githubusercontent.com/u/144712954?v=4)](https://github.com/leoramiroo) |
+| [![Ana Elisa Ramos](https://avatars.githubusercontent.com/u/78448515?v=4)](https://github.com/anaelisaramos) | [![Davi Camilo Menezes](https://avatars.githubusercontent.com/u/144080784?v=4)](https://github.com/DaviCamilo23) | [![Euller Júlio da Silva](https://avatars.githubusercontent.com/u/125329742?v=4)](https://github.com/potatoyz908) | [![Leonardo Ramiro Alves de Oliveira](https://avatars.githubusercontent.com/u/144712954?v=4)](https://github.com/leoramiroo) |
 |-------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|
 | Ana Elisa Marques | Davi Camilo Menezes | Euller Júlio da Silva | Leonardo Ramiro Alves de Oliveira |
 
