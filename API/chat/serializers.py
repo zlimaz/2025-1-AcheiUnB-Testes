@@ -45,4 +45,7 @@ class ChatRoomSerializer(serializers.ModelSerializer):
         # Associa o item ao chat usando o item_id
         item_id = validated_data.pop("item_id")
         validated_data["item"] = Item.objects.get(id=item_id)
-        return super().create(validated_data)
+
+        # Criação do chat
+        chat_room = super().create(validated_data)
+        return chat_room

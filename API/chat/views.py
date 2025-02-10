@@ -16,32 +16,31 @@ class ChatRoomViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        participant_1_id = request.data.get("participant_1")
+        participant_1_id = request.user.id  # Usuário autenticado
         participant_2_id = request.data.get("participant_2")
         item_id = request.data.get("item_id")
 
-        # Verifica se todos os dados necessários foram fornecidos
-        if not participant_1_id or not participant_2_id or not item_id:
-            raise ValidationError(
-                "Os campos participant_1, participant_2 e item são obrigatórios."
-            )
+        # 🔒 Verifica se os dados necessários foram fornecidos
+        if not participant_2_id or not item_id:
+            raise ValidationError("Os campos participant_2 e item são obrigatórios.")
 
-        # Verifica se o item existe
-        try:
-            item = Item.objects.get(id=item_id)
-        except Item.DoesNotExist:
-            raise ValidationError({"item": "Item não encontrado."})
+        # 🔒 Impedir criação de chats consigo mesmo
+        if participant_1_id == int(participant_2_id):
+            raise ValidationError("Não é possível criar um chat consigo mesmo.")
 
-        # Verifica se já existe um chat para este item e participantes
-        if ChatRoom.objects.filter(
-            item=item,
-            participant_1__in=[participant_1_id, participant_2_id],
-            participant_2__in=[participant_1_id, participant_2_id],
-        ).exists():
-            raise ValidationError(
-                "Já existe um chat para este item com os mesmos participantes."
-            )
+        # 🔍 Verifica se o item existe
+        if not Item.objects.filter(id=item_id).exists():
+            raise ValidationError("O item associado não foi encontrado.")
 
+        # 🔍 Verifica se já existe um chat entre esses participantes para o mesmo item
+        existing_chat = ChatRoom.objects.filter(
+            participant_1=participant_1_id, participant_2=participant_2_id, item_id=item_id
+        ).first()
+
+        if existing_chat:
+            raise ValidationError("Já existe um chat para este item com os mesmos participantes.")
+
+        # 🔄 Se não existir, cria o chat normalmente
         return super().create(request, *args, **kwargs)
 
 
