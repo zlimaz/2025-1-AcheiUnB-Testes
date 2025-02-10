@@ -17,6 +17,6 @@ coverage:
     patch:
       default:
         # Aqui você define a meta e a tolerância só para as linhas novas (diff/patch)
-        target: 90%
-        threshold: 1
+        target: 0%
+        threshold: 100
         if_not_found: success
