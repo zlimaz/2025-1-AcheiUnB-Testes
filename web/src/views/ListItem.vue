@@ -4,6 +4,7 @@
       :title="itemStatus === 'found' ? 'Item Achado' : 'Item Perdido'"
       :userId="currentUser.id"
       :itemUserId="item.user_id"
+      :itemId="item.id"
       />
   </div>
 

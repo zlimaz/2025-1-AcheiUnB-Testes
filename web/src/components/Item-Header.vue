@@ -22,7 +22,8 @@
     <button
     v-if="userId === itemUserId"
     type="button"
-    
+    @click="editItem()"
+    class="flex items-center w-1/4 justify-end"
     >
       <img
         src="@/assets/icons/EditarPerfil.svg" 
@@ -55,12 +56,23 @@ export default {
       type: String,
       required: true,
     },
-    userId: Number,
-    itemUserId: Number,
+    userId: {
+      type: Number,
+    },
+    itemUserId: {
+      type: Number,
+    },
+    itemId: {
+      type: [String, Number],
+    },
   },
   methods: {
     goBack() {
       this.$router.back(); // Retorna para a página anterior
+    },
+
+    editItem() {
+      this.$router.push(`/edit-item/${this.itemId}`);
     },
   },
 };
