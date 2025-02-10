@@ -1,59 +1,88 @@
-# Nome do workflow
-name: CI/CD Workflow
+name: Tests CI
 
-# Definir quando o workflow será executado
 on:
   push:
     branches: 
-      - main # Executa o workflow ao push na branch 'main'
-      - ajustar-workflow
+      - main
+      - 193/refactor/aumentar-a-cobertura-dos-testes-unitários
   pull_request:
     branches: 
-      - main # Executa o workflow ao abrir um PR na branch 'main'
-
-# Definindo os jobs
+      - main
 jobs:
-  # Job para rodar os testes
   test:
     runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:15
+        env:
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+
+
+    env:
+      CELERY_BROKER_URL: redis://localhost:6379/0
+      CELERY_RESULT_BACKEND: redis://localhost:6379/0
+      PYTHONPATH: ${{ github.workspace }}/API  # Caminho para o diretório API
+      DJANGO_SETTINGS_MODULE: AcheiUnB.settings  # Ajustado para o módulo correto
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      #- name: Set up Docker
-       # uses: docker/setup-buildx-action@v2
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
 
-      #- name: Install Docker Compose
-       # run: |
-        #  sudo apt-get update
-         # sudo apt-get install -y docker-compose
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r API/requirements.txt
+          pip install coverage
+      - name: Run migrations
+        run: python API/manage.py migrate
 
-      #- name: Set up Docker Compose
-       # run: |
-        #  docker-compose -f API/docker-compose.yml up -d --build
-          
-      #- name: Run migrations
-       # run: |
-        #  docker-compose -f API/docker-compose.yml exec web python manage.py migrate
+      # - name: Run Black (formatação)
+      #   run: black --check .
 
-      #- name: Run tests with coverage
-       # run: |
-        #  docker-compose -f API/docker-compose.yml exec web coverage run --source='.' manage.py test
+      # - name: Run Ruff (linting)
+      #   run: ruff check .
 
-      #- name: Generate coverage report
-       # run: |
-        #  docker-compose -f API/docker-compose.yml exec web coverage xml
-       # # Gera o relatório em XML, necessário para o Codecov
+      # - name: Post comment on PR if linting fails
+      #   if: failure()
+      #   uses: mshick/add-pr-comment@v2
+      #   with:
+      #     message: |
+      #       ❌ **O código não passou na formatação e linting!**
+            
+      #       Por favor, corrija os problemas antes de fazer push novamente:
+            
+      #       🖊️ **Formatação:** Rode `black .`
+      #       🔍 **Linting:** Rode `ruff check --fix .`
+            
+      #       Depois de corrigir, faça `git add .`, `git commit -m "Corrigindo lint"` e `git push`.
 
-      #- name: Upload coverage to Codecov
-      #  uses: codecov/codecov-action@v3
-       # with:
-        #  files: ./web/coverage.xml  # Caminho do relatório XML gerado
-         # token: ${{ secrets.CODECOV_TOKEN }}  # O token Codecov é armazenado nos secrets do GitHub
-          #flags: unittests
-          #name: Django Tests
-
-      #- name: Tear down Docker Compose
-       # if: always()
-       # run: |
-        #  docker-compose down
+      - name: Run tests with coverage
+        run: |
+          coverage run -m pytest
+          coverage report -m
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
