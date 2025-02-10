@@ -48,20 +48,15 @@ e quais tasks devem ser feitas com mais urgência nessa sprint. Além disso, ana
 projeto a serem resolvidos em novas tarefas.
 
 ### Reunião 2
-Data: DD/MM/AAAA  
-Local: Local da reunião  
+Data: 10/02/2025  
+Local: Discord  
 **Ata:**
 
-
-### Reunião 3
-Data: DD/MM/AAAA  
-Local: Local da reunião  
-**Ata:**
-
+Iniciamos a reunião com a review, com os membros do grupo mostrando as alterações feitas na sprint, além de analisarmos quais atividades não foram feitas e quais foram os motivos para isso. Assim como na Sprint 12, a retrospectiva foi pulada, pois não foi visto a necessidade de debatermos "O que nos ajudou a avançar?", "O que nos deteve?", "Como podemos fazer as coisas de forma diferente?" e "O que devemos fazer a seguir?", indo, dessa forma, para a planning da Sprint 14.
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_ (caso existam).
+> As principais atividades da Sprint foram concluídas com sucesso, adiando para a próxima sprint apenas, em sua maioria, tasks com menor prioridade.
 ---
 
 **Observações:**
-> Esse espaço deve ser utilizado para registrar qualquer observação que o time julgar pertinente.
+> Quase todos os entregáveis feitos!
