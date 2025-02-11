@@ -4,7 +4,7 @@ on:
   push:
     branches: 
       - main
-      - 193/refactor/aumentar-a-cobertura-dos-testes-unitários
+      - 213-tasktestes-configurar-testes-estáticos-com-linter
   pull_request:
     branches: 
       - main
@@ -58,25 +58,25 @@ jobs:
       - name: Run migrations
         run: python API/manage.py migrate
 
-      # - name: Run Black (formatação)
-      #   run: black --check .
+      - name: Run Black (formatação)
+        run: black --check .
 
-      # - name: Run Ruff (linting)
-      #   run: ruff check .
+      - name: Run Ruff (linting)
+        run: ruff check .
 
-      # - name: Post comment on PR if linting fails
-      #   if: failure()
-      #   uses: mshick/add-pr-comment@v2
-      #   with:
-      #     message: |
-      #       ❌ **O código não passou na formatação e linting!**
+      - name: Post comment on PR if linting fails
+        if: failure()
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+             ❌ **O código não passou na formatação e linting!**
             
-      #       Por favor, corrija os problemas antes de fazer push novamente:
+             Por favor, corrija os problemas antes de fazer push novamente:
             
-      #       🖊️ **Formatação:** Rode `black .`
-      #       🔍 **Linting:** Rode `ruff check --fix .`
+             🖊️ **Formatação:** Rode `black .`
+             🔍 **Linting:** Rode `ruff check --fix .`
             
-      #       Depois de corrigir, faça `git add .`, `git commit -m "Corrigindo lint"` e `git push`.
+             Depois de corrigir, faça `git add .`, `git commit -m "Corrigindo lint"` e `git push`.
 
       - name: Run tests with coverage
         run: |
