@@ -1,14 +1,16 @@
 <template>
-  <div class="fixed top-0 left-0 w-full bg-verde shadow-md py-3 px-4 flex items-center z-10">
-    
+  <div
+    class="fixed top-0 left-0 w-full bg-verde shadow-md py-3 px-4 flex items-center z-10"
+    :class="{ visible: isVisible, invisible: !isVisible }"
+  >
     <!-- Botão de Voltar -->
-    <img 
+    <img
       @click="goBack"
       :src="LeftArrow"
       alt="Voltar"
       class="w-6 h-6 md:w-8 md:h-8 cursor-pointer"
     />
-    
+
     <!-- Container do usuário e item com espaçamento adequado -->
     <div class="flex items-center space-x-4 ml-2">
       <!-- Foto do Usuário -->
@@ -19,7 +21,9 @@
       />
 
       <!-- Nome do Usuário -->
-      <span class="text-white font-semibold text-sm md:text-base truncate max-w-[120px] md:max-w-[200px]">
+      <span
+        class="text-white font-semibold text-sm md:text-base truncate max-w-[120px] md:max-w-[200px]"
+      >
         {{ userName || "Usuário" }}
       </span>
 
@@ -37,7 +41,6 @@
         <Logo class="pr-4" sizeClass="text-2xl" />
       </router-link>
     </div>
-
   </div>
 </template>
 
@@ -65,6 +68,7 @@ const router = useRouter();
 const userName = ref("");
 const userImage = ref(null);
 const itemImage = ref(null);
+const isVisible = ref(false);
 
 const fetchUserData = async () => {
   if (!props.userId) return;
@@ -94,5 +98,25 @@ const goBack = () => {
 onMounted(async () => {
   await fetchUserData();
   await fetchItemData();
+
+  setTimeout(() => {
+    isVisible.value = true;
+  }, 1);
 });
 </script>
+
+<style>
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.invisible {
+  opacity: 0;
+  transform: translateY(-45px);
+}
+</style>

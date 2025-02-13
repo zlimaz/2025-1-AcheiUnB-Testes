@@ -8,12 +8,15 @@
     >
       <p class="text-5xl font-bold md:text-3xl">Sua sessão expirou.</p>
     </div>
-    <div class="flex justify-center">
-      <router-link
-        to="/"
-        class="inline-flex items-center rounded-full bg-gray-50 px-10 mt-8 py-3 md:px-24 md:py-4 text-azul ring-1 ring-inset ring-gray-500/10 font-bold font-inter text-lg md:text-xl no-underline w-auto"
-      >
-        Fazer login novamente
+    <div
+      class="pt-[30px] px-4 lg:pt-[50px] flex flex-col items-center w-full mt-6 space-y-4 lg:space-y-6"
+    >
+      <router-link to="/" class="w-full flex justify-center">
+        <button
+          class="bg-white text-verde w-full md:w-[70%] lg:w-[40%] font-semibold py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
+        >
+          Fazer login
+        </button>
       </router-link>
     </div>
   </div>
