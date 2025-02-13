@@ -9,7 +9,7 @@
     </div>
 
     <!-- Se não houver itens, exibir mensagem e imagem -->
-    <EmptyState v-if="foundItems.length === 0" message="está sem itens achados... Você pode adicionar um!" />
+    <EmptyState v-if="foundItems.length === 0" type="achado" />
 
     <div
       v-else
