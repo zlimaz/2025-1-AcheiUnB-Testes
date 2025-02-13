@@ -281,8 +281,39 @@ export default {
       brands: [],
     };
   },
+
+  props: {
+    editMode: {
+      type: Boolean,
+      default: false
+    },
+    existingItem: {
+      type: Object,
+      default: null
+    }
+  },
+
   mounted() {
     this.initializeData();
+
+    if (this.editMode && this.existingItem) {
+      // Preencher dados existentes
+      this.item = Object.assign(new Item(), this.existingItem);
+      
+      if (this.item.found_lost_date) {
+        try {
+          const date = new Date(this.item.found_lost_date);
+          this.item.foundDate = date.getFullYear() + '-' + 
+                          String(date.getMonth() + 1).padStart(2, '0') + '-' + 
+                          String(date.getDate()).padStart(2, '0');
+          this.foundTime = String(date.getHours()).padStart(2, '0') + ':' + 
+                          String(date.getMinutes()).padStart(2, '0');
+        } catch (error) {
+          console.error("Erro ao processar found_lost_date:", error);
+        }
+        
+      }
+    }
   },
   methods: {
     initializeData() {

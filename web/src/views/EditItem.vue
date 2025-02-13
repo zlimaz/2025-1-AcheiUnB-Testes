@@ -43,7 +43,6 @@
     async mounted() {
       this.itemId = this.$route.params.id;
       await this.loadItem();
-      console.log(this.item)
     },
     methods: {
       async loadItem() {

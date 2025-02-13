@@ -202,7 +202,7 @@
         <label
           for="images"
           class="flex bg-azul text-white text-base px-5 py-3 outline-none rounded cursor-pointer font-inter"
-          :class="(item.images?.length || 0) + (item.image_urls?.length || 0) >= 2 ? 'opacity-50 cursor-not-allowed' : ''"
+          :class="item.images?.length > 1 ? 'opacity-50 cursor-not-allowed' : ''"
         >
           <img src="../assets/icons/add-item-white.svg" alt="" class="mr-2" />
           Adicionar imagens
@@ -211,7 +211,7 @@
             id="images"
             class="hidden"
             @change="onFileChange"
-            :disabled="(item.images?.length || 0) + (item.image_urls?.length || 0) >= 2"
+            :disabled="item.images?.length > 1"
           />
         </label>
       </div>
@@ -219,12 +219,12 @@
       <div class="flex flex-wrap gap-4 col-span-3">
         <!-- Loop de Imagens -->
         <div
-          v-for="(image, index) in item.image_urls"
-          v-bind:key="index"
+          v-for="(image, index) in previews"
+          :key="index"
           class="w-64 h-64 border rounded relative"
         >
           <!-- Imagem de Pré-visualização -->
-          <img v-bind:src="image" alt="Preview" class="w-full h-full object-cover rounded" />
+          <img :src="image" alt="Preview" class="w-full h-full object-cover rounded" />
 
           <!-- Botão Remover -->
           <div
@@ -280,7 +280,6 @@ export default {
       locations: [],
       colors: [],
       brands: [],
-      imagesToRemove: [],
     };
   },
   props: {
@@ -295,7 +294,7 @@ export default {
   },
   mounted() {
     this.initializeData();
-
+    
     if (this.editMode && this.existingItem) {
       // Preencher dados existentes
       this.item = Object.assign(new Item(), this.existingItem);
@@ -315,13 +314,6 @@ export default {
           console.error("Erro ao processar found_lost_date:", error);
         }
         
-      }
-
-      if (this.item.image_urls && this.item.image_urls.length > 0) {
-        this.previews = [...this.item.image_urls]; // Carregar imagens existentes
-      }
-      if (!this.item.images) {
-        this.item.images = []; // Garantir que images nunca seja nulo
       }
     }
   },
@@ -371,6 +363,7 @@ export default {
 
     async save() {
       this.item.status = "found";
+
       const form = new Form(this.item);
 
       if (!form.validate()) {
@@ -385,22 +378,9 @@ export default {
       }
 
       const formData = form.toFormData();
-
       try {
-        if (this.editMode) {
-          // Primeiro, remover as imagens que estão no array imagesToRemove
-          for (const imageId of this.imagesToRemove) {
-            await api.delete(`/items/${this.item.id}/images/${imageId}/`);
-          }
-
-          // Agora, enviar a requisição PATCH para atualizar o item
-          await api.patch(`/items/${this.item.id}/`, formData);
-          this.formSubmitted = true;
-        } else {
-          // Criar um novo item normalmente
-          await api.post("/items/", formData);
-          this.formSubmitted = true;
-        }
+        await api.post("/items/", formData);
+        this.formSubmitted = true;
 
         setTimeout(() => {
           window.location.replace(`http://localhost:8000/#/found`);
@@ -411,39 +391,21 @@ export default {
       }
     },
 
-    async onFileChange(event) {
+    onFileChange(event) {
+      if (!this.item.images) {
+        this.item.images = [];
+      }
+
       const files = Array.from(event.target.files);
+      this.item.images.push(...files);
 
-      // Atualizar a contagem total antes da verificação
-      const totalImages = this.item.image_urls.length + this.previews.length;
-
-      if (totalImages >= 2) {
-        alert("Você só pode adicionar no máximo 2 imagens.");
-        return;
-      }
-
-      for (const file of files) {
-        if (this.item.image_urls.length + this.previews.length < 2) {
-          try {
-            const formData = new FormData();
-            formData.append("image", file);
-
-            const response = await api.post(`/items/${this.item.id}/images/`, formData);
-
-            if (response.data && response.data.image_url) {
-              this.item.image_urls.push(response.data.image_url); // Adiciona a nova imagem no array de URLs
-              this.item.image_ids.push(response.data.image_id); // Adiciona o ID da imagem no array de IDs
-            }
-          } catch (error) {
-            console.error("Erro ao adicionar imagem:", error);
-            alert("Erro ao enviar a imagem. Tente novamente.");
-          }
-        }
-      }
-
-      // Atualizar os arrays para refletir as mudanças
-      this.item.image_urls = [...this.item.image_urls]; // Garante a reatividade
-      this.$forceUpdate(); // Força o Vue a atualizar a interface
+      files.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.previews.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
     },
 
     formatFoundLostDate() {
@@ -463,34 +425,9 @@ export default {
     },
 
     removeImage(index) {
-    if (index < this.item.image_urls.length) {
-      // Remover uma imagem existente (precisa chamar API para remoção)
-      const imageIdToRemove = this.item.image_ids[index];
-
-      api.delete(`/items/${this.item.id}/images/${imageIdToRemove}/`)
-        .then(() => {
-          this.item.image_urls.splice(index, 1);
-          this.item.image_ids.splice(index, 1);
-          this.$forceUpdate(); // Atualizar Vue
-        })
-        .catch((error) => {
-          console.error("Erro ao remover imagem:", error);
-          alert("Erro ao remover imagem. Tente novamente.");
-        });
-
-    } else {
-      // Remover uma imagem recém-adicionada (não precisa chamar API)
-      const adjustedIndex = index - this.item.image_urls.length;
-      this.previews.splice(adjustedIndex, 1);
-      this.item.images.splice(adjustedIndex, 1);
-      this.$forceUpdate(); // Atualizar Vue
-    }
-
-    // Atualizar a contagem de imagens
-    this.item.image_urls = [...this.item.image_urls];
-    this.previews = [...this.previews];
-    this.$forceUpdate();
-  },
+      this.previews.splice(index, 1);
+      this.item.images.splice(index, 1);
+    },
 
     handleSelectChange(event) {
       const element = event.target;
