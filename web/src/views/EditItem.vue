@@ -1,7 +1,8 @@
 <template>
     <div>
       <ItemHeader 
-        :title="'Editar Item'" :itemId="itemId" 
+      :title="tituloHeader"
+      :itemId="itemId" 
         class="fixed w-full top-0" style="z-index: 1"/>
       </div>
 
@@ -40,6 +41,13 @@
         item: {}
       }
     },
+
+    computed: {
+    tituloHeader() {
+      return `Editar Item ${this.item.status === 'found' ? 'Achado' : 'Perdido'}`;
+    }
+  },
+
     async mounted() {
       this.itemId = this.$route.params.id;
       await this.loadItem();

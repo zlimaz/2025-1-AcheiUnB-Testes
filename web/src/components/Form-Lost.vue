@@ -211,7 +211,7 @@
             id="images"
             class="hidden"
             @change="onFileChange"
-            :disabled="item.images?.length > 1"
+            :disabled="previews?.length > 1"
           />
         </label>
       </div>
@@ -302,6 +302,8 @@ export default {
       // Preencher dados existentes
       this.item = Object.assign(new Item(), this.existingItem);
       
+      this.previews.push(...this.existingItem.image_urls);
+
       if (this.item.found_lost_date) {
         try {
           const date = new Date(this.item.found_lost_date);
@@ -432,9 +434,34 @@ export default {
       return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}${sign}${offsetHours}${offsetMinutes}`;
     },
 
-    removeImage(index) {
-      this.previews.splice(index, 1);
-      this.item.images.splice(index, 1);
+    async removeImage(index) {
+      if (index < this.existingItem.image_urls.length) {
+        const imageId = this.existingItem.image_ids[index];
+        if (imageId) {
+          try {
+            await api.delete(`/items/${this.item.id}/images/${imageId}/`);
+            console.log(`Imagem ${imageId} removida.`);
+          } catch (error) {
+            console.error("Erro ao remover imagem:", error);
+            alert("Erro ao remover a imagem. Tente novamente.");
+            return;
+          }
+
+          // Remove a imagem dos arrays de imagens existentes
+          this.existingItem.image_urls.splice(index, 1);
+          this.existingItem.image_ids.splice(index, 1);
+        }
+      } else {
+          // Imagem nova (ainda não foi enviada para a API)
+          const newIndex = index - this.existingItem.image_urls.length;
+          this.item.images.splice(newIndex, 1);
+      }
+
+        // Atualiza a lista de previews corretamente
+        this.previews.splice(index, 1);
+        
+        // Verifica se agora há menos de 2 imagens para reativar o botão de adicionar
+        this.$forceUpdate();
     },
 
     handleSelectChange(event) {
