@@ -378,10 +378,17 @@ export default {
       }
 
       const formData = form.toFormData();
-      try {
-        await api.post("/items/", formData);
-        this.formSubmitted = true;
 
+      try {
+        if (this.editMode) {
+          // Enviar a requisição PATCH para atualizar o item
+          await api.patch(`/items/${this.item.id}/`, formData);
+          this.formSubmitted = true;
+        } else {
+          // Criar um novo item normalmente
+          await api.post("/items/", formData);
+          this.formSubmitted = true;
+        }
         setTimeout(() => {
           window.location.replace(`http://localhost:8000/#/found`);
         }, 1000);

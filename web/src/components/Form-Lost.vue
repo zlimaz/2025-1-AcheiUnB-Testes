@@ -154,31 +154,31 @@
 
       <!-- Data -->
       <div class="mb-4 col-span-2">
-        <label for="foundLostDate" class="font-inter block text-azul text-sm font-bold mb-2"
+        <label for="lostDate" class="font-inter block text-azul text-sm font-bold mb-2"
           >Data em que foi perdido</label
         >
         <input
-          id="foundLostDate"
+          id="lostDate"
           class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-          :class="item.foundLostDate === '' ? 'text-gray-400' : 'text-gray-700'"
-          v-model="item.foundLostDate"
+          :class="item.lostDate === '' ? 'text-gray-400' : 'text-gray-700'"
+          v-model="item.lostDate"
           type="date"
-          name="foundLostDate"
+          name="lostDate"
         />
       </div>
 
       <!-- Horário -->
       <div class="mb-4 col-span-2">
-        <label for="foundTime" class="font-inter block text-azul text-sm font-bold mb-2"
+        <label for="lostTime" class="font-inter block text-azul text-sm font-bold mb-2"
           >Horário em que foi perdido</label
         >
         <input
-          id="foundTime"
+          id="lostTime"
           class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-          :class="foundTime === '' ? 'text-gray-400' : 'text-gray-700'"
-          v-model="foundTime"
+          :class="lostTime === '' ? 'text-gray-400' : 'text-gray-700'"
+          v-model="lostTime"
           type="time"
-          name="foundTime"
+          name="lostTime"
         />
       </div>
 
@@ -202,7 +202,7 @@
         <label
           for="images"
           class="flex bg-azul text-white text-base px-5 py-3 outline-none rounded cursor-pointer font-inter"
-          :class="item.images?.length > 1 ? 'opacity-50 cursor-not-allowed' : ''"
+          :class="previews?.length > 1 ? 'opacity-50 cursor-not-allowed' : ''"
         >
           <img src="../assets/icons/add-item-white.svg" alt="" class="mr-2" />
           Adicionar imagens
@@ -270,7 +270,8 @@ export default {
   data() {
     return {
       item: new Item(),
-      foundTime: "",
+      lostTime: "",
+      lostDate: "",
       previews: [],
       submitError: false,
       formSubmitted: false,
@@ -297,16 +298,17 @@ export default {
     this.initializeData();
 
     if (this.editMode && this.existingItem) {
+      console.log(this.existingItem)
       // Preencher dados existentes
       this.item = Object.assign(new Item(), this.existingItem);
       
       if (this.item.found_lost_date) {
         try {
           const date = new Date(this.item.found_lost_date);
-          this.item.foundDate = date.getFullYear() + '-' + 
+          this.item.lostDate = date.getFullYear() + '-' + 
                           String(date.getMonth() + 1).padStart(2, '0') + '-' + 
                           String(date.getDate()).padStart(2, '0');
-          this.foundTime = String(date.getHours()).padStart(2, '0') + ':' + 
+          this.lostTime = String(date.getHours()).padStart(2, '0') + ':' + 
                           String(date.getMinutes()).padStart(2, '0');
         } catch (error) {
           console.error("Erro ao processar found_lost_date:", error);
@@ -370,15 +372,24 @@ export default {
         return;
       }
 
-      if (form.foundLostDate) {
-        this.setFoundLostDate();
+      if (this.item.lostDate) {
+        const formattedFoundLostDate = this.formatFoundLostDate();
+        form.setFieldValue("found_lost_date", formattedFoundLostDate);
       }
 
       const formData = form.toFormData();
-      try {
-        await api.post("/items/", formData);
-        this.formSubmitted = true;
 
+      try {
+        if (this.editMode) {
+          
+          // Enviar a requisição PATCH para atualizar o item
+          await api.patch(`/items/${this.item.id}/`, formData);
+          this.formSubmitted = true;
+        } else {
+          // Criar um novo item normalmente
+          await api.post("/items/", formData);
+          this.formSubmitted = true;
+        }
         setTimeout(() => {
           window.location.replace(`http://localhost:8000/#/lost`);
         }, 1000);
@@ -405,12 +416,20 @@ export default {
       });
     },
 
-    setFoundLostDate() {
-      const [day, month, year] = this.item.foundLostDate.split("-").map(Number);
+    formatFoundLostDate() {
+      const [year, month, day] = this.item.lostDate.split("-").map(Number);
 
-      const [hours, minutes] = this.lostTime.split(":").map(Number);
+      const [hours, minutes] = this.lostTime?.split(":").map(Number);
 
-      this.item.foundLostDate = new Date(year, month - 1, day, hours ?? 0, minutes ?? 0);
+      const date = new Date(year, month - 1, day, hours ?? 0, minutes ?? 0);
+
+      const timezoneOffset = date.getTimezoneOffset();
+      const sign = timezoneOffset > 0 ? "-" : "+";
+      const offset = Math.abs(timezoneOffset);
+      const offsetHours = String(Math.floor(offset / 60)).padStart(2, "0");
+      const offsetMinutes = String(offset % 60).padStart(2, "0");
+
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}${sign}${offsetHours}${offsetMinutes}`;
     },
 
     removeImage(index) {
