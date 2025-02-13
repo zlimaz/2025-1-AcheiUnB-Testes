@@ -78,11 +78,13 @@ const routes = [
     path: "/user-items-lost",
     name: "UserItemsLost",
     component: UserItemsLost,
+    meta: { requiresAuth: true },
   },
   {
     path: "/user-items-found",
     name: "UserItemsFound",
     component: UserItemsFound,
+    meta: { requiresAuth: true },
   },
   /*{
     path: "/message",
