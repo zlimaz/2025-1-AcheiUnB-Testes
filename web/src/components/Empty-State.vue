@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, toRefs } from "vue";
 import { filtersState } from "@/store/filters"; // Importação corrigida sem Pinia
 import box from "@/assets/icons/found-and-lost-box.jpg";
 
@@ -20,20 +20,22 @@ const props = defineProps({
     },
 });
 
+const { searchQuery, activeCategory, activeLocation } = toRefs(filtersState);
+
 // Computed Property para modificar a mensagem dinamicamente
 const computedMessage = computed(() => {
     // Define a palavra correta com base no tipo de item
     const itemType = props.type === "achado" ? "achado" : "perdido";
 
     // Verifica os filtros e retorna a mensagem correspondente
-    if (filtersState.searchQuery.value) {
-        return `não encontrou resultados para "${filtersState.searchQuery.value}" nos itens ${itemType}s.`;
+    if (searchQuery.value != "") {
+        return `não encontrou resultados para "${searchQuery.value}" nos itens ${itemType}s.`;
     }
-    if (filtersState.activeCategory.value) {
-        return `não encontrou itens ${itemType}s da categoria "${filtersState.activeCategory.value}".`;
+    if (activeCategory.value != null) {
+        return `não encontrou itens ${itemType}s da categoria "${activeCategory.value}".`;
     }
-    if (filtersState.activeLocation.value) {
-        return `não encontrou itens ${itemType}s no local "${filtersState.activeLocation.value}".`;
+    if (activeLocation.value != null) {
+        return `não encontrou itens ${itemType}s no local "${activeLocation.value}".`;
     }
 
     return `está sem itens ${itemType}s... Você pode adicionar um!`;
