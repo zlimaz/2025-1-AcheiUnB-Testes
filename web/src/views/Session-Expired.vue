@@ -9,7 +9,7 @@
       <p class="text-5xl font-bold md:text-3xl">Sua sessão expirou.</p>
     </div>
     <div
-      class="pt-[30px] px-4 lg:pt-[50px] flex flex-col items-center w-full mt-6 space-y-4 lg:space-y-6"
+      class="pt-[30px] px-4 lg:pt-[50px] flex flex-col items-center w-full md:w-128 mt-6 space-y-4 lg:space-y-6"
     >
       <router-link to="/" class="w-full flex justify-center">
         <button

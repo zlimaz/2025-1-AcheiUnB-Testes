@@ -12,6 +12,7 @@ import UserItemsLost from "../views/UserItems-Lost.vue";
 import UserItemsFound from "../views/UserItems-Found.vue";
 import Message from "../views/Message.vue";
 import SessionExpired from "@/views/Session-Expired.vue";
+import api from "../services/api";
 
 const routes = [
   {
@@ -71,11 +72,13 @@ const routes = [
     path: "/user-items-lost",
     name: "UserItemsLost",
     component: UserItemsLost,
+    meta: { requiresAuth: true },
   },
   {
     path: "/user-items-found",
     name: "UserItemsFound",
     component: UserItemsFound,
+    meta: { requiresAuth: true },
   },
   {
     path: "/chat/new",
@@ -84,7 +87,7 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: "/chat/:chatroomId",
+    path: "/chat/:chatroomId/:itemId?",
     name: "Chat",
     component: Message,
     meta: { requiresAuth: true },
@@ -103,6 +106,20 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach(async (to) => {
+  if (to.meta.requiresAuth) {
+    try {
+      await api.get("/auth/validate", {
+        withCredentials: true,
+      });
+      return true;
+    } catch {
+      return { name: "Expired" };
+    }
+  }
+  return true;
 });
 
 export default router;
