@@ -5,36 +5,41 @@
     </div>
   </div>
 
-  <div id="main-content" class="telaInteira bg-azul text-white p-4 min-h-screen hidden">
-    <div class="titulo flex space-x-1 mt-20 mb-16 ml-8 md:ml-0 md:flex md:justify-center md:mb-24">
-      <Logo />
-    </div>
-    <div class="slogan max-w-72 ml-8 md:mr-8 md:max-w-none md:w-auto md:text-center">
-      <p class="text-5xl font-bold mb-7 md:text-6xl">Perdeu algo no campus?</p>
-      <p class="text-5xl italic font-thin mb-4 md:text-6xl">A gente te ajuda!</p>
+  <div id="main-content" class="flex telaInteira bg-azul text-white p-4 min-h-screen hidden">
+    <div>
+      <div class="titulo flex space-x-1 mt-20 mb-16 ml-12 md:ml-0 md:flex md:ml-12 md:mb-24">
+        <Logo />
+      </div>
+      <div class="slogan max-w-72 ml-12 md:mr-8 md:max-w-none md:w-auto">
+        <p class="text-5xl font-bold mb-7 md:text-5xl">Perdeu algo no campus?</p>
+        <p class="text-5xl italic font-thin mb-4 md:text-5xl">A gente te ajuda!</p>
+      </div>
+
+      <div class="flex mt-24">
+        <button
+          @click="redirectToLoginMicrosoft"
+          class="flex items-center rounded-full bg-gray-50 px-10 py-4 md:px-24 md:py-5 text-azul ring-1 ring-inset ring-gray-500/10 ml-12"
+        >
+          <img
+            src="../assets/icons/Microsoft_logo2.svg"
+            alt="Logo Microsoft"
+            class="h-6 w-auto mr-4"
+          />
+          <span class="font-bold font-inter text-lg md:text-xl">
+            Entre com a conta da Microsoft
+          </span>
+        </button>
+      </div>
     </div>
 
-    <div class="flex justify-center mt-24">
-      <button
-        @click="redirectToLoginMicrosoft"
-        class="flex items-center rounded-full bg-gray-50 px-10 py-4 md:px-24 md:py-5 text-azul ring-1 ring-inset ring-gray-500/10"
-      >
-        <img
-          src="../assets/icons/Microsoft_logo2.svg"
-          alt="Logo Microsoft"
-          class="h-6 w-auto mr-4"
-        />
-        <span class="font-bold font-inter text-lg md:text-xl">
-          Entre com a conta da Microsoft
-        </span>
-      </button>
-    </div>
+    <div></div>
   </div>
 </template>
 
 <script setup>
 import { onMounted } from "vue";
 import Logo from "../components/Logo.vue";
+import Found from "./Found.vue";
 
 onMounted(() => {
   const transitionScreen = document.getElementById("transition-screen");

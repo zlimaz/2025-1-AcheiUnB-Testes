@@ -20,6 +20,9 @@ import Logo from "./Logo.vue";
 
 export default {
   name: "SearchHeader",
+  props: {
+    disabled: Boolean,
+  },
   components: {
     SearchBar,
     Logo,

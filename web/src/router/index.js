@@ -13,6 +13,7 @@ import UserItemsFound from "../views/UserItems-Found.vue";
 import Message from "../views/Message.vue";
 import SessionExpired from "@/views/Session-Expired.vue";
 import api from "../services/api";
+import Anonimo from "@/views/Anonimo.vue";
 
 const routes = [
   {
@@ -95,6 +96,11 @@ const routes = [
       chatroomId: route.params.chatroomId || route.query.chatroomId,
       itemId: route.params.itemId || route.query.itemId,
     }),
+  },
+  {
+    path: "/anonimo",
+    name: "Anonimo",
+    component: Anonimo,
   },
   {
     path: "/session-expired",

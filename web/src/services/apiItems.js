@@ -35,7 +35,7 @@ export const fetchFoundItems = async ({
     ...(filtersState.activeLocation && { location_name: filtersState.activeLocation }),
   };
 
-  const response = awaiapit(`${API_BASE_URL}/found/`, { params });
+  const response = await api.get(`${API_BASE_URL}/found/`, { params });
   return response.data;
 };
 
