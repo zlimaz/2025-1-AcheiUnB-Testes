@@ -408,9 +408,9 @@ export default {
           await api.post("/items/", formData);
           this.formSubmitted = true;
         }
-        // setTimeout(() => {
-        //   window.location.replace(`http://localhost:8000/#/found`);
-        // }, 1000);
+        setTimeout(() => {
+          window.location.replace(`http://localhost:8000/#/found`);
+        }, 1000);
       } catch (error) {
         this.alertMessage = "Erro ao publicar item.";
         this.submitError = true;
