@@ -58,17 +58,11 @@ jobs:
       - name: Run migrations
         run: python API/manage.py migrate
 
-      - name: Check Black version
-        run: black --version
-
-      - name: Check Ruff version
-        run: ruff --version
-
       - name: Run Black (formatação)
-        run: black --check .
+        run: black --check API/
 
       - name: Run Ruff (linting)
-        run: ruff check .
+        run: ruff check API/
 
 
       - name: Post comment on PR if linting fails
