@@ -27,7 +27,7 @@
 
   <!-- Sem chatrooms -->
   <div v-else class="flex flex-col items-center justify-center h-96">
-    <p class="text-xl text-cinza4">Nenhuma conversa encontrada.</p>
+    <p class="text-lg text-cinza3">Nenhuma conversa encontrada.</p>
   </div>
 
   <div class="fixed bottom-0 w-full">

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col relative z-0"
+    class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col relative z-0 cursor-pointer"
     @click="viewItemDetails()"
   >
     <!--imagem-->
@@ -19,7 +19,7 @@
 
     <!-- Modal de Confirmação de Exclusão -->
     <div v-if="showConfirmModal" class="fixed inset-0 flex items-center justify-center">
-      <div 
+      <div
         class="bg-azul p-6 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md lg:max-w-lg text-center"
         @click.stop
       >
@@ -28,13 +28,13 @@
         </p>
 
         <div class="flex flex-col sm:flex-row justify-center mt-4 gap-4">
-          <button 
+          <button
             class="bg-red-500 text-white font-inter px-4 py-2 rounded-md hover:bg-red-600 transition w-full sm:w-auto"
             @click="confirmDelete"
           >
             Excluir
           </button>
-          <button 
+          <button
             class="bg-white font-inter px-4 py-2 rounded-md hover:bg-gray-200 transition w-full sm:w-auto"
             @click="showConfirmModal = false"
           >

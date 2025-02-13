@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen pb-32">
     <div class="fixed w-full top-0 z-10">
       <SearchHeader />
     </div>
@@ -9,7 +9,10 @@
     </div>
 
     <!-- Se não houver itens, exibir mensagem e imagem -->
-    <EmptyState v-if="lostItems.length === 0" message="está sem itens perdidos... Você pode adicionar um!" />
+    <EmptyState
+      v-if="lostItems.length === 0"
+      message="está sem itens perdidos... Você pode adicionar um!"
+    />
 
     <div
       v-else
@@ -26,7 +29,7 @@
       />
     </div>
 
-    <div class="flex w-full justify-start sm:justify-center">
+    <div v-if="lostItems.length" class="flex w-full justify-start sm:justify-center">
       <div class="ml-24 transform -translate-x-1/2 flex gap-4 z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -11,6 +11,7 @@ import ListItem from "../views/ListItem.vue";
 import UserItemsLost from "../views/UserItems-Lost.vue";
 import UserItemsFound from "../views/UserItems-Found.vue";
 import Message from "../views/Message.vue";
+import SessionExpired from "@/views/Session-Expired.vue";
 
 const routes = [
   {
@@ -82,16 +83,20 @@ const routes = [
     component: Message,
     meta: { requiresAuth: true },
   },
-  // Rota para chat que aceita chatroomId no path e itemId nos query parameters
   {
     path: "/chat/:chatroomId",
     name: "Chat",
     component: Message,
     meta: { requiresAuth: true },
-    props: route => ({
+    props: (route) => ({
       chatroomId: route.params.chatroomId || route.query.chatroomId,
-      itemId: route.params.itemId || route.query.itemId
+      itemId: route.params.itemId || route.query.itemId,
     }),
+  },
+  {
+    path: "/session-expired",
+    name: "Expired",
+    component: SessionExpired,
   },
 ];
 
