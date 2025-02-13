@@ -208,6 +208,7 @@
           Adicionar imagens
           <input
             type="file"
+            ref="fileInput"
             id="images"
             class="hidden"
             @change="onFileChange"
@@ -273,6 +274,7 @@ export default {
       foundTime: "",
       foundDate: "",
       previews: [],
+      imagesToRemove: [],
       submitError: false,
       formSubmitted: false,
       alertMessage: "",
@@ -381,19 +383,34 @@ export default {
 
       const formData = form.toFormData();
 
+      if(this.imagesToRemove.length > 0) {
+        // Envia múltiplos IDs repetindo a chave "remove_images"
+        this.imagesToRemove.forEach(id => formData.append("remove_images", id));
+      }
+
       try {
         if (this.editMode) {
-          // Enviar a requisição PATCH para atualizar o item
-          await api.patch(`/items/${this.item.id}/`, formData);
+          if (this.item.images?.length > 0) {
+            this.item.images.forEach((image) => {
+              formData.append("images", image);
+            });
+          }
+
+          await api.patch(`/items/${this.item.id}/`, formData, {
+            headers: { "Content-Type": "multipart/form-data" }
+          });
+
           this.formSubmitted = true;
+          for (let pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+          };
         } else {
-          // Criar um novo item normalmente
           await api.post("/items/", formData);
           this.formSubmitted = true;
         }
-        setTimeout(() => {
-          window.location.replace(`http://localhost:8000/#/found`);
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.replace(`http://localhost:8000/#/found`);
+        // }, 1000);
       } catch (error) {
         this.alertMessage = "Erro ao publicar item.";
         this.submitError = true;
@@ -434,25 +451,16 @@ export default {
     },
 
     async removeImage(index) {
-      if (index < this.existingItem.image_urls.length) {
-        const imageId = this.existingItem.image_ids[index];
-        if (imageId) {
-          try {
-            await api.delete(`/items/${this.item.id}/images/${imageId}/`);
-            console.log(`Imagem ${imageId} removida.`);
-          } catch (error) {
-            console.error("Erro ao remover imagem:", error);
-            alert("Erro ao remover a imagem. Tente novamente.");
-            return;
-          }
-
+      if (this.existingItem && index < (this.existingItem.image_urls?.length || 0)) {
+        this.imagesToRemove.push(this.existingItem.image_ids[index]);
+        if (this.imagesToRemove.length > 0) {
           // Remove a imagem dos arrays de imagens existentes
-          this.existingItem.image_urls.splice(index, 1);
+          this.existingItem.image_urls?.splice(index, 1);
           this.existingItem.image_ids.splice(index, 1);
         }
       } else {
           // Imagem nova (ainda não foi enviada para a API)
-          const newIndex = index - this.existingItem.image_urls.length;
+          const newIndex = index - ((this.existingItem?.image_urls?.length) || 0);
           this.item.images.splice(newIndex, 1);
       }
 
@@ -461,6 +469,7 @@ export default {
 
         // Verifica se agora há menos de 2 imagens para reativar o botão de adicionar
         this.$forceUpdate();
+        this.$refs.fileInput.value = "";
     },
 
     handleSelectChange(event) {

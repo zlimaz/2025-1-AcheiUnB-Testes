@@ -17,11 +17,6 @@ export default class FormModel {
   toFormData() {
     const formData = new FormData();
 
-      // Para PATCH, enviar apenas campos modificados
-    if (this.entity.id) {
-      formData.append('_method', 'PATCH');
-    }
-
     for (const [key, value] of Object.entries(this.entity)) {
       if (key !== "requiredFields" && value !== undefined && value !== null) {
         if (Array.isArray(value)) {

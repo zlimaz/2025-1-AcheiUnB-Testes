@@ -208,6 +208,7 @@
           Adicionar imagens
           <input
             type="file"
+            ref="fileInput"
             id="images"
             class="hidden"
             @change="onFileChange"
@@ -273,6 +274,7 @@ export default {
       lostTime: "",
       lostDate: "",
       previews: [],
+      imagesToRemove: [],
       submitError: false,
       formSubmitted: false,
       alertMessage: "",
@@ -381,14 +383,28 @@ export default {
 
       const formData = form.toFormData();
 
+      if(this.imagesToRemove.length > 0) {
+        // Envia múltiplos IDs repetindo a chave "remove_images"
+        this.imagesToRemove.forEach(id => formData.append("remove_images", id));
+      }
+
       try {
         if (this.editMode) {
-          
-          // Enviar a requisição PATCH para atualizar o item
-          await api.patch(`/items/${this.item.id}/`, formData);
+          if (this.item.images?.length > 0) {
+            this.item.images.forEach((image) => {
+              formData.append("images", image);
+            });
+          }
+
+          await api.patch(`/items/${this.item.id}/`, formData, {
+            headers: { "Content-Type": "multipart/form-data" }
+          });
+
           this.formSubmitted = true;
+          for (let pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+          };
         } else {
-          // Criar um novo item normalmente
           await api.post("/items/", formData);
           this.formSubmitted = true;
         }
@@ -434,34 +450,26 @@ export default {
       return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}${sign}${offsetHours}${offsetMinutes}`;
     },
 
-    async removeImage(index) {
-      if (index < this.existingItem.image_urls.length) {
-        const imageId = this.existingItem.image_ids[index];
-        if (imageId) {
-          try {
-            await api.delete(`/items/${this.item.id}/images/${imageId}/`);
-            console.log(`Imagem ${imageId} removida.`);
-          } catch (error) {
-            console.error("Erro ao remover imagem:", error);
-            alert("Erro ao remover a imagem. Tente novamente.");
-            return;
-          }
-
+    async removeImage(index) {    
+      if (this.existingItem && index < (this.existingItem.image_urls?.length || 0)) {
+        this.imagesToRemove.push(this.existingItem.image_ids[index]);
+        if (this.imagesToRemove.length > 0) {
           // Remove a imagem dos arrays de imagens existentes
-          this.existingItem.image_urls.splice(index, 1);
+          this.existingItem.image_urls?.splice(index, 1);
           this.existingItem.image_ids.splice(index, 1);
         }
       } else {
           // Imagem nova (ainda não foi enviada para a API)
-          const newIndex = index - this.existingItem.image_urls.length;
+          const newIndex = index - ((this.existingItem?.image_urls?.length) || 0);
           this.item.images.splice(newIndex, 1);
       }
 
         // Atualiza a lista de previews corretamente
         this.previews.splice(index, 1);
-        
+
         // Verifica se agora há menos de 2 imagens para reativar o botão de adicionar
         this.$forceUpdate();
+        this.$refs.fileInput.value = "";
     },
 
     handleSelectChange(event) {
