@@ -18,7 +18,7 @@ class ChatRoomSerializer(serializers.ModelSerializer):
     messages = MessageSerializer(many=True, read_only=True)
     participant_1_username = serializers.ReadOnlyField(source="participant_1.first_name")
     participant_2_username = serializers.ReadOnlyField(source="participant_2.first_name")
-    item_id = serializers.IntegerField(write_only=True, required=True)
+    item_id = serializers.IntegerField(required=True)
     item_name = serializers.ReadOnlyField(source="item.name")
 
     class Meta:
