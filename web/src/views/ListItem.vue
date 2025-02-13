@@ -197,7 +197,6 @@ async function fetchItem() {
     item.value = response.data;
     itemStatus.value = item.value.status;
     isLoaded.value = true;
-    console.log("Item carregado:", item.value);
   } catch (error) {
     console.error("Erro ao carregar item:", error);
   }
@@ -207,7 +206,6 @@ async function fetchCurrentUser() {
   try {
     const response = await api.get(`/auth/user/`);
     currentUser.value = response.data;
-    console.log("Usuário atual:", currentUser.value);
   } catch (error) {
     console.error("Erro ao buscar usuário:", error);
   }
