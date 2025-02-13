@@ -55,6 +55,7 @@ jobs:
           pip install --upgrade pip
           pip install -r API/requirements.txt
           pip install coverage
+          
       - name: Run migrations
         run: python API/manage.py migrate
 
