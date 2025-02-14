@@ -4,14 +4,12 @@ from django.db import models
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    profile_picture = models.URLField(
-        null=True, blank=True
-    ) 
+    profile_picture = models.URLField(null=True, blank=True)
     welcome_email_sent = models.BooleanField(default=False)
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50, unique=True) 
+    name = models.CharField(max_length=50, unique=True)
     category_id = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
@@ -20,15 +18,16 @@ class Category(models.Model):
 
 class Location(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    location_id = models.CharField(max_length=2, unique=True) 
+    location_id = models.CharField(max_length=2, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class Color(models.Model):
-    name = models.CharField(max_length=50, unique=True) 
+    name = models.CharField(max_length=50, unique=True)
     color_id = models.CharField(max_length=2, unique=True)
+
     def __str__(self):
         return self.name
 
@@ -47,23 +46,15 @@ class Item(models.Model):
         ("lost", "Lost"),
     ]
 
-    user = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, blank=True
-    ) 
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=250, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
-    color = models.ForeignKey(
-        Color, on_delete=models.SET_NULL, null=True, blank=True
-    )
-    brand = models.ForeignKey(
-        Brand, on_delete=models.SET_NULL, null=True, blank=True
-    ) 
-    status = models.CharField(
-        max_length=10, choices=STATUS_CHOICES, default="lost"
-    ) 
-    found_lost_date = models.DateTimeField(null=True, blank=True) 
+    color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="lost")
+    found_lost_date = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     barcode = models.CharField(max_length=10, editable=False, blank=True)
@@ -91,7 +82,7 @@ class Item(models.Model):
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, related_name="images", on_delete=models.CASCADE)
-    image_url = models.URLField() 
+    image_url = models.URLField()
 
     def __str__(self):
         return f"Image for {self.item.name}"

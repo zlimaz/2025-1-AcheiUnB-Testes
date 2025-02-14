@@ -33,7 +33,7 @@ def send_welcome_email_on_first_login(sender, request, user, **kwargs):
     if not profile.welcome_email_sent:
         print("Primeiro login detectado. Enviando e-mail de boas-vindas.")
         send_welcome_email.delay(user.email, user.first_name)
-        profile.welcome_email_sent = True 
+        profile.welcome_email_sent = True
         profile.save()
     else:
         print("E-mail de boas-vindas já enviado anteriormente. Nenhuma ação tomada.")

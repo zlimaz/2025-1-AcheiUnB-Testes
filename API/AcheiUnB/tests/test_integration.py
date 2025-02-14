@@ -1,4 +1,3 @@
-import uuid
 from unittest.mock import patch
 
 import pytest
@@ -92,7 +91,7 @@ def test_search_items(mock_authentication):
     )
 
     assert response.status_code == 200
-    
+
 
 @pytest.mark.django_db()
 def test_get_messages(mock_authentication):

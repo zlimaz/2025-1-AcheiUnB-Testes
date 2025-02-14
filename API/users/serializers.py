@@ -47,7 +47,7 @@ class ItemSerializer(serializers.ModelSerializer):
     image_urls = serializers.SerializerMethodField(read_only=True)
     image_ids = serializers.SerializerMethodField(read_only=True)
     user_id = serializers.IntegerField(source="user.id", read_only=True)
-    barcode = serializers.CharField(read_only=True) 
+    barcode = serializers.CharField(read_only=True)
     category_name = serializers.SerializerMethodField()
     location_name = serializers.SerializerMethodField()
     color_name = serializers.SerializerMethodField()
@@ -78,7 +78,7 @@ class ItemSerializer(serializers.ModelSerializer):
             "images",
             "remove_images",
             "image_urls",
-            "image_ids", 
+            "image_ids",
         ]
 
     def validate_images(self, value):

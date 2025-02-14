@@ -8,7 +8,7 @@
         @click="goBack"
         src="../assets/icons/arrow-left-white.svg"
         alt="Voltar"
-        class="w-[30px] h-[30px] text-white cursor-pointer hover:scale-110 transition-transform duration-300 hover:text-laranja"
+        class="w-[35px] h-[35px] text-white cursor-pointer hover:scale-110 transition-transform duration-300 hover:text-laranja"
       />
     </div>
 
@@ -19,21 +19,19 @@
     </div>
 
     <button
-    v-if="userId === itemUserId"
-    type="button"
-    @click="editItem()"
-    class="flex items-center w-1/4 justify-end hover:scale-110  transition-transform duration-300"
+      v-if="userId === itemUserId"
+      type="button"
+      @click="editItem()"
+      class="flex items-center w-1/4 justify-end hover:scale-110 transition-transform duration-300"
     >
       <img
-        src="@/assets/icons/EditarPerfil.svg" 
+        src="@/assets/icons/EditarPerfil.svg"
         alt="Editar Item"
         class="w-[25px] h-[25px] text-white cursor-pointer"
-        />
+      />
     </button>
 
-    <div
-     v-else
-    class="flex items-center w-1/4 justify-end">
+    <div v-else class="flex items-center w-1/4 justify-end">
       <router-link to="/about" class="no-underline text-white">
         <Logo class="pr-2 md:pr-4" sizeClass="text-xl md:text-2xl" />
       </router-link>

@@ -8,7 +8,7 @@
       @click="goBack"
       :src="LeftArrow"
       alt="Voltar"
-      class="w-6 h-6 md:w-8 md:h-8 cursor-pointer"
+      class="w-[35px] h-35[px] md:w-8 md:h-8 cursor-pointer transform transition duration-300 hover:scale-125"
     />
 
     <div class="flex items-center space-x-4 ml-2">

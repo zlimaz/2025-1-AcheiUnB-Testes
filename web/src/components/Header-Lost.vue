@@ -7,7 +7,7 @@
       <img
         src="../assets/icons/arrow-left-white.svg"
         alt="Voltar"
-        class="w-[30px] h-[30px] text-white"
+        class="w-[35px] h-[35px] text-white transform transition duration-300 hover:scale-125"
       />
     </router-link>
     <div>

@@ -296,10 +296,882 @@ export default {
       submitError: false,
       formSubmitted: false,
       alertMessage: "",
-      categories: [],
-      locations: [],
-      colors: [],
-      brands: [],
+      categories: [
+        {
+          id: 1,
+          name: "Anel",
+          category_id: "01",
+        },
+        {
+          id: 2,
+          name: "Anotações",
+          category_id: "02",
+        },
+        {
+          id: 3,
+          name: "Apostila",
+          category_id: "03",
+        },
+        {
+          id: 4,
+          name: "Base",
+          category_id: "04",
+        },
+        {
+          id: 5,
+          name: "Batom",
+          category_id: "05",
+        },
+        {
+          id: 6,
+          name: "Blusa",
+          category_id: "06",
+        },
+        {
+          id: 7,
+          name: "Blush",
+          category_id: "07",
+        },
+        {
+          id: 8,
+          name: "Boné",
+          category_id: "08",
+        },
+        {
+          id: 9,
+          name: "Borracha",
+          category_id: "09",
+        },
+        {
+          id: 10,
+          name: "Brinco",
+          category_id: "10",
+        },
+        {
+          id: 11,
+          name: "Caderno",
+          category_id: "11",
+        },
+        {
+          id: 12,
+          name: "Calculadora",
+          category_id: "12",
+        },
+        {
+          id: 13,
+          name: "Calculadora Científica",
+          category_id: "13",
+        },
+        {
+          id: 14,
+          name: "Camiseta",
+          category_id: "14",
+        },
+        {
+          id: 15,
+          name: "Caneta",
+          category_id: "15",
+        },
+        {
+          id: 16,
+          name: "Carregador",
+          category_id: "16",
+        },
+        {
+          id: 17,
+          name: "Carregador Portátil",
+          category_id: "17",
+        },
+        {
+          id: 18,
+          name: "Carteira",
+          category_id: "18",
+        },
+        {
+          id: 19,
+          name: "Carteira de Identidade",
+          category_id: "19",
+        },
+        {
+          id: 20,
+          name: "Carteira de Motorista",
+          category_id: "20",
+        },
+        {
+          id: 21,
+          name: "Cartão SUS",
+          category_id: "21",
+        },
+        {
+          id: 22,
+          name: "Casaco",
+          category_id: "22",
+        },
+        {
+          id: 23,
+          name: "Case Fone",
+          category_id: "23",
+        },
+        {
+          id: 24,
+          name: "Case Notebook",
+          category_id: "24",
+        },
+        {
+          id: 25,
+          name: "Celular",
+          category_id: "25",
+        },
+        {
+          id: 26,
+          name: "Chapéu",
+          category_id: "26",
+        },
+        {
+          id: 27,
+          name: "Chaves",
+          category_id: "27",
+        },
+        {
+          id: 28,
+          name: "Chinelo",
+          category_id: "28",
+        },
+        {
+          id: 29,
+          name: "Colar",
+          category_id: "29",
+        },
+        {
+          id: 30,
+          name: "Estojo",
+          category_id: "30",
+        },
+        {
+          id: 31,
+          name: "Fone de ouvido",
+          category_id: "31",
+        },
+        {
+          id: 32,
+          name: "Garrafa de Água",
+          category_id: "32",
+        },
+        {
+          id: 33,
+          name: "Gloss",
+          category_id: "33",
+        },
+        {
+          id: 34,
+          name: "Grampeador",
+          category_id: "34",
+        },
+        {
+          id: 35,
+          name: "Guarda-chuva",
+          category_id: "35",
+        },
+        {
+          id: 36,
+          name: "Lapizeira",
+          category_id: "36",
+        },
+        {
+          id: 37,
+          name: "Livro",
+          category_id: "37",
+        },
+        {
+          id: 38,
+          name: "Lápis",
+          category_id: "38",
+        },
+        {
+          id: 39,
+          name: "Lápis de olho",
+          category_id: "39",
+        },
+        {
+          id: 40,
+          name: "Mochila",
+          category_id: "40",
+        },
+        {
+          id: 41,
+          name: "Mouse",
+          category_id: "41",
+        },
+        {
+          id: 42,
+          name: "Nessesair",
+          category_id: "42",
+        },
+        {
+          id: 43,
+          name: "Notebook",
+          category_id: "43",
+        },
+        {
+          id: 44,
+          name: "Passe Estudantil",
+          category_id: "44",
+        },
+        {
+          id: 45,
+          name: "Passe de Ônibus",
+          category_id: "45",
+        },
+        {
+          id: 46,
+          name: "Piercing",
+          category_id: "46",
+        },
+        {
+          id: 47,
+          name: "Pingente",
+          category_id: "47",
+        },
+        {
+          id: 48,
+          name: "Planner",
+          category_id: "48",
+        },
+        {
+          id: 49,
+          name: "Presilha de Cabelo",
+          category_id: "49",
+        },
+        {
+          id: 50,
+          name: "Pulseira",
+          category_id: "50",
+        },
+        {
+          id: 51,
+          name: "Relógio",
+          category_id: "51",
+        },
+        {
+          id: 52,
+          name: "Smartwatch",
+          category_id: "52",
+        },
+        {
+          id: 53,
+          name: "Sombra",
+          category_id: "53",
+        },
+        {
+          id: 54,
+          name: "Stylus",
+          category_id: "54",
+        },
+        {
+          id: 55,
+          name: "Suporte Notebook",
+          category_id: "55",
+        },
+        {
+          id: 56,
+          name: "Tablet",
+          category_id: "56",
+        },
+        {
+          id: 57,
+          name: "Touca",
+          category_id: "57",
+        },
+        {
+          id: 58,
+          name: "Óculos",
+          category_id: "58",
+        },
+        {
+          id: 59,
+          name: "Outra",
+          category_id: "00",
+        },
+      ],
+      locations: [
+        {
+          id: 1,
+          name: "Anfiteatro - UAC",
+          location_id: "01",
+        },
+        {
+          id: 2,
+          name: "Banheiros - LDTEA",
+          location_id: "02",
+        },
+        {
+          id: 3,
+          name: "Banheiros - RU",
+          location_id: "03",
+        },
+        {
+          id: 4,
+          name: "Banheiros - UAC",
+          location_id: "04",
+        },
+        {
+          id: 5,
+          name: "Banheiros - UED",
+          location_id: "05",
+        },
+        {
+          id: 6,
+          name: "Bebedouros - UAC",
+          location_id: "06",
+        },
+        {
+          id: 7,
+          name: "Bebedouros - UED",
+          location_id: "07",
+        },
+        {
+          id: 8,
+          name: "Biblioteca - UAC",
+          location_id: "08",
+        },
+        {
+          id: 9,
+          name: "Box - RU",
+          location_id: "09",
+        },
+        {
+          id: 10,
+          name: "Caixa - RU",
+          location_id: "10",
+        },
+        {
+          id: 11,
+          name: "Diretório Acadêmico - DA",
+          location_id: "11",
+        },
+        {
+          id: 12,
+          name: "Estacionamento - LDTEA",
+          location_id: "12",
+        },
+        {
+          id: 13,
+          name: "Estacionamento - UAC",
+          location_id: "13",
+        },
+        {
+          id: 14,
+          name: "Estacionamento - UED",
+          location_id: "14",
+        },
+        {
+          id: 15,
+          name: "Guarita Estacionamento Norte",
+          location_id: "15",
+        },
+        {
+          id: 16,
+          name: "Guarita Estacionamento Sul",
+          location_id: "16",
+        },
+        {
+          id: 17,
+          name: "I1 - UAC",
+          location_id: "17",
+        },
+        {
+          id: 18,
+          name: "I10 - UAC",
+          location_id: "18",
+        },
+        {
+          id: 19,
+          name: "I2 - UAC",
+          location_id: "19",
+        },
+        {
+          id: 20,
+          name: "I3 - UAC",
+          location_id: "20",
+        },
+        {
+          id: 21,
+          name: "I4 - UAC",
+          location_id: "21",
+        },
+        {
+          id: 22,
+          name: "I5 - UAC",
+          location_id: "22",
+        },
+        {
+          id: 23,
+          name: "I6 - UAC",
+          location_id: "23",
+        },
+        {
+          id: 24,
+          name: "I7 - UAC",
+          location_id: "24",
+        },
+        {
+          id: 25,
+          name: "I8 - UAC",
+          location_id: "25",
+        },
+        {
+          id: 26,
+          name: "I9 - UAC",
+          location_id: "26",
+        },
+        {
+          id: 27,
+          name: "Jardim - RU",
+          location_id: "27",
+        },
+        {
+          id: 28,
+          name: "Jardim - UAC",
+          location_id: "28",
+        },
+        {
+          id: 29,
+          name: "LDTEA",
+          location_id: "29",
+        },
+        {
+          id: 30,
+          name: "Laboratórios - LDTEA",
+          location_id: "30",
+        },
+        {
+          id: 31,
+          name: "Laboratórios - UED",
+          location_id: "31",
+        },
+        {
+          id: 32,
+          name: "Mesa de estudos - UED",
+          location_id: "32",
+        },
+        {
+          id: 33,
+          name: "Mesanino - UAC",
+          location_id: "33",
+        },
+        {
+          id: 34,
+          name: "Mesanino - UED",
+          location_id: "34",
+        },
+        {
+          id: 35,
+          name: "Mesas - RU",
+          location_id: "35",
+        },
+        {
+          id: 36,
+          name: "Mesas O Belisco - UAC",
+          location_id: "36",
+        },
+        {
+          id: 37,
+          name: "Mesas Redondas - UED",
+          location_id: "37",
+        },
+        {
+          id: 38,
+          name: "Mesas de Dama - UAC",
+          location_id: "38",
+        },
+        {
+          id: 39,
+          name: "Mesas de Estudos - UAC",
+          location_id: "39",
+        },
+        {
+          id: 40,
+          name: "Mocap - UED",
+          location_id: "40",
+        },
+        {
+          id: 41,
+          name: "Monumento lado ru",
+          location_id: "41",
+        },
+        {
+          id: 42,
+          name: "Quadra Poliesportiva",
+          location_id: "42",
+        },
+        {
+          id: 43,
+          name: "RU",
+          location_id: "43",
+        },
+        {
+          id: 44,
+          name: "Restaurante - RU",
+          location_id: "44",
+        },
+        {
+          id: 45,
+          name: "S1 - UAC",
+          location_id: "45",
+        },
+        {
+          id: 46,
+          name: "S10 - UAC",
+          location_id: "46",
+        },
+        {
+          id: 47,
+          name: "S2 - UAC",
+          location_id: "47",
+        },
+        {
+          id: 48,
+          name: "S3 - UAC",
+          location_id: "48",
+        },
+        {
+          id: 49,
+          name: "S4 - UAC",
+          location_id: "49",
+        },
+        {
+          id: 50,
+          name: "S5 - UAC",
+          location_id: "50",
+        },
+        {
+          id: 51,
+          name: "S6 - UAC",
+          location_id: "51",
+        },
+        {
+          id: 52,
+          name: "S7 - UAC",
+          location_id: "52",
+        },
+        {
+          id: 53,
+          name: "S8 - UAC",
+          location_id: "53",
+        },
+        {
+          id: 54,
+          name: "S9 - UAC",
+          location_id: "54",
+        },
+        {
+          id: 55,
+          name: "Sala de Professor - UED",
+          location_id: "55",
+        },
+        {
+          id: 56,
+          name: "UAC",
+          location_id: "56",
+        },
+        {
+          id: 57,
+          name: "UED",
+          location_id: "57",
+        },
+        {
+          id: 58,
+          name: "Outro",
+          location_id: "00",
+        },
+      ],
+      colors: [
+        {
+          id: 1,
+          name: "Amarelo",
+          color_id: "01",
+        },
+        {
+          id: 2,
+          name: "Azul",
+          color_id: "02",
+        },
+        {
+          id: 3,
+          name: "Bege",
+          color_id: "03",
+        },
+        {
+          id: 4,
+          name: "Branco",
+          color_id: "04",
+        },
+        {
+          id: 5,
+          name: "Bronze",
+          color_id: "05",
+        },
+        {
+          id: 6,
+          name: "Cinza",
+          color_id: "06",
+        },
+        {
+          id: 7,
+          name: "Dourado",
+          color_id: "07",
+        },
+        {
+          id: 8,
+          name: "Estampado",
+          color_id: "08",
+        },
+        {
+          id: 9,
+          name: "Laranja",
+          color_id: "09",
+        },
+        {
+          id: 10,
+          name: "Marrom",
+          color_id: "10",
+        },
+        {
+          id: 11,
+          name: "Prata",
+          color_id: "11",
+        },
+        {
+          id: 12,
+          name: "Preto",
+          color_id: "12",
+        },
+        {
+          id: 13,
+          name: "Rosa",
+          color_id: "13",
+        },
+        {
+          id: 14,
+          name: "Verde",
+          color_id: "14",
+        },
+        {
+          id: 15,
+          name: "Vermelho",
+          color_id: "15",
+        },
+        {
+          id: 16,
+          name: "Outra",
+          color_id: "00",
+        },
+      ],
+      brands: [
+        {
+          id: 1,
+          name: "Acer",
+          brand_id: "01",
+        },
+        {
+          id: 2,
+          name: "Adidas",
+          brand_id: "02",
+        },
+        {
+          id: 3,
+          name: "Apple",
+          brand_id: "03",
+        },
+        {
+          id: 4,
+          name: "Asus",
+          brand_id: "04",
+        },
+        {
+          id: 5,
+          name: "Avon",
+          brand_id: "05",
+        },
+        {
+          id: 6,
+          name: "Bic",
+          brand_id: "06",
+        },
+        {
+          id: 7,
+          name: "Dell",
+          brand_id: "07",
+        },
+        {
+          id: 8,
+          name: "Dior",
+          brand_id: "08",
+        },
+        {
+          id: 9,
+          name: "FCTE",
+          brand_id: "09",
+        },
+        {
+          id: 10,
+          name: "FGA",
+          brand_id: "10",
+        },
+        {
+          id: 11,
+          name: "HP",
+          brand_id: "11",
+        },
+        {
+          id: 12,
+          name: "Havaianas",
+          brand_id: "12",
+        },
+        {
+          id: 13,
+          name: "Hay-Ban",
+          brand_id: "13",
+        },
+        {
+          id: 14,
+          name: "Huawei",
+          brand_id: "14",
+        },
+        {
+          id: 15,
+          name: "JBL",
+          brand_id: "15",
+        },
+        {
+          id: 16,
+          name: "Kingston",
+          brand_id: "16",
+        },
+        {
+          id: 17,
+          name: "LG",
+          brand_id: "17",
+        },
+        {
+          id: 18,
+          name: "Lenovo",
+          brand_id: "18",
+        },
+        {
+          id: 19,
+          name: "Levi's",
+          brand_id: "19",
+        },
+        {
+          id: 20,
+          name: "Motorola",
+          brand_id: "20",
+        },
+        {
+          id: 21,
+          name: "New Balance",
+          brand_id: "21",
+        },
+        {
+          id: 22,
+          name: "Nike",
+          brand_id: "22",
+        },
+        {
+          id: 23,
+          name: "Nokia",
+          brand_id: "23",
+        },
+        {
+          id: 24,
+          name: "O Boticário",
+          brand_id: "24",
+        },
+        {
+          id: 25,
+          name: "Oaklay",
+          brand_id: "25",
+        },
+        {
+          id: 26,
+          name: "Puma",
+          brand_id: "26",
+        },
+        {
+          id: 27,
+          name: "RRDD",
+          brand_id: "27",
+        },
+        {
+          id: 28,
+          name: "Razer",
+          brand_id: "28",
+        },
+        {
+          id: 29,
+          name: "Samsung",
+          brand_id: "29",
+        },
+        {
+          id: 30,
+          name: "SanDisk",
+          brand_id: "30",
+        },
+        {
+          id: 31,
+          name: "Sony",
+          brand_id: "31",
+        },
+        {
+          id: 32,
+          name: "Stanley",
+          brand_id: "32",
+        },
+        {
+          id: 33,
+          name: "Tapaware",
+          brand_id: "33",
+        },
+        {
+          id: 34,
+          name: "Toshiba",
+          brand_id: "34",
+        },
+        {
+          id: 35,
+          name: "UnB",
+          brand_id: "35",
+        },
+        {
+          id: 36,
+          name: "Vaio",
+          brand_id: "36",
+        },
+        {
+          id: 37,
+          name: "Vans",
+          brand_id: "37",
+        },
+        {
+          id: 38,
+          name: "Xiaomi",
+          brand_id: "38",
+        },
+        {
+          id: 39,
+          name: "Outra",
+          brand_id: "00",
+        },
+      ],
+      searchCategory: "",
+      searchLocation: "",
+      searchBrand: "",
+      searchColor: "",
+      showCategoryDropdown: false,
+      showLocationDropdown: false,
+      showBrandDropdown: false,
+      showColorDropdown: false,
     };
   },
   props: {
@@ -313,10 +1185,7 @@ export default {
     },
   },
   mounted() {
-    this.initializeData();
-
     if (this.editMode && this.existingItem) {
-      // Preencher dados existentes
       this.item = Object.assign(new Item(), this.existingItem);
 
       this.previews.push(...this.existingItem.image_urls);
@@ -344,14 +1213,29 @@ export default {
       }
     }
   },
-  methods: {
-    initializeData() {
-      this.initializeCategories();
-      this.initializeLocations();
-      this.initializeColors();
-      this.initializeBrands();
+  computed: {
+    filteredCategories() {
+      return this.categories.filter((category) =>
+        category.name.toLowerCase().includes(this.searchCategory.toLowerCase()),
+      );
     },
-
+    filteredLocations() {
+      return this.locations.filter((location) =>
+        location.name.toLowerCase().includes(this.searchLocation.toLowerCase()),
+      );
+    },
+    filteredBrands() {
+      return this.brands.filter((brand) =>
+        brand.name.toLowerCase().includes(this.searchBrand.toLowerCase()),
+      );
+    },
+    filteredColors() {
+      return this.colors.filter((color) =>
+        color.name.toLowerCase().includes(this.searchColor.toLowerCase()),
+      );
+    },
+  },
+  methods: {
     async initializeCategories() {
       try {
         const result = await api.get("/categories/");
@@ -395,7 +1279,6 @@ export default {
         this.submitError = true;
       }
     },
-
     async save() {
       this.item.status = "found";
 
@@ -509,6 +1392,39 @@ export default {
       if (element.value == "clear") {
         this.item[`${element.id}`] = "";
       }
+    },
+
+    selectCategory(category) {
+      this.item.category = category.id;
+      this.searchCategory = category.name;
+      this.showCategoryDropdown = false;
+    },
+
+    selectLocation(location) {
+      this.item.location = location.id;
+      this.searchLocation = location.name;
+      this.showLocationDropdown = false;
+    },
+
+    selectBrand(brand) {
+      this.item.brand = brand.id;
+      this.searchBrand = brand.name;
+      this.showBrandDropdown = false;
+    },
+
+    selectColor(color) {
+      this.item.color = color.id;
+      this.searchColor = color.name;
+      this.showBrandDropdown = false;
+    },
+
+    hideDropdown(field) {
+      setTimeout(() => {
+        if (field === "category") this.showCategoryDropdown = false;
+        if (field === "location") this.showLocationDropdown = false;
+        if (field === "brand") this.showBrandDropdown = false;
+        if (field === "color") this.showColorDropdown = false;
+      }, 100);
     },
   },
 };
