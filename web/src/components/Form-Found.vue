@@ -419,7 +419,7 @@ export default {
         }
         setTimeout(() => {
           window.location.replace(`http://localhost:8000/#/found`);
-        }, 1000);
+        }, 2050);
       } catch (error) {
         this.alertMessage = "Erro ao publicar item.";
         this.submitError = true;
