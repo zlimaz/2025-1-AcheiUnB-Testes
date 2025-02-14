@@ -90,10 +90,8 @@ const fetchItems = async () => {
 // Função para confirmar exclusão
 const confirmDelete = async (itemId) => {
   try {
-    await deleteItem(itemId); // Chama a API para excluir o item
-    myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId); // Remove do estado
-  } catch (error) {
-    console.error("Erro ao excluir item:", error);
+    await deleteItem(itemId);
+    myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId);
   }
 };
 
