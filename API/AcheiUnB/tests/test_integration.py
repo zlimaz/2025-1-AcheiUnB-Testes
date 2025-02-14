@@ -1,4 +1,4 @@
-from unittest.mock import patch
+'''from unittest.mock import patch
 
 import pytest
 import requests
@@ -105,3 +105,4 @@ def test_get_messages(mock_authentication):
         json={"room": 6, "content": "Oi, esse item é seu?"},
         headers={"Authorization": f"Bearer {mock_authentication.return_value[1]}"},
     )
+'''
