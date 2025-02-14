@@ -19,7 +19,7 @@
     </div>
 
     <button
-      v-if="userId === itemUserId"
+      v-if="userId === itemUserId && canEditUser"
       type="button"
       @click="editItem()"
       class="flex items-center w-1/4 justify-end hover:scale-110 transition-transform duration-300"
@@ -65,6 +65,10 @@ export default {
     },
     itemId: {
       type: [String, Number],
+    },
+    canEditUser: {
+      type: Boolean,
+      default: true,
     },
   },
   methods: {
