@@ -51,7 +51,7 @@ def send_welcome_email(user_email, user_name):
 
 @shared_task
 def find_and_notify_matches_task(target_item_id, max_distance=2):
-    from .match import find_and_notify_matches  # Importação atrasada para evitar ciclo
+    from .match import find_and_notify_matches
 
     """Task assíncrona para encontrar e notificar matches."""
     try:
@@ -59,7 +59,6 @@ def find_and_notify_matches_task(target_item_id, max_distance=2):
     except Item.DoesNotExist:
         return
 
-    # Chama a lógica de matches
     find_and_notify_matches(target_item, max_distance)
 
 
@@ -95,23 +94,6 @@ def upload_images_to_cloudinary(object_id, images, object_type="item"):
         except Exception as e:
             print(f"Erro ao fazer upload de imagem para o objeto {object_id}: {e}")
 
-    # try:
-    #     item = Item.objects.get(id=item_id)
-    # except Item.DoesNotExist:
-    #     return
-
-    # for image_content in images:
-    #     try:
-    #         # Fazer o upload para o Cloudinary usando o conteúdo do arquivo
-    #         upload_result = cloudinary.uploader.upload(image_content)
-    #         image_url = upload_result.get("secure_url")
-
-    #         # Criar a entrada no banco para a imagem
-    #         ItemImage.objects.create(item=item, image_url=image_url)
-    #     except Exception as e:
-    #         # Logar o erro
-    #         print(f"Erro ao fazer upload de imagem para o item {item_id}: {e}")
-
 
 @shared_task
 def remove_images_from_item(image_ids):
@@ -127,7 +109,6 @@ def delete_old_items_and_chats():
     """Exclui itens com mais de 2 semanas e os chats vinculados automaticamente."""
     cutoff_date = now() - timedelta(weeks=2)
 
-    # Filtrar itens antigos
     old_items = Item.objects.filter(created_at__lt=cutoff_date)
 
     item_ids = [item.id for item in old_items]

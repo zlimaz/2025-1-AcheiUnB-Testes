@@ -19,6 +19,7 @@ nav:
     - Sprint 11: sprints/sprint-11.md
     - Sprint 12: sprints/sprint-12.md
     - Sprint 13: sprints/sprint-13.md
+    - Sprint 14: sprints/sprint-14.md
   - Story Map: StoryMap.md
   - Arquitetura: Architecture.md
   - Protótipo: front-end/figma.md
@@ -26,20 +27,17 @@ nav:
 theme:
   name: material
   palette:
-    # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
       toggle:
         icon: material/brightness-auto
         name: Switch to light mode
 
-    # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default 
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
 
-    # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       toggle:

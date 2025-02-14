@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./api";
 import { filtersState } from "@/store/filters";
 
 const API_BASE_URL = "http://localhost:8000/api/items";
@@ -17,7 +17,7 @@ export const fetchLostItems = async ({
     ...(filtersState.activeLocation && { location_name: filtersState.activeLocation }),
   };
 
-  const response = await axios.get(`${API_BASE_URL}/lost/`, { params });
+  const response = await api.get(`${API_BASE_URL}/lost/`, { params });
   return response.data;
 };
 
@@ -28,20 +28,25 @@ export const fetchFoundItems = async ({
   category_name = "",
   location_name = "",
 }) => {
-  const params = {
-    page,
-    ...(filtersState.searchQuery && { search: filtersState.searchQuery }),
-    ...(filtersState.activeCategory && { category_name: filtersState.activeCategory }),
-    ...(filtersState.activeLocation && { location_name: filtersState.activeLocation }),
-  };
+  try {
+    const params = {
+      page,
+      ...(filtersState.searchQuery && { search: filtersState.searchQuery }),
+      ...(filtersState.activeCategory && { category_name: filtersState.activeCategory }),
+      ...(filtersState.activeLocation && { location_name: filtersState.activeLocation }),
+    };
 
-  const response = await axios.get(`${API_BASE_URL}/found/`, { params });
-  return response.data;
+    const response = await api.get(`${API_BASE_URL}/found/`, { params });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar itens encontrados:", error);
+    throw error;
+  }
 };
 
 export const fetchMyItemsFound = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/found/my-items/`);
+    const response = await api.get(`${API_BASE_URL}/found/my-items/`);
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar itens encontrados:", error);
@@ -51,17 +56,17 @@ export const fetchMyItemsFound = async () => {
 
 export const fetchMyItemsLost = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/lost/my-items/`);
-    return response.data; // Retorna os dados da resposta
+    const response = await api.get(`${API_BASE_URL}/lost/my-items/`);
+    return response.data;
   } catch (error) {
     console.error("Erro ao buscar itens encontrados:", error);
-    throw error; // Lança o erro para ser tratado onde a função for chamada
+    throw error;
   }
 };
 
 export const deleteItem = async (itemId) => {
   try {
-    await axios.delete(`${API_BASE_URL}/${itemId}/`);
+    await api.delete(`${API_BASE_URL}/${itemId}/`);
   } catch (error) {
     console.error("Erro ao deletar o item:", error);
     throw error;

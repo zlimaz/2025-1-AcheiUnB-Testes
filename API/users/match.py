@@ -15,7 +15,6 @@ def get_potential_matches(target_item: Item, opposite_status: str, max_distance:
         location=target_item.location,
     ).prefetch_related("images")
 
-    # Filtrar itens com distância de Hamming dentro do limite
     matches = [
         item
         for item in potential_items
@@ -51,11 +50,9 @@ def find_and_notify_matches(target_item: Item, max_distance=2):
             target_item, opposite_status="found", max_distance=max_distance
         )
         if matches:
-            # Adicionar os matches ao item perdido
             target_item.matches.add(*matches)
             target_item.save()
 
-            # Enviar notificação ao dono do item perdido
             match_data = generate_match_data(matches)
             send_match_notification.delay(
                 to_email=target_item.user.email,
@@ -68,11 +65,9 @@ def find_and_notify_matches(target_item: Item, max_distance=2):
             target_item, opposite_status="lost", max_distance=max_distance
         )
         for lost_item in potential_items:
-            # Adicionar o item encontrado como match ao item perdido
             lost_item.matches.add(target_item)
             lost_item.save()
 
-            # Obter todos os matches atualizados e notificar o usuário
             updated_matches = lost_item.matches.all()
             match_data = generate_match_data(updated_matches)
             send_match_notification.delay(

@@ -12,9 +12,8 @@ from users import views
 from users.views import DeleteUserView, microsoft_callback
 
 
-# View para servir o arquivo Vue.js
 def vue_app(request):
-    return render(request, "index.html")  # Caminho para o index.html dentro da pasta templates
+    return render(request, "index.html")
 
 
 urlpatterns = [
@@ -26,18 +25,13 @@ urlpatterns = [
         microsoft_callback,
         name="microsoft_callback",
     ),
-    path("", vue_app, name="vue_home"),  # Essa URL renderiza o arquivo index.html
-    path(
-        "api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"
-    ),  # Obter token de acesso e refresh
-    path(
-        "api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
-    ),  # Atualizar token de acesso
+    path("", vue_app, name="vue_home"),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/chat/", include("chat.urls")),
     path("api/", include("users.urls")),
     path("delete-user/<int:user_id>/", DeleteUserView.as_view(), name="delete_user"),
 ]
 
-# Adiciona a configuração para servir arquivos estáticos no desenvolvimento
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

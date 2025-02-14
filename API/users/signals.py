@@ -23,20 +23,17 @@ def save_user_profile(sender, instance, **kwargs):
 
 @receiver(user_logged_in)
 def send_welcome_email_on_first_login(sender, request, user, **kwargs):
-    # Garantir que date_joined é "aware"
     if is_naive(user.date_joined):
         make_aware(user.date_joined)
     else:
         pass
 
-    # Obter ou criar o perfil do usuário
     profile, _ = UserProfile.objects.get_or_create(user=user)
 
-    # Verificar se o e-mail de boas-vindas já foi enviado
     if not profile.welcome_email_sent:
         print("Primeiro login detectado. Enviando e-mail de boas-vindas.")
         send_welcome_email.delay(user.email, user.first_name)
-        profile.welcome_email_sent = True  # Atualizar o status
+        profile.welcome_email_sent = True
         profile.save()
     else:
         print("E-mail de boas-vindas já enviado anteriormente. Nenhuma ação tomada.")
@@ -49,9 +46,7 @@ def delete_image_from_cloudinary(sender, instance, **kwargs):
     """
     if instance.image_url:
         try:
-            # Extrair o ID público do Cloudinary da URL
             public_id = instance.image_url.split("/")[-1].split(".")[0]
             cloudinary.uploader.destroy(public_id)
         except Exception as e:
-            # Opcional: Adicione logs ou trate o erro de forma adequada
             print(f"Erro ao remover a imagem do Cloudinary: {str(e)}")

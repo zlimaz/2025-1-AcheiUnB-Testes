@@ -1,14 +1,19 @@
 <template>
   <div class="fixed w-full top-0 z-[1]" v-if="isLoaded">
-    <ItemHeader :title="itemStatus === 'found' ? 'Item Achado' : 'Item Perdido'" />
+    <ItemHeader
+      :title="itemStatus === 'found' ? 'Item Achado' : 'Item Perdido'"
+      :userId="currentUser.id"
+      :itemUserId="item.user_id"
+      :itemId="item.id"
+    />
   </div>
 
-  <div class="px-6 py-[120px] flex flex-col items-center gap-6" v-if="item">
-    <!-- Container principal para desktop -->
+  <div
+    class="px-6 py-[120px] min-h-screen flex flex-col justify-center items-center gap-6 mt-3"
+    v-if="item"
+  >
     <div class="w-full md:flex md:gap-8 md:max-w-4xl">
-      <!-- Container de Imagens (Esquerda) -->
       <div class="w-full max-w-md md:max-w-none md:w-1/2 relative">
-        <!-- Imagem padrão quando não há fotos -->
         <div v-if="!item.image_urls || item.image_urls.length === 0" class="w-full h-64">
           <img
             :src="notAvailableImage"
@@ -82,9 +87,8 @@
       </div>
 
       <div class="w-full md:w-1/2 mt-6 md:mt-0">
-        <h1 class="text-lg md:text-2xl font-bold text-left">{{ item.name }}</h1>
+        <h1 class="text-lg md:text-2xl font-bold break-words">{{ item.name }}</h1>
 
-        <!-- Sempre exibe o local com o rótulo "Achado em:" -->
         <p class="text-sm md:text-base text-gray-500 text-left mt-2">
           Achado em: {{ item.location_name || "Não especificado" }}
         </p>
@@ -130,16 +134,28 @@
     </div>
 
     <button
+      v-if="currentUser.id != item.user_id"
       class="bg-laranja text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
       @click="handleChat"
     >
-      É meu item
+      <span v-if="itemStatus === 'found'">É meu item</span>
+      <span v-else>Achei este item</span>
+    </button>
+
+    <button
+      v-if="currentUser.id == item.user_id"
+      class="bg-red-500 text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
+      @click="confirmDelete(item.id)"
+    >
+      Excluir meu item
     </button>
   </div>
 
   <div class="fixed bottom-0 w-full">
     <MainMenu :activeIcon="itemStatus === 'found' ? 'found' : 'lost'" />
   </div>
+
+  <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
 </template>
 
 <script setup>
@@ -149,6 +165,8 @@ import ItemHeader from "../components/Item-Header.vue";
 import MainMenu from "../components/Main-Menu.vue";
 import { useRoute, useRouter } from "vue-router";
 import notAvailableImage from "@/assets/images/not-available.png";
+import Alert from "@/components/Alert.vue";
+import { deleteItem } from "@/services/apiItems";
 
 const route = useRoute();
 const router = useRouter();
@@ -157,29 +175,44 @@ const itemStatus = ref("");
 const currentUser = ref(null);
 const activeIndex = ref(0);
 const isMobile = ref(window.innerWidth < 768);
-// Flag que indica se os dados foram carregados
+
+const alertMessage = ref("");
+const submitError = ref(false);
+
 const isLoaded = ref(false);
+
+// Função para confirmar exclusão
+const confirmDelete = async (itemId) => {
+  console.log(itemStatus.value);
+  console.log(item.value.id);
+  try {
+    await deleteItem(itemId); // Chama a API para excluir o item
+    router.push(`/${itemStatus.value}`);
+  } catch (error) {
+    console.error("Erro ao excluir item:", error);
+    alertMessage.value = "Erro ao excluir item.";
+    submitError.value = true;
+  }
+};
 
 const formatDateTime = (dateString) => {
   const date = new Date(dateString);
   return `${date.toLocaleDateString("pt-BR", {
-    timeZone: "America/Sao_Paulo"
+    timeZone: "America/Sao_Paulo",
   })} às ${date.toLocaleTimeString("pt-BR", {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "America/Sao_Paulo"
+    timeZone: "America/Sao_Paulo",
   })}`;
 };
 
 const nextImage = () => {
-  activeIndex.value =
-    (activeIndex.value + 1) % item.value.image_urls.length;
+  activeIndex.value = (activeIndex.value + 1) % item.value.image_urls.length;
 };
 
 const prevImage = () => {
   activeIndex.value =
-    (activeIndex.value - 1 + item.value.image_urls.length) %
-    item.value.image_urls.length;
+    (activeIndex.value - 1 + item.value.image_urls.length) % item.value.image_urls.length;
 };
 
 const handleResize = () => {
@@ -192,9 +225,10 @@ async function fetchItem() {
     item.value = response.data;
     itemStatus.value = item.value.status;
     isLoaded.value = true;
-    console.log("Item carregado:", item.value);
   } catch (error) {
     console.error("Erro ao carregar item:", error);
+    alertMessage.value = "Erro ao carregar item.";
+    submitError.value = true;
   }
 }
 
@@ -202,9 +236,10 @@ async function fetchCurrentUser() {
   try {
     const response = await api.get(`/auth/user/`);
     currentUser.value = response.data;
-    console.log("Usuário atual:", currentUser.value);
   } catch (error) {
     console.error("Erro ao buscar usuário:", error);
+    alertMessage.value = "Erro ao buscar usuário.";
+    submitError.value = true;
   }
 }
 
@@ -217,26 +252,21 @@ const handleChat = async () => {
     if (!currentUser.value?.id || !item.value?.user_id) {
       console.error("IDs de usuário inválidos:", {
         currentUser: currentUser.value,
-        item: item.value
+        item: item.value,
       });
       return;
     }
-    console.log("Item atual (ID):", item.value.id);
-    console.log("Dono do item (user_id):", item.value.user_id);
-    console.log("Usuário atual (ID):", currentUser.value.id);
 
     const searchParams = {
       participant_1: currentUser.value.id,
       participant_2: item.value.user_id,
-      item_id: item.value.id
+      item_id: item.value.id,
     };
-    console.log("Parâmetros para busca de chat:", searchParams);
 
     const searchResponse = await api.get("/chat/chatrooms/", {
-      params: searchParams
+      params: searchParams,
     });
     const chatsEncontrados = searchResponse.data;
-    console.log("Chats encontrados:", chatsEncontrados);
 
     if (chatsEncontrados && chatsEncontrados.length > 0) {
       router.push(`/chat/${chatsEncontrados[0].id}?itemId=${item.value.id}`);
@@ -246,12 +276,10 @@ const handleChat = async () => {
     const chatData = {
       participant_1: currentUser.value.id,
       participant_2: item.value.user_id,
-      item_id: item.value.id
+      item_id: item.value.id,
     };
-    console.log("Dados para criação de chat:", chatData);
 
     const createResponse = await api.post("/chat/chatrooms/", chatData);
-    console.log("Resposta da criação de chat:", createResponse.data);
 
     if (createResponse.data?.id) {
       router.push(`/chat/${createResponse.data.id}?itemId=${item.value.id}`);
@@ -260,7 +288,8 @@ const handleChat = async () => {
     }
   } catch (error) {
     console.error("Erro ao criar/aceder chat:", error.response?.data || error.message);
-    alert("Ocorreu um erro ao iniciar o chat. Por favor, tente novamente.");
+    alertMessage.value = "Erro ao criar chat.";
+    submitError.value = true;
   }
 };
 
@@ -274,3 +303,5 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", handleResize);
 });
 </script>
+
+<style scoped></style>

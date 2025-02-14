@@ -4,39 +4,37 @@ from django.db import models
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    profile_picture = models.URLField(
-        null=True, blank=True
-    )  # Campo para salvar a URL da imagem
+    profile_picture = models.URLField(null=True, blank=True)
     welcome_email_sent = models.BooleanField(default=False)
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50, unique=True)  # Nome da categoria
-    category_id = models.CharField(max_length=10, unique=True)  # ID único da categoria
+    name = models.CharField(max_length=50, unique=True)
+    category_id = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class Location(models.Model):
-    name = models.CharField(max_length=100, unique=True)  # Nome do local
-    location_id = models.CharField(max_length=2, unique=True)  # ID único do local
+    name = models.CharField(max_length=100, unique=True)
+    location_id = models.CharField(max_length=2, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class Color(models.Model):
-    name = models.CharField(max_length=50, unique=True)  # Nome da cor
-    color_id = models.CharField(max_length=2, unique=True)  # ID único da cor
+    name = models.CharField(max_length=50, unique=True)
+    color_id = models.CharField(max_length=2, unique=True)
 
     def __str__(self):
         return self.name
 
 
 class Brand(models.Model):
-    name = models.CharField(max_length=50, unique=True)  # Nome da marca
-    brand_id = models.CharField(max_length=2, unique=True)  # ID único da marca
+    name = models.CharField(max_length=50, unique=True)
+    brand_id = models.CharField(max_length=2, unique=True)
 
     def __str__(self):
         return self.name
@@ -48,31 +46,22 @@ class Item(models.Model):
         ("lost", "Lost"),
     ]
 
-    user = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, blank=True
-    )  # Quem registrou o item
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=250, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
-    color = models.ForeignKey(
-        Color, on_delete=models.SET_NULL, null=True, blank=True
-    )  # Cor do item (opcional)
-    brand = models.ForeignKey(
-        Brand, on_delete=models.SET_NULL, null=True, blank=True
-    )  # Marca do item (opcional)
-    status = models.CharField(
-        max_length=10, choices=STATUS_CHOICES, default="lost"
-    )  # Diferencia entre Achado ou Perdido
-    found_lost_date = models.DateTimeField(null=True, blank=True)  # Data personalizada
-    created_at = models.DateTimeField(auto_now_add=True)  # Data de cadastro automático
+    color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="lost")
+    found_lost_date = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     barcode = models.CharField(max_length=10, editable=False, blank=True)
     matches = models.ManyToManyField(
         "self", symmetrical=False, blank=True, related_name="matched_with"
     )
 
-    # Calcula o código único (barcode) do item
     def save(self, *args, **kwargs):
         category_id = self.category.category_id if self.category else "00"
         location_id = self.location.location_id if self.location else "00"
@@ -93,7 +82,7 @@ class Item(models.Model):
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, related_name="images", on_delete=models.CASCADE)
-    image_url = models.URLField()  # URL para armazenar imagens remotamente
+    image_url = models.URLField()
 
     def __str__(self):
         return f"Image for {self.item.name}"
