@@ -1,15 +1,27 @@
 {
   "index.html": {
+<<<<<<< HEAD
     "file": "js/index-DagMRiY7.js",
+=======
+    "file": "js/index-D96LntmE.js",
+>>>>>>> 0aa8016aa30641ecaa49aec118b028668a338d87
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "css": [
+<<<<<<< HEAD
       "assets/index-CZ44oVY3.css"
     ],
     "assets": [
       "assets/Favicon-DZaE_dAz.png",
       "assets/found-and-lost-box-BIV9dkbR.jpg",
+=======
+      "assets/index-k303jj23.css"
+    ],
+    "assets": [
+      "assets/Favicon-DZaE_dAz.png",
+      "assets/found-and-lost-box-BB3OpleO.jpg",
+>>>>>>> 0aa8016aa30641ecaa49aec118b028668a338d87
       "assets/default-avatar-BpcudYYH.png"
     ]
   },
