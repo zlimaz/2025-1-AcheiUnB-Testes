@@ -20,8 +20,11 @@
       class="flex items-center px-6 py-5 cursor-pointer transition-all duration-200 hover:bg-gray-200"
       @click="openChat(chatroom)"
     >
-      <img :src="chatroom.recipient.foto" alt="Foto do usuário"
-        class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-white" />
+      <img
+        :src="chatroom.recipient.foto"
+        alt="Foto do usuário"
+        class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-white"
+      />
 
       <div class="ml-5">
         <p class="text-xl font-semibold text-gray-800">{{ chatroom.recipient.name }}</p>
@@ -30,8 +33,8 @@
     </div>
   </div>
 
-  <div v-else class="flex flex-col items-center justify-center h-96">
-    <p class="text-xl text-cinza4">Nenhuma conversa encontrada.</p>
+  <div v-else class="flex flex-col items-center justify-center h-96 mt-10">
+    <p class="text-lg text-cinza3">Nenhuma conversa encontrada.</p>
   </div>
 
   <div class="fixed bottom-0 w-full bg-white shadow-md">
@@ -81,7 +84,10 @@ async function fetchUserChatrooms() {
     let chatroomsTemp = [];
 
     for (const chatroom of response.data.results) {
-      if (chatroom.participant_1 === currentUser.value.id || chatroom.participant_2 === currentUser.value.id) {
+      if (
+        chatroom.participant_1 === currentUser.value.id ||
+        chatroom.participant_2 === currentUser.value.id
+      ) {
         let otherUserId, otherUserName, otherUserFoto;
 
         if (chatroom.participant_1 === currentUser.value.id) {

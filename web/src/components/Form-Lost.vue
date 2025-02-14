@@ -12,143 +12,160 @@
           v-model="item.name"
           type="text"
           name="name"
+          maxlength="750"
           placeholder="Escreva o nome do item"
         />
       </div>
 
       <!-- Categoria -->
       <div class="block relative mb-4 col-span-2">
-        <label for="category" class="font-inter block text-azul text-sm font-bold mb-2"
-          >Categoria <span class="text-red-500">*</span></label
-        >
-        <select
-          id="category"
-          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-          :class="item.category === '' ? 'text-gray-400' : 'text-gray-700'"
-          v-model="item.category"
-          @change="handleSelectChange"
-          name="category"
-        >
-          <option disabled value="">Selecione</option>
-          <option value="clear">Limpar seleção</option>
-          <option
-            v-for="category of categories"
-            :key="category.id"
-            :value="category.id"
-            class="block text-gray-700"
-          >
-            {{ category.name }}
-          </option>
-        </select>
-        <div
-          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
-        >
-          <img
-            src="../assets/icons/chevron-down.svg"
-            alt="chevron-down"
-            class="w-[15px] h-[15px]"
+        <label for="category" class="font-inter block text-azul text-sm font-bold mb-2">
+          Categoria <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <input
+            type="text"
+            v-model="searchCategory"
+            placeholder="Pesquisar Categoria..."
+            class="w-full border rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            @focus="showCategoryDropdown = true"
+            @blur="hideDropdown('category')"
           />
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <img
+              src="../assets/icons/chevron-down.svg"
+              alt="chevron-down"
+              class="w-[15px] h-[15px] cursor-pointer"
+              @click="showCategoryDropdown = !showCategoryDropdown"
+            />
+          </div>
+          <ul
+            v-if="showCategoryDropdown"
+            class="absolute z-10 bg-white border rounded mt-1 w-full max-h-48 overflow-y-auto shadow-lg"
+          >
+            <li
+              v-for="category in filteredCategories"
+              :key="category.id"
+              @mousedown="selectCategory(category)"
+              class="px-3 py-2 hover:bg-gray-200 cursor-pointer"
+            >
+              {{ category.name }}
+            </li>
+          </ul>
         </div>
       </div>
 
       <!-- Location -->
       <div class="block relative mb-4 col-span-2">
-        <label for="location" class="font-inter block text-azul text-sm font-bold mb-2"
-          >Local <span class="text-red-500">*</span></label
-        >
-        <select
-          id="location"
-          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-          :class="item.location === '' ? 'text-gray-400' : 'text-gray-700'"
-          v-model="item.location"
-          @change="handleSelectChange"
-          name="location"
-        >
-          <option value="" disabled selected>Selecione</option>
-          <option value="clear">Limpar seleção</option>
-          <option
-            v-for="location of locations"
-            :key="location.id"
-            :value="location.id"
-            class="block text-gray-700"
-          >
-            {{ location.name }}
-          </option>
-        </select>
-        <div
-          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
-        >
-          <img
-            src="../assets/icons/chevron-down.svg"
-            alt="chevron-down"
-            class="w-[15px] h-[15px]"
+        <label for="location" class="font-inter block text-azul text-sm font-bold mb-2 mt-4">
+          Localização <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <input
+            type="text"
+            v-model="searchLocation"
+            placeholder="Pesquisar Localização..."
+            class="w-full border rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            @focus="showLocationDropdown = true"
+            @blur="hideDropdown('location')"
           />
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <img
+              src="../assets/icons/chevron-down.svg"
+              alt="chevron-down"
+              class="w-[15px] h-[15px] cursor-pointer"
+              @click="showLocationDropdown = !showLocationDropdown"
+            />
+          </div>
+          <ul
+            v-if="showLocationDropdown"
+            class="absolute z-10 bg-white border rounded mt-1 w-full max-h-48 overflow-y-auto shadow-lg"
+          >
+            <li
+              v-for="location in filteredLocations"
+              :key="location.id"
+              @mousedown="selectLocation(location)"
+              class="px-3 py-2 hover:bg-gray-200 cursor-pointer"
+            >
+              {{ location.name }}
+            </li>
+          </ul>
         </div>
       </div>
 
       <!-- Color -->
       <div class="block relative mb-4 col-span-2">
-        <label for="color" class="font-inter block text-azul text-sm font-bold mb-2">Cor</label>
-        <select
-          id="color"
-          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-          :class="item.color === '' ? 'text-gray-400' : 'text-gray-700'"
-          v-model="item.color"
-          @change="handleSelectChange"
-          name="color"
-        >
-          <option value="" disabled selected>Selecione</option>
-          <option value="clear">Limpar seleção</option>
-          <option
-            v-for="color of colors"
-            :key="color.id"
-            :value="color.id"
-            class="block text-gray-700"
-          >
-            {{ color.name }}
-          </option>
-        </select>
-        <div
-          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
-        >
-          <img
-            src="../assets/icons/chevron-down.svg"
-            alt="chevron-down"
-            class="w-[15px] h-[15px] fill-current text-white"
+        <label for="color" class="font-inter block text-azul text-sm font-bold mb-2 mt-4">
+          Cor <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <input
+            type="text"
+            v-model="searchColor"
+            placeholder="Pesquisar Cor..."
+            class="w-full border rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            @focus="showColorDropdown = true"
+            @blur="hideDropdown('color')"
           />
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <img
+              src="../assets/icons/chevron-down.svg"
+              alt="chevron-down"
+              class="w-[15px] h-[15px] cursor-pointer"
+              @click="showColorDropdown = !showColorDropdown"
+            />
+          </div>
+          <ul
+            v-if="showColorDropdown"
+            class="absolute z-10 bg-white border rounded mt-1 w-full max-h-48 overflow-y-auto shadow-lg"
+          >
+            <li
+              v-for="color in filteredColors"
+              :key="color.id"
+              @mousedown="selectColor(color)"
+              class="px-3 py-2 hover:bg-gray-200 cursor-pointer"
+            >
+              {{ color.name }}
+            </li>
+          </ul>
         </div>
       </div>
 
       <!-- Brand -->
       <div class="block relative mb-4 col-span-2">
-        <label for="color" class="font-inter block text-azul text-sm font-bold mb-2">Marca</label>
-        <select
-          id="brand"
-          class="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-          :class="item.brand === '' ? 'text-gray-400' : 'text-gray-700'"
-          v-model="item.brand"
-          @change="handleSelectChange"
-          name="color"
-        >
-          <option value="" disabled selected>Selecione</option>
-          <option value="clear">Limpar seleção</option>
-          <option
-            v-for="brand of brands"
-            :key="brand.id"
-            :value="brand.id"
-            class="block text-gray-700"
-          >
-            {{ brand.name }}
-          </option>
-        </select>
-        <div
-          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mt-6"
-        >
-          <img
-            src="../assets/icons/chevron-down.svg"
-            alt="chevron-down"
-            class="w-[15px] h-[15px] fill-current text-white"
+        <label for="brand" class="font-inter block text-azul text-sm font-bold mb-2 mt-4">
+          Marca <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <input
+            type="text"
+            v-model="searchBrand"
+            placeholder="Pesquisar Marca..."
+            class="w-full border rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+            @focus="showBrandDropdown = true"
+            @blur="hideDropdown('brand')"
           />
+          <div class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <img
+              src="../assets/icons/chevron-down.svg"
+              alt="chevron-down"
+              class="w-[15px] h-[15px] cursor-pointer"
+              @click="showBrandDropdown = !showBrandDropdown"
+            />
+          </div>
+          <ul
+            v-if="showBrandDropdown"
+            class="absolute z-10 bg-white border rounded mt-1 w-full max-h-48 overflow-y-auto shadow-lg"
+          >
+            <li
+              v-for="brand in filteredBrands"
+              :key="brand.id"
+              @mousedown="selectBrand(brand)"
+              class="px-3 py-2 hover:bg-gray-200 cursor-pointer"
+            >
+              {{ brand.name }}
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -190,6 +207,7 @@
         <textarea
           id="description"
           v-model="item.description"
+          maxlength="750"
           name="description"
           rows="4"
           placeholder="Descreva detalhadamente o item"
@@ -282,18 +300,26 @@ export default {
       locations: [],
       colors: [],
       brands: [],
+      searchCategory: "",
+      searchLocation: "",
+      searchBrand: "",
+      searchColor: "",
+      showCategoryDropdown: false,
+      showLocationDropdown: false,
+      showBrandDropdown: false,
+      showColorDropdown: false,
     };
   },
 
   props: {
     editMode: {
       type: Boolean,
-      default: false
+      default: false,
     },
     existingItem: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
 
   mounted() {
@@ -302,23 +328,49 @@ export default {
     if (this.editMode && this.existingItem) {
       // Preencher dados existentes
       this.item = Object.assign(new Item(), this.existingItem);
-      
+
       this.previews.push(...this.existingItem.image_urls);
 
       if (this.item.found_lost_date) {
         try {
           const date = new Date(this.item.found_lost_date);
-          this.item.lostDate = date.getFullYear() + '-' + 
-                          String(date.getMonth() + 1).padStart(2, '0') + '-' + 
-                          String(date.getDate()).padStart(2, '0');
-          this.lostTime = String(date.getHours()).padStart(2, '0') + ':' + 
-                          String(date.getMinutes()).padStart(2, '0');
+          this.item.lostDate =
+            date.getFullYear() +
+            "-" +
+            String(date.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(date.getDate()).padStart(2, "0");
+          this.lostTime =
+            String(date.getHours()).padStart(2, "0") +
+            ":" +
+            String(date.getMinutes()).padStart(2, "0");
         } catch (error) {
           console.error("Erro ao processar found_lost_date:", error);
         }
-        
       }
     }
+  },
+  computed: {
+    filteredCategories() {
+      return this.categories.filter((category) =>
+        category.name.toLowerCase().includes(this.searchCategory.toLowerCase()),
+      );
+    },
+    filteredLocations() {
+      return this.locations.filter((location) =>
+        location.name.toLowerCase().includes(this.searchLocation.toLowerCase()),
+      );
+    },
+    filteredBrands() {
+      return this.brands.filter((brand) =>
+        brand.name.toLowerCase().includes(this.searchBrand.toLowerCase()),
+      );
+    },
+    filteredColors() {
+      return this.colors.filter((color) =>
+        color.name.toLowerCase().includes(this.searchColor.toLowerCase()),
+      );
+    },
   },
   methods: {
     initializeData() {
@@ -375,16 +427,16 @@ export default {
         return;
       }
 
-      if (this.item.lostDate) {
+      if (this.item.foundDate) {
         const formattedFoundLostDate = this.formatFoundLostDate();
         form.setFieldValue("found_lost_date", formattedFoundLostDate);
       }
 
       const formData = form.toFormData();
 
-      if(this.imagesToRemove.length > 0) {
+      if (this.imagesToRemove.length > 0) {
         // Envia múltiplos IDs repetindo a chave "remove_images"
-        this.imagesToRemove.forEach(id => formData.append("remove_images", id));
+        this.imagesToRemove.forEach((id) => formData.append("remove_images", id));
       }
 
       try {
@@ -396,13 +448,13 @@ export default {
           }
 
           await api.patch(`/items/${this.item.id}/`, formData, {
-            headers: { "Content-Type": "multipart/form-data" }
+            headers: { "Content-Type": "multipart/form-data" },
           });
 
           this.formSubmitted = true;
           for (let pair of formData.entries()) {
             console.log(pair[0], pair[1]);
-          };
+          }
         } else {
           await api.post("/items/", formData);
           this.formSubmitted = true;
@@ -434,9 +486,9 @@ export default {
     },
 
     formatFoundLostDate() {
-      const [year, month, day] = this.item.lostDate.split("-").map(Number);
+      const [year, month, day] = this.item.foundDate.split("-").map(Number);
 
-      const [hours, minutes] = this.lostTime?.split(":").map(Number);
+      const [hours, minutes] = this.foundTime?.split(":").map(Number);
 
       const date = new Date(year, month - 1, day, hours ?? 0, minutes ?? 0);
 
@@ -449,7 +501,7 @@ export default {
       return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}${sign}${offsetHours}${offsetMinutes}`;
     },
 
-    async removeImage(index) {    
+    async removeImage(index) {
       if (this.existingItem && index < (this.existingItem.image_urls?.length || 0)) {
         this.imagesToRemove.push(this.existingItem.image_ids[index]);
         if (this.imagesToRemove.length > 0) {
@@ -458,17 +510,17 @@ export default {
           this.existingItem.image_ids.splice(index, 1);
         }
       } else {
-          // Imagem nova (ainda não foi enviada para a API)
-          const newIndex = index - ((this.existingItem?.image_urls?.length) || 0);
-          this.item.images.splice(newIndex, 1);
+        // Imagem nova (ainda não foi enviada para a API)
+        const newIndex = index - (this.existingItem?.image_urls?.length || 0);
+        this.item.images.splice(newIndex, 1);
       }
 
-        // Atualiza a lista de previews corretamente
-        this.previews.splice(index, 1);
+      // Atualiza a lista de previews corretamente
+      this.previews.splice(index, 1);
 
-        // Verifica se agora há menos de 2 imagens para reativar o botão de adicionar
-        this.$forceUpdate();
-        this.$refs.fileInput.value = "";
+      // Verifica se agora há menos de 2 imagens para reativar o botão de adicionar
+      this.$forceUpdate();
+      this.$refs.fileInput.value = "";
     },
 
     handleSelectChange(event) {
@@ -477,6 +529,39 @@ export default {
       if (element.value == "clear") {
         this.item[`${element.id}`] = "";
       }
+    },
+
+    selectCategory(category) {
+      this.item.category = category.id;
+      this.searchCategory = category.name;
+      this.showCategoryDropdown = false;
+    },
+
+    selectLocation(location) {
+      this.item.location = location.id;
+      this.searchLocation = location.name;
+      this.showLocationDropdown = false;
+    },
+
+    selectBrand(brand) {
+      this.item.brand = brand.id;
+      this.searchBrand = brand.name;
+      this.showBrandDropdown = false;
+    },
+
+    selectColor(color) {
+      this.item.color = color.id;
+      this.searchColor = color.name;
+      this.showBrandDropdown = false;
+    },
+
+    hideDropdown(field) {
+      setTimeout(() => {
+        if (field === "category") this.showCategoryDropdown = false;
+        if (field === "location") this.showLocationDropdown = false;
+        if (field === "brand") this.showBrandDropdown = false;
+        if (field === "color") this.showColorDropdown = false;
+      }, 200);
     },
   },
 };
