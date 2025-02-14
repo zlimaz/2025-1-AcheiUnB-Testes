@@ -300,7 +300,6 @@ export default {
     this.initializeData();
 
     if (this.editMode && this.existingItem) {
-      console.log(this.existingItem)
       // Preencher dados existentes
       this.item = Object.assign(new Item(), this.existingItem);
       

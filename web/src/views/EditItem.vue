@@ -26,6 +26,7 @@
   import FormLost from '@/components/Form-Lost.vue';
   import FormFound from '@/components/Form-Found.vue';
   import api from '@/services/api';
+  import { ref } from 'vue';
   
   export default {
     components: { ItemHeader, FormLost, FormFound },
@@ -33,13 +34,14 @@
     id: {
       type: [String, Number], // Pode ser string (valor bruto) ou number (se converter)
       required: true
-    }
+    },
   },
     data() {
       return {
         itemId: null,
-        item: {}
-      }
+        item: {},
+        currentUser: null,
+      };
     },
 
     computed: {
@@ -48,9 +50,31 @@
     }
   },
 
-    async mounted() {
+    async created() {
       this.itemId = this.$route.params.id;
       await this.loadItem();
+
+      try {
+        const response = await api.get(`/auth/user/`);
+        this.currentUser = response.data;  // Atribuindo o valor de currentUser
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+
+      try {
+        const response = await api.get(`/items/${this.itemId}/`);
+        this.item = response.data;
+      } catch (error) {
+        console.error('Erro ao carregar item:', error);
+      }
+      
+      console.log(this.item.user_id);
+      console.log(this.currentUser.id);
+
+      if (this.currentUser && this.item.user_id !== this.currentUser.id) {
+        this.$router.push(`/${this.item.status}`)
+      }
+
     },
     methods: {
       async loadItem() {
@@ -61,6 +85,6 @@
           console.error('Erro ao carregar item:', error);
         }
       }
-    }
+    },
   }
   </script>
