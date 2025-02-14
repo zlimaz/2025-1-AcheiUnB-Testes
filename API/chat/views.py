@@ -16,31 +16,25 @@ class ChatRoomViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        participant_1_id = request.data.get("participant_1")
+        participant_1_id = request.user.id
         participant_2_id = request.data.get("participant_2")
         item_id = request.data.get("item_id")
 
-        # Verifica se todos os dados necessários foram fornecidos
-        if not participant_1_id or not participant_2_id or not item_id:
-            raise ValidationError(
-                "Os campos participant_1, participant_2 e item são obrigatórios."
-            )
+        if not participant_2_id or not item_id:
+            raise ValidationError("Os campos participant_2 e item são obrigatórios.")
 
-        # Verifica se o item existe
-        try:
-            item = Item.objects.get(id=item_id)
-        except Item.DoesNotExist:
-            raise ValidationError({"item": "Item não encontrado."})
+        if participant_1_id == int(participant_2_id):
+            raise ValidationError("Não é possível criar um chat consigo mesmo.")
 
-        # Verifica se já existe um chat para este item e participantes
-        if ChatRoom.objects.filter(
-            item=item,
-            participant_1__in=[participant_1_id, participant_2_id],
-            participant_2__in=[participant_1_id, participant_2_id],
-        ).exists():
-            raise ValidationError(
-                "Já existe um chat para este item com os mesmos participantes."
-            )
+        if not Item.objects.filter(id=item_id).exists():
+            raise ValidationError("O item associado não foi encontrado.")
+
+        existing_chat = ChatRoom.objects.filter(
+            participant_1=participant_1_id, participant_2=participant_2_id, item_id=item_id
+        ).first()
+
+        if existing_chat:
+            return Response(self.get_serializer(existing_chat).data)
 
         return super().create(request, *args, **kwargs)
 
@@ -53,14 +47,12 @@ class MessageViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Obtém o parâmetro "room" da URL (query params)
         room_id = self.request.query_params.get("room")
         if room_id:
             return Message.objects.filter(room_id=room_id)
         return super().get_queryset()
 
     def perform_create(self, serializer):
-        # O remetente da mensagem será sempre o usuário autenticado
         serializer.save(sender=self.request.user)
 
 
@@ -70,7 +62,6 @@ class ClearChatsView(APIView):
     permission_classes = [IsAdminUser]
 
     def delete(self, request, *args, **kwargs):
-        # Apaga mensagens e salas de chat
         Message.objects.all().delete()
         ChatRoom.objects.all().delete()
         return Response({"detail": "Todos os chats foram limpos com sucesso."})

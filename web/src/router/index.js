@@ -86,25 +86,23 @@ const routes = [
     component: UserItemsFound,
     meta: { requiresAuth: true },
   },
-  /*{
-    path: "/message",
-    name: "Message",
-    component: Message,
-  },*/
   {
     path: "/chat/new",
     name: "NewChat",
-    component: Message, // A mesma tela de chat será usada para criar um novo chat
+    component: Message,
     meta: { requiresAuth: true },
   },
+  // Rota para chat que aceita chatroomId no path e itemId nos query parameters
   {
     path: "/chat/:chatroomId",
     name: "Chat",
     component: Message,
     meta: { requiresAuth: true },
-    props: true, // Permite passar o `chatroomId` como propriedade
+    props: route => ({
+      chatroomId: route.params.chatroomId || route.query.chatroomId,
+      itemId: route.params.itemId || route.query.itemId
+    }),
   },
-  { path: "/:catchAll(.*)", name: "NotFound", component: Login },
 ];
 
 const router = createRouter({

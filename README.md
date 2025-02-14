@@ -1,5 +1,15 @@
 # AcheiUnB
 
+![GitHub Repo stars](https://img.shields.io/github/stars/unb-mds/2024-2-AcheiUnB?style=social)
+![GitHub contributors](https://img.shields.io/github/contributors/unb-mds/2024-2-AcheiUnB)
+![Python](https://img.shields.io/badge/Python-3.12.9-blue)
+![Django](https://img.shields.io/badge/Django-5.1.4-green)
+![Vue.js](https://img.shields.io/badge/Vue.js-3.5.12-brightgreen)
+![Docker](https://img.shields.io/badge/Docker-27.2.0-blue)
+![GitHub](https://img.shields.io/github/license/unb-mds/2024-2-AcheiUnB)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/unb-mds/2024-2-AcheiUnB)
+![GitHub closed PRs](https://img.shields.io/github/issues-pr-closed/unb-mds/2024-2-AcheiUnB)
+
 AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Universidade de Brasília (UnB) na busca e recuperação de itens perdidos. A plataforma permite que os alunos registrem e encontrem objetos, facilitando o contato entre quem perdeu e encontrou o item. O objetivo é reduzir a dependência de grupos de mensagens e proporcionar um sistema mais organizado e acessível para achados e perdidos.
 
 
@@ -26,7 +36,7 @@ AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Univ
 
 ## 👥 Equipe
 
-| [![Ana Elisa Marques](https://avatars.githubusercontent.com/u/78448515?v=4)](https://github.com/anaelisaramos) | [![Davi Camilo Menezes](https://avatars.githubusercontent.com/u/144080784?v=4)](https://github.com/DaviCamilo23) | [![Euller Júlio da Silva](https://avatars.githubusercontent.com/u/125329742?v=4)](https://github.com/potatoyz908) | [![Leonardo Ramiro Alves de Oliveira](https://avatars.githubusercontent.com/u/144712954?v=4)](https://github.com/leoramiroo) |
+| [![Ana Elisa Ramos](https://avatars.githubusercontent.com/u/78448515?v=4)](https://github.com/anaelisaramos) | [![Davi Camilo Menezes](https://avatars.githubusercontent.com/u/144080784?v=4)](https://github.com/DaviCamilo23) | [![Euller Júlio da Silva](https://avatars.githubusercontent.com/u/125329742?v=4)](https://github.com/potatoyz908) | [![Leonardo Ramiro Alves de Oliveira](https://avatars.githubusercontent.com/u/144712954?v=4)](https://github.com/leoramiroo) |
 |-------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|
 | Ana Elisa Marques | Davi Camilo Menezes | Euller Júlio da Silva | Leonardo Ramiro Alves de Oliveira |
 
@@ -47,8 +57,7 @@ git clone https://github.com/unb-mds/2024-2-AcheiUnB.git
 
 Para rodar o projeto, você precisa das seguintes ferramentas:
 
-- **Python** v3.12.0
-- **Docker** v20.10.0+
+- **Docker** v27.2.0
 
 ### 💻 Ambiente
 
