@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col items-center px-6 pt-10 lg:pt-16">
-    <!-- Foto do Usuário -->
     <div
       class="w-24 h-24 lg:w-32 lg:h-32 rounded-full flex items-center justify-center border-4 border-laranja overflow-hidden"
     >
@@ -31,7 +30,6 @@
       </div>
     </div>
 
-    <!-- Nome e Email do Usuário -->
     <h1 class="text-xl lg:text-3xl font-bold text-azul mt-4 lg:mt-6">
       {{
         user.first_name || user.last_name ? user.first_name + " " + user.last_name : user.username
@@ -41,12 +39,10 @@
       {{ user.email || "Email não disponível" }}
     </p>
 
-    <!-- Matrícula (se existir) -->
     <p v-if="user.matricula" class="text-sm lg:text-lg text-cinza3">
       Matrícula: {{ user.matricula }}
     </p>
 
-    <!-- Botões de Ação (Centralizados e Melhor Distribuídos) -->
     <div
       class="pt-[30px] px-4 lg:pt-[50px] flex flex-col items-center w-full mt-6 space-y-4 lg:space-y-6"
     >
@@ -73,22 +69,22 @@
       </router-link>
     </div>
 
-    <!-- Espaçamento extra para telas grandes -->
     <div class="h-16 lg:h-24"></div>
 
-    <!-- Menu Fixo -->
     <div class="fixed bottom-0 w-full">
       <MainMenu activeIcon="user" />
     </div>
   </div>
+
+  <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import api from "../services/api";
 import MainMenu from "../components/Main-Menu.vue";
+import Alert from "@/components/Alert.vue";
 
-// Dados do Usuário
 const user = ref({
   foto: "",
   first_name: "",
@@ -97,15 +93,12 @@ const user = ref({
   username: "",
   matricula: null,
 });
+const alertMessage = ref("");
+const submitError = ref(false);
 
-// Função para buscar os dados do usuário logado
 async function fetchUserData() {
   try {
-    console.log("Buscando dados do usuário logado...");
     const response = await api.get("/auth/user/");
-    console.log("Dados do usuário recebidos:", response.data);
-
-    // Atualizar os dados do usuário com base na resposta da API
     user.value = {
       foto: response.data.foto || null,
       first_name: response.data.first_name,
@@ -116,10 +109,11 @@ async function fetchUserData() {
     };
   } catch (error) {
     console.error("Erro ao carregar dados do usuário:", error);
+    alertMessage = "Erro ao carregar dados do usuário.";
+    submitError = true;
   }
 }
 
-// Buscar os dados ao montar o componente
 onMounted(fetchUserData);
 </script>
 
