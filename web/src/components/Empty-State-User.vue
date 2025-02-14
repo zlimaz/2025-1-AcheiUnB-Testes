@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import box from "@/assets/icons/found-and-lost-box.jpg";
+import box from "@/assets/icons/box.svg";
 
 defineProps({
     message: String,
