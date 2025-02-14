@@ -11,6 +11,12 @@ User = get_user_model()
 
 class APITestItemFilters(APITestCase):
     def setUp(self):
+
+        Category.objects.all().delete()
+        Color.objects.all().delete()
+        Location.objects.all().delete()
+        Item.objects.all().delete()
+        
         self.user = User.objects.create_user(username="testuser", password="password")
 
         self.category1 = Category.objects.create(name="Acessórios", category_id="01")
