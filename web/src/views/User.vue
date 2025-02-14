@@ -60,14 +60,12 @@
           Reportar um problema
         </button>
       </a>
-      <router-link to="/" class="w-full flex justify-center">
-        <button
-          class="bg-verde text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
-          @click="logout"
-        >
-          Sair da Conta
-        </button>
-      </router-link>
+      <button
+        class="bg-verde text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
+        @click="logout"
+      >
+        Sair da Conta
+      </button>
     </div>
 
     <div class="h-16 lg:h-24"></div>
@@ -114,9 +112,11 @@ async function fetchUserData() {
     submitError = true;
   }
 }
+
 async function logout() {
   try {
     await api.get("/auth/logout/");
+    router.push("/");
   } catch (error) {
     console.error("Erro ao fazer logout", error);
   }

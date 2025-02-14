@@ -32,7 +32,7 @@ urlpatterns = [
     path("items/found/my-items/", MyItemsFoundView.as_view(), name="my-found-items"),
     path("", include(router.urls)),
     path("auth/validate/", UserValidateView.as_view(), name="useer-detail"),
-    path("auth/logout/", LogoutView.as_view(), name="useer-detail"),
+    path("auth/logout/", LogoutView.as_view(), name="useer-logout"),
     path("auth/user/", UserDetailView.as_view(), name="useer-detail"),
     path("test-user/", TestUserView.as_view(), name="test_user"),
     path("users/", UserListView.as_view(), name="user-list"),
