@@ -33,7 +33,7 @@
     <input
       v-model="filtersState.searchQuery"
       class="input bg-gray-200 rounded-full px-10 py-2 my-1 border-2 border-transparent focus:outline-none focus:border-laranja placeholder-gray-500 text-gray-700 transition-all duration-300 shadow-md pr-10 w-full z-40"
-      placeholder="Pesquise seu item"
+      :placeholder="animatedPlaceholder"
       type="text"
       @input="setSearchQuery(filtersState.searchQuery)"
       @focus="isActive = true"
@@ -143,6 +143,9 @@ export default {
 
   data() {
     return {
+      fullPlaceholder: "Pesquise seu item",
+      animatedPlaceholder: "",
+      typingSpeed: 50,
       showFilters: false,
       isActive: false,
       categories: [
@@ -227,6 +230,9 @@ export default {
         : "";
     },
   },
+  mounted() {
+    this.startTypingEffect();
+  },
   methods: {
     toggleActive() {
       this.isActive = !this.isActive;
@@ -254,6 +260,19 @@ export default {
           }
         });
       }
+    },
+
+    startTypingEffect() {
+      let index = 0;
+      this.animatedPlaceholder = ""; // Garante que começa vazio
+      const interval = setInterval(() => {
+        if (index < this.fullPlaceholder.length) {
+          this.animatedPlaceholder += this.fullPlaceholder[index];
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, this.typingSpeed);
     },
 
     // handleSearch() {

@@ -21,12 +21,13 @@
   </div>
 
   <!-- SubMenu -->
-  <div class="pb-8 pt-24">
+  <div class="pt-24 pb-8">
     <SubMenu />
   </div>
 
+  <!-- Se não houver itens, exibir mensagem e imagem -->
   <EmptyState
-    v-if="!loading && myItemsLost.length === 0"
+    v-if="myItemsLost.length === 0"
     message="perdidos registrados... Você pode adicionar um no"
     highlightText="AcheiUnB"
   />

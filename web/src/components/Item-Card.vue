@@ -1,7 +1,7 @@
 <template>
   <div
-    class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col relative z-0"
-    @click="viewItemDetails()"
+    class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col relative z-0 cursor-pointer transform transition duration-300 hover:scale-105"
+    @click="!disabled ? viewItemDetails() : null"
   >
     <!--imagem-->
     <div class="w-full h-[120px] bg-cinza2 rounded-sm flex justify-center items-start">
@@ -50,17 +50,17 @@
       </div>
     </Teleport>
 
-    <!--linha-->
     <div class="h-[2px] w-1/4 bg-laranja mt-4"></div>
 
     <!--textos-->
-    <div class="text-azul font-bold font-inter mt-1 truncate">{{ name }}</div>
-    <div class="flex items-start">
-      <img src="../assets/icons/locale.svg" alt="" class="w-[15px] h-[15px] mr-1" />
-      <div class="text-azul font-inter text-sm">{{ location }}</div>
+    <div class="flex flex-col">
+      <div class="text-azul font-bold font-inter mt-1 truncate">{{ name }}</div>
+      <div class="flex items-start justify-start">
+        <img src="../assets/icons/locale.svg" alt="" class="w-5 h-5 mr-1" />
+        <span class="text-azul font-inter text-md font-medium">{{ location }}</span>
+      </div>
     </div>
 
-    <!-- Exibe o tempo se não for um item do usuário -->
     <span
       class="text-right font-inter font-bold text-xs text-cinza3 p-1 flex justify-end items-center"
     >
@@ -82,6 +82,10 @@ const props = defineProps({
   time: String,
   location: String,
   isMyItem: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
     type: Boolean,
     default: false,
   },
