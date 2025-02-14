@@ -67,6 +67,7 @@ const myItemsLost = ref([]);
 const submitError = ref(false);
 const formSubmitted = ref(false);
 const alertMessage = ref("");
+const loading = ref(true);
 
 const fetchItems = async () => {
   try {
@@ -76,12 +77,14 @@ const fetchItems = async () => {
     alertMessage.value = "Erro ao carregar itens perdidos.";
     submitError.value = true;
   }
+
+  loading.value = false;
 };
 
 const confirmDelete = async (itemId) => {
   try {
-    await deleteItem(itemId); // Chama a API para excluir o item
-    myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId);
+    await deleteItem(itemId);
+    myItemsLost.value = myItemsLost.value.filter(item => item.id !== itemId);
   } catch (error) {
     console.error("Erro ao excluir item:", error);
   }

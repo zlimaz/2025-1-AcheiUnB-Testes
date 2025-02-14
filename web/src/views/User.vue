@@ -44,7 +44,7 @@
     </p>
 
     <div
-      class="pt-[30px] lg:pt-[50px] flex flex-col items-center w-full mt-6 space-y-4 lg:space-y-6"
+      class="pt-[30px] px-4 lg:pt-[50px] flex flex-col items-center w-full mt-6 space-y-4 lg:space-y-6"
     >
       <router-link to="/user-items-lost" class="w-full flex justify-center">
         <button

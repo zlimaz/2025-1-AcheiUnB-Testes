@@ -57,7 +57,6 @@ import { formatTime } from "@/utils/dateUtils";
 import MainMenu from "../components/Main-Menu.vue";
 import SubMenu from "../components/Sub-Menu-UserFound.vue";
 import ItemCard from "@/components/Item-Card.vue";
-import Alert from "@/components/Alert.vue";
 import Logo from "@/components/Logo.vue";
 import NotAvailableImage from "@/assets/images/not-available.png";
 import EmptyState from "@/components/Empty-State-User.vue";
@@ -66,6 +65,7 @@ const myItemsFound = ref([]);
 const submitError = ref(false);
 const formSubmitted = ref(false);
 const alertMessage = ref("");
+const loading = ref(true);
 
 const fetchItems = async () => {
   try {
@@ -75,6 +75,8 @@ const fetchItems = async () => {
     alertMessage.value = "Erro ao carregar itens encontrados.";
     submitError.value = true;
   }
+
+  loading.value = false;
 };
 
 const confirmDelete = async (itemId) => {

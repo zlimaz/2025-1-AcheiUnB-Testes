@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen">
-    <div class="fixed w-full top-0 z-10">
+  <div class="min-h-screen pb-32">
+    <div class="fixed w-full top-0 z-30">
       <SearchHeader />
     </div>
 
@@ -8,7 +8,10 @@
       <SubMenu />
     </div>
 
-    <EmptyState v-if="foundItems.length === 0" message="está sem itens achados... Você pode adicionar um!" />
+    <EmptyState
+      v-if="!loading && foundItems.length === 0"
+      message="está sem itens achados... Você pode adicionar um!"
+    />
 
     <div
       v-else
@@ -25,7 +28,7 @@
       ></ItemCard>
     </div>
 
-    <div class="flex w-full justify-start sm:justify-center">
+    <div v-if="foundItems.length" class="flex w-full justify-start sm:justify-center">
       <div class="bottom-32 ml-24 transform -translate-x-1/2 flex gap-4 z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +36,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-10 text-azul hover:text-laranja transition duration-200 cursor-pointer"
+          class="size-10 text-azul hover:text-laranja transition duration-200 cursor-pointer hover:size-12"
           @click="goToPreviousPage"
         >
           <path
@@ -84,6 +87,7 @@ import EmptyState from "@/components/Empty-State.vue";
 const foundItems = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
+const loading = ref(true);
 
 const fetchItems = async (page = 1) => {
   const { searchQuery, activeCategory, activeLocation } = filtersState;
@@ -97,6 +101,7 @@ const fetchItems = async (page = 1) => {
 
   foundItems.value = response.results;
   totalPages.value = Math.ceil(response.count / 27);
+  loading.value = false;
 };
 
 const goToPreviousPage = () => {
