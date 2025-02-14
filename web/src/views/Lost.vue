@@ -9,7 +9,7 @@
     </div>
 
     <!-- Se não houver itens, exibir mensagem e imagem -->
-    <EmptyState v-if="lostItems.length === 0" message="está sem itens perdidos... Você pode adicionar um!" />
+    <EmptyState v-if="lostItems.length === 0" type="perdido" />
 
     <div
       v-else
