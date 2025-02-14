@@ -131,6 +131,7 @@
     </div>
 
     <button
+    v-if="currentUser.id != item.user_id"
       class="bg-laranja text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
       @click="handleChat"
     >
@@ -286,7 +287,7 @@ const handleChat = async () => {
     }
   } catch (error) {
     console.error("Erro ao criar/aceder chat:", error.response?.data || error.message);
-    alertMessage.value = "Erro ao excluir item.";
+    alertMessage.value = "Erro ao criar chat.";
     submitError.value = true;
   }
 };
