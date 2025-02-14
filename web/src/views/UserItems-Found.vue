@@ -52,6 +52,8 @@
   <div class="fixed bottom-0 w-full">
     <MainMenu activeIcon="search" />
   </div>
+
+  <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
 </template>
 
 <script setup>
@@ -89,6 +91,8 @@ const confirmDelete = async (itemId) => {
     myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId); // Remove do estado
   } catch (error) {
     console.error("Erro ao excluir item:", error);
+    alertMessage = "Erro ao excluir item.";
+    submitError = true;
   }
 };
 

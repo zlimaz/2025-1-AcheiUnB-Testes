@@ -19,6 +19,8 @@
         :existingItem="item"
       />
       </div>
+
+      <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
   </template>
   
   <script>
@@ -27,6 +29,7 @@
   import FormFound from '@/components/Form-Found.vue';
   import api from '@/services/api';
   import { ref } from 'vue';
+  import Alert from "@/components/Alert.vue";
   
   export default {
     components: { ItemHeader, FormLost, FormFound },
@@ -41,6 +44,8 @@
         itemId: null,
         item: {},
         currentUser: null,
+        alertMessage: "",
+        submitError: false,
       };
     },
 
@@ -59,6 +64,8 @@
         this.currentUser = response.data;  // Atribuindo o valor de currentUser
       } catch (error) {
         console.error("Erro ao buscar usuário:", error);
+        this.alertMessage = "Erro ao buscar usuário.";
+        this.submitError = true;
       }
 
       try {
@@ -66,10 +73,9 @@
         this.item = response.data;
       } catch (error) {
         console.error('Erro ao carregar item:', error);
+        this.alertMessage = "Erro ao carregar item.";
+        this.submitError = true;
       }
-      
-      console.log(this.item.user_id);
-      console.log(this.currentUser.id);
 
       if (this.currentUser && this.item.user_id !== this.currentUser.id) {
         this.$router.push(`/${this.item.status}`)
@@ -83,6 +89,8 @@
           this.item = response.data;
         } catch (error) {
           console.error('Erro ao carregar item:', error);
+          this.alertMessage = "Erro ao carregar item.";
+          this.submitError = true;
         }
       }
     },

@@ -205,17 +205,6 @@ export default {
         });
       }
     },
-
-    // handleSearch() {
-    //   const query = this.searchQuery;
-
-    //   const activeCategory = this.categories.find((filter) => filter.active);
-    //   const activeLocation = this.locations.find((filter) => filter.active);
-
-    //   console.log("Pesquisa:", query);
-    //   console.log("Categoria selecionada:", activeCategory ? activeCategory.label : "Nenhuma");
-    //   console.log("Local selecionado:", activeLocation ? activeLocation.label : "Nenhum");
-    // },
   },
 };
 </script>
