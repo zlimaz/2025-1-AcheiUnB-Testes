@@ -59,8 +59,8 @@ Local: Discord
 Fizemos essa reunião de última hora, pois houve uma mudança de planos quanto a data de apresentação pela professora. Então, por causa disso, reduzimos o escopo do projeto (cortando tarefas menos relevantes) para conseguirmos finalizar o trabalho até dia 14 com todos os entregáveis e com os ideais de um MVP.
 
 ## Finalização
-> A _Sprint_ deve ser finalizada com um resumo do que realmente foi feito e quais tarefas foram postergadas para a próxima _Sprint_ (caso existam).
+> Após finalizarem todas as outras atividades da faculdade, o grupo buscou dar o máximo de foco nessa sprint, e embora o escopo tenha sido reduzido, boa parte das tarefas propostas inicialmente foram concluídas com sucesso para a Release 2.
 ---
 
 **Observações:**
-> Esse espaço deve ser utilizado para registrar qualquer observação que o time julgar pertinente.
+> Reta final!

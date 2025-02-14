@@ -9,10 +9,10 @@
 </template>
 
 <script setup>
-import box from "@/assets/icons/box.svg"; // Caminho para a imagem
+import box from "@/assets/icons/box.svg";
 
 defineProps({
-  message: String, // Parâmetro para personalizar a mensagem
-  highlightText: String,
+    message: String,
+    highlightText: String
 });
 </script>

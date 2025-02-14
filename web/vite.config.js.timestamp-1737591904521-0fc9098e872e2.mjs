@@ -22,18 +22,13 @@ var vite_config_default = defineConfig({
     manifest: true,
     emptyOutDir: true,
     assetsDir: "static/dist/assets",
-    // Pasta onde as imagens e outros arquivos estáticos serão armazenados
     rollupOptions: {
       output: {
-        // Define o nome dos arquivos JS
         entryFileNames: "js/[name]-[hash].js",
-        // Define o nome dos arquivos de assets (imagens, fontes)
         assetFileNames: "assets/[name]-[hash][extname]"
-        // As imagens serão armazenadas em 'static/dist/assets/'
       }
     }
   },
-  // Adicionando uma configuração global para que o Vite processe as imagens corretamente
   assetsInclude: [
     "**/*.png",
     "**/*.jpg",

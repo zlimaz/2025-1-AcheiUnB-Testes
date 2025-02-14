@@ -40,6 +40,8 @@
   <div class="fixed bottom-0 w-full bg-white shadow-md">
     <MainMenu :activeIcon="'chat'" />
   </div>
+
+  <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
 </template>
 
 <script setup>
@@ -49,11 +51,14 @@ import api from "../services/api";
 import ItemHeader from "../components/Item-Header.vue";
 import MainMenu from "../components/Main-Menu.vue";
 import defaultAvatar from "@/assets/images/default-avatar.png";
+import Alert from "@/components/Alert.vue";
 
 const router = useRouter();
 const currentUser = ref(null);
 const chatrooms = ref([]);
 const loadingChats = ref(true);
+const alertMessage = ref("");
+const submitError = ref(false);
 
 const openChat = (chatroom) => {
   if (!chatroom.id || !chatroom.recipient || !chatroom.item_id) return;
@@ -73,6 +78,8 @@ async function fetchCurrentUser() {
     await fetchUserChatrooms();
   } catch (error) {
     console.error("Erro ao buscar usuário:", error);
+    alertMessage = "Erro ao buscar usuário.";
+    submitError = true;
   }
 }
 
@@ -115,6 +122,8 @@ async function fetchUserChatrooms() {
     chatrooms.value = chatroomsTemp;
   } catch (error) {
     console.error("Erro ao buscar conversas:", error);
+    alertMessage = "Erro ao buscar conversas.";
+    submitError = true;
   } finally {
     loadingChats.value = false;
   }

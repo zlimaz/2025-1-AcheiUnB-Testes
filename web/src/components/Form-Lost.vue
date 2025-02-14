@@ -1,7 +1,6 @@
 <template>
   <form id="app" @submit="save">
     <div class="grid md:grid-cols-4 gap-4">
-      <!-- Nome do item -->
       <div class="mb-4 col-span-2">
         <label for="name" class="font-inter block text-azul text-sm font-bold mb-2"
           >Item <span class="text-red-500">*</span></label
@@ -17,7 +16,6 @@
         />
       </div>
 
-      <!-- Categoria -->
       <div class="block relative mb-4 col-span-2">
         <label for="category" class="font-inter block text-azul text-sm font-bold mb-2">
           Categoria <span class="text-red-500">*</span>
@@ -55,7 +53,6 @@
         </div>
       </div>
 
-      <!-- Location -->
       <div class="block relative mb-4 col-span-2">
         <label for="location" class="font-inter block text-azul text-sm font-bold mb-2 mt-4">
           Localização <span class="text-red-500">*</span>
@@ -93,7 +90,6 @@
         </div>
       </div>
 
-      <!-- Color -->
       <div class="block relative mb-4 col-span-2">
         <label for="color" class="font-inter block text-azul text-sm font-bold mb-2 mt-4">
           Cor <span class="text-red-500">*</span>
@@ -131,7 +127,6 @@
         </div>
       </div>
 
-      <!-- Brand -->
       <div class="block relative mb-4 col-span-2">
         <label for="brand" class="font-inter block text-azul text-sm font-bold mb-2 mt-4">
           Marca <span class="text-red-500">*</span>
@@ -184,7 +179,6 @@
         />
       </div>
 
-      <!-- Horário -->
       <div class="mb-4 col-span-2">
         <label for="lostTime" class="font-inter block text-azul text-sm font-bold mb-2"
           >Horário em que foi perdido</label
@@ -199,7 +193,6 @@
         />
       </div>
 
-      <!-- Descrição -->
       <div class="mb-4 col-span-2">
         <label for="description" class="font-inter block text-azul text-sm font-bold mb-2">
           Descrição
@@ -216,7 +209,6 @@
       </div>
 
       <div>
-        <!-- Upload de arquivo -->
         <label
           for="images"
           class="flex bg-azul text-white text-base px-5 py-3 outline-none rounded cursor-pointer font-inter"
@@ -236,16 +228,13 @@
       </div>
 
       <div class="flex flex-wrap gap-4 col-span-3">
-        <!-- Loop de Imagens -->
         <div
           v-for="(image, index) in previews"
           :key="index"
           class="w-64 h-64 border rounded relative"
         >
-          <!-- Imagem de Pré-visualização -->
           <img :src="image" alt="Preview" class="w-full h-full object-cover rounded" />
 
-          <!-- Botão Remover -->
           <div
             class="absolute p-1 bottom-2 border-2 border-laranja right-2 w-12 h-12 bg-white flex items-center justify-center text-xs rounded-full cursor-pointer"
             @click="removeImage(index)"
@@ -255,7 +244,6 @@
         </div>
       </div>
 
-      <!-- Enviar -->
       <div class="col-span-4">
         <button
           type="button"
@@ -326,7 +314,6 @@ export default {
     this.initializeData();
 
     if (this.editMode && this.existingItem) {
-      // Preencher dados existentes
       this.item = Object.assign(new Item(), this.existingItem);
 
       this.previews.push(...this.existingItem.image_urls);
@@ -346,6 +333,8 @@ export default {
             String(date.getMinutes()).padStart(2, "0");
         } catch (error) {
           console.error("Erro ao processar found_lost_date:", error);
+          this.alertMessage = "Erro ao processar data.";
+          this.submitError = true;
         }
       }
     }
@@ -386,6 +375,8 @@ export default {
         this.categories = result.data.results;
       } catch {
         console.log("Erro ao carregar categorias");
+        this.alertMessage = "Erro ao carregar categorias.";
+        this.submitError = true;
       }
     },
 
@@ -395,6 +386,8 @@ export default {
         this.locations = result.data.results;
       } catch {
         console.log("Erro ao carregar locais");
+        this.alertMessage = "Erro ao carregar locais.";
+        this.submitError = true;
       }
     },
 
@@ -404,6 +397,8 @@ export default {
         this.colors = result.data.results;
       } catch {
         console.log("Erro ao carregar cores");
+        this.alertMessage = "Erro ao carregar cores.";
+        this.submitError = true;
       }
     },
 
@@ -413,6 +408,8 @@ export default {
         this.brands = result.data.results;
       } catch {
         console.log("Erro ao carregar marcas");
+        this.alertMessage = "Erro ao carregar marcas.";
+        this.submitError = true;
       }
     },
 
@@ -435,7 +432,6 @@ export default {
       const formData = form.toFormData();
 
       if (this.imagesToRemove.length > 0) {
-        // Envia múltiplos IDs repetindo a chave "remove_images"
         this.imagesToRemove.forEach((id) => formData.append("remove_images", id));
       }
 
@@ -452,16 +448,13 @@ export default {
           });
 
           this.formSubmitted = true;
-          for (let pair of formData.entries()) {
-            console.log(pair[0], pair[1]);
-          }
         } else {
           await api.post("/items/", formData);
           this.formSubmitted = true;
         }
         setTimeout(() => {
           window.location.replace(`http://localhost:8000/#/lost`);
-        }, 1000);
+        }, 2050);
       } catch (error) {
         this.alertMessage = "Erro ao publicar item.";
         this.submitError = true;
@@ -505,20 +498,16 @@ export default {
       if (this.existingItem && index < (this.existingItem.image_urls?.length || 0)) {
         this.imagesToRemove.push(this.existingItem.image_ids[index]);
         if (this.imagesToRemove.length > 0) {
-          // Remove a imagem dos arrays de imagens existentes
           this.existingItem.image_urls?.splice(index, 1);
           this.existingItem.image_ids.splice(index, 1);
         }
       } else {
-        // Imagem nova (ainda não foi enviada para a API)
         const newIndex = index - (this.existingItem?.image_urls?.length || 0);
         this.item.images.splice(newIndex, 1);
       }
 
-      // Atualiza a lista de previews corretamente
       this.previews.splice(index, 1);
 
-      // Verifica se agora há menos de 2 imagens para reativar o botão de adicionar
       this.$forceUpdate();
       this.$refs.fileInput.value = "";
     },
