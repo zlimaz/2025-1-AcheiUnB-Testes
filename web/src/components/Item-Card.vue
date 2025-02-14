@@ -1,7 +1,7 @@
 <template>
   <div
-    class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col relative z-0 cursor-pointer"
-    @click="viewItemDetails()"
+    class="w-[170px] sm:w-[190px] h-[230px] bg-cinza1 rounded-sm shadow-complete p-2 flex flex-col relative z-0 cursor-pointer transform transition duration-300 hover:scale-105"
+    @click="!disabled ? viewItemDetails() : null"
   >
     <!--imagem-->
     <div class="w-full h-[120px] bg-cinza2 rounded-sm flex justify-center items-start">
@@ -44,7 +44,6 @@
       </div>
     </div>
 
-    <!--linha-->
     <div class="h-[2px] w-1/4 bg-laranja mt-4"></div>
 
     <!--textos-->
@@ -56,7 +55,6 @@
       </div>
     </div>
 
-    <!-- Exibe o tempo se não for um item do usuário -->
     <span
       class="text-right font-inter font-bold text-xs text-cinza3 p-1 flex justify-end items-center"
     >
@@ -78,6 +76,10 @@ const props = defineProps({
   time: String,
   location: String,
   isMyItem: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
     type: Boolean,
     default: false,
   },

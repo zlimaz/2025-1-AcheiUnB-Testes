@@ -8,9 +8,8 @@
       <SubMenu />
     </div>
 
-    <!-- Se não houver itens, exibir mensagem e imagem -->
     <EmptyState
-      v-if="foundItems.length === 0"
+      v-if="!loading && foundItems.length === 0"
       message="está sem itens achados... Você pode adicionar um!"
     />
 
@@ -89,6 +88,7 @@ import EmptyState from "@/components/Empty-State.vue";
 const foundItems = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
+const loading = ref(true);
 
 // Função para buscar itens achados com base na página
 const fetchItems = async (page = 1) => {
@@ -103,6 +103,7 @@ const fetchItems = async (page = 1) => {
 
   foundItems.value = response.results;
   totalPages.value = Math.ceil(response.count / 27); // 20 itens por página
+  loading.value = false;
 };
 
 // Navegação de páginas

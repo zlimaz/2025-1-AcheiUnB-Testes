@@ -10,7 +10,7 @@
 
     <!-- Se não houver itens, exibir mensagem e imagem -->
     <EmptyState
-      v-if="lostItems.length === 0"
+      v-if="!loading && lostItems.length === 0"
       message="está sem itens perdidos... Você pode adicionar um!"
     />
 
@@ -89,6 +89,7 @@ import EmptyState from "@/components/Empty-State.vue";
 const lostItems = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
+const loading = ref(true);
 
 // Função para buscar itens perdidos com base na página
 const fetchItems = async (page = 1) => {
@@ -103,6 +104,7 @@ const fetchItems = async (page = 1) => {
 
   lostItems.value = response.results;
   totalPages.value = Math.ceil(response.count / 27);
+  loading.value = false;
 };
 
 // Navegação de páginas
