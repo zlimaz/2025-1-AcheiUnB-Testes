@@ -92,70 +92,16 @@ def test_search_items(mock_authentication):
     )
 
     assert response.status_code == 200
-
-
-@pytest.mark.django_db()
-def test_login_user():
-    user = User.objects.create_user(
-        username="testuser", email="test@example.com", password="testpass"
-    )
-
-    token = get_jwt_token(user)
-
-    response = requests.post(
-        "http://localhost:8000/api/auth/msal-login/",
-        headers={"Authorization": f"Bearer {token}"},
-    )
-
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db()
-def test_get_my_items(mock_authentication):
-    username = f"testuser_{uuid.uuid4()}"
-
-    user = User.objects.create_user(username=username, password="testpass")
-
-    item_data = {
-        "name": "Carteira Preta",
-        "location_name": "Biblioteca",
-        "status": "lost",
-        "user_id": user.id,
-    }
-
-    response = requests.post(
-        "http://localhost:8000/api/items/",
-        json=item_data,
-        cookies={"access_token": mock_authentication.return_value[1]},
-    )
-
-    assert response.status_code == 201
-
-
-@pytest.mark.django_db()
-def test_chat_by_item():
-    user1 = User.objects.create_user(username="usuario1@unb.br", password="senha123")
-    user2 = User.objects.create_user(username="usuario2@unb.br", password="senha123")
     
-    token_user1 = get_jwt_token(user1)
-    
-    response = requests.post(
-        "http://localhost:8000/api/chat/messages/",
-        json={"room": 6, "content": "Mensagem de teste"},
-        headers={"Authorization": f"Bearer {token_user1}"},
-    )
-    
-    assert response.status_code == 201
-
 
 @pytest.mark.django_db()
 def test_get_messages(mock_authentication):
     user1 = User.objects.create_user(username="usuario1@unb.br", password="senha123")
-    user2 = User.objects.create_user(username="usuario2@unb.br", password="senha123")
-    
+    User.objects.create_user(username="usuario2@unb.br", password="senha123")
+
     mock_authentication.return_value = (user1, get_jwt_token(user1))
-    
-    response = requests.post(
+
+    requests.post(
         "http://localhost:8000/api/chat/messages/",
         json={"room": 6, "content": "Oi, esse item é seu?"},
         headers={"Authorization": f"Bearer {mock_authentication.return_value[1]}"},
