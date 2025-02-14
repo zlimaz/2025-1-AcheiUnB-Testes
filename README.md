@@ -20,14 +20,11 @@ AcheiUnB é um projeto desenvolvido para facilitar a vida dos estudantes da Univ
   - [👥 Equipe](#-equipe)
   - [✨ Início](#-início)
     - [📋 Pré-requisitos](#-pré-requisitos)
-    - [💻 Ambiente](#-ambiente)
-    - [📁 Dependências do Projeto](#-dependências-do-projeto)
     - [💾 Execução](#-execução)
       - [Observações do Docker](#observações-do-docker)
-    - [✅ Autenticação com o Microsoft OAuth](#-autenticação-com-o-microsoft-oauth)
-    - [📥 Atualização do Banco de Dados](#-atualização-do-banco-de-dados)
+    - [✅ Autenticação com o Microsoft MSAL](#-autenticação-com-o-microsoft-msal)
     - [🖱️ Acesso aos Serviços](#️-acesso-aos-serviços)
-    - [📍 Migrations](#-migrations)
+    - [⚙️ Fluxo do Front-End](https://github.com/unb-mds/2024-2-AcheiUnB/edit/main/README.md#%EF%B8%8F-fluxo-do-front-end)
   - [📚 Documentação](#-documentação)
   - [📎 Extra](#-extra)
     - [Story Map e Activity Flow](#story-map-e-activity-flow)
@@ -59,29 +56,6 @@ Para rodar o projeto, você precisa das seguintes ferramentas:
 
 - **Docker** v27.2.0
 
-### 💻 Ambiente
-
-Para configurar o ambiente, rode o seguinte script:
-
-```bash
-make config 
-```
-
-### 📁 Dependências do Projeto
-
-Para instalar as dependências, siga os passos abaixo:
-
-```bash
-# Crie um ambiente virtual para Python
-python3 -m venv api/env
-
-# Ative o ambiente virtual
-source api/env/bin/activate
-
-# Instale os pacotes do Python e do Node
-make install
-```
-
 ### 💾 Execução
 
 Para iniciar o projeto, use o comando:
@@ -103,7 +77,7 @@ docker compose up
 #### Observações do Docker
 
 - Para rodar o projeto em segundo plano:
-
+  
   ```bash
   docker compose up -d
   ```
@@ -120,30 +94,16 @@ docker compose up
   docker compose down -v
   ```
 
-### ✅ Autenticação com o Microsoft OAuth
+### ✅ Autenticação com o Microsoft MSAL
 
-Para ativar o login com Google, substitua `your_client_id` no arquivo `web/.env.local` pelo Client ID do seu projeto no Google Cloud:
+Para ativar o login com a Microsoft, substitua Client ID e Client Secret no arquivo API/.env pelo Client ID do seu projeto pelo seu token da Azure:
 
 1. Acesse o portal do [Azure Active Directory](https://portal.azure.com/).
 2. Crie um aplicativo para o AcheiUnB.
-3. Defina como tipo de aplicativo "Aplicativo Web" e adicione `http://localhost:8000` como origem autorizada e URI de redirecionamento.
-4. Copie o Client ID e o Client Secret gerados. e substitua em `API/.env`.
+3. Defina como tipo de aplicativo "Aplicativo Web" e adicione http://localhost:8000 como origem autorizada e URI de redirecionamento.
+4. Copie o Client ID e o Client Secret gerados. e substitua em API/.env.
 
 Após a configuração, o login estará habilitado.
-
-### 📥 Atualização do Banco de Dados
-
-Os dados são obtidos por meio de scraping do site da UnB e precisam ser atualizados periodicamente. Para atualizar, use:
-
-```bash
-make updatedb-all
-```
-
-ou, de forma equivalente:
-
-```bash
-docker exec django-api python3 ./manage.py updatedb -a
-```
 
 ### 🖱️ Acesso aos Serviços
 
@@ -152,14 +112,27 @@ docker exec django-api python3 ./manage.py updatedb -a
 | Frontend   | http://localhost:5173    |
 | Backend    | http://localhost:8000    |
 
-### 📍 Migrations
+### ⚙️ Fluxo do Front-End
 
-Sempre que alterar o modelo de dados, crie novas migrations com os comandos:
+Acesse a pasta do frontend:
 
 ```bash
-make makemigrations  # Cria as migrations
-make migrate         # Executa as migrations
+cd web
 ```
+
+Instale as dependências do projeto utilizando o npm:
+
+```bash
+npm install
+```
+
+Para rodar o projeto em modo de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+Isso iniciará o servidor de desenvolvimento na porta `5173`.
 
 ## 📚 Documentação
 
