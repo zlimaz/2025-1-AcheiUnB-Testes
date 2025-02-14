@@ -1,14 +1,17 @@
 <template>
   <div class="fixed w-full top-0 z-[1]" v-if="isLoaded">
-    <ItemHeader 
+    <ItemHeader
       :title="itemStatus === 'found' ? 'Item Achado' : 'Item Perdido'"
       :userId="currentUser.id"
       :itemUserId="item.user_id"
       :itemId="item.id"
-      />
+    />
   </div>
 
-  <div class="px-6 py-[120px] flex flex-col items-center gap-6" v-if="item">
+  <div
+    class="px-6 py-[120px] min-h-screen flex flex-col justify-center items-center gap-6 mt-3"
+    v-if="item"
+  >
     <div class="w-full md:flex md:gap-8 md:max-w-4xl">
       <div class="w-full max-w-md md:max-w-none md:w-1/2 relative">
         <div v-if="!item.image_urls || item.image_urls.length === 0" class="w-full h-64">
@@ -131,7 +134,7 @@
     </div>
 
     <button
-    v-if="currentUser.id != item.user_id"
+      v-if="currentUser.id != item.user_id"
       class="bg-laranja text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
       @click="handleChat"
     >
@@ -140,7 +143,7 @@
     </button>
 
     <button
-    v-if="currentUser.id == item.user_id"
+      v-if="currentUser.id == item.user_id"
       class="bg-red-500 text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
       @click="confirmDelete(item.id)"
     >
@@ -184,7 +187,7 @@ const confirmDelete = async (itemId) => {
   console.log(item.value.id);
   try {
     await deleteItem(itemId); // Chama a API para excluir o item
-    router.push(`/${itemStatus.value}`)
+    router.push(`/${itemStatus.value}`);
   } catch (error) {
     console.error("Erro ao excluir item:", error);
     alertMessage.value = "Erro ao excluir item.";
@@ -195,23 +198,21 @@ const confirmDelete = async (itemId) => {
 const formatDateTime = (dateString) => {
   const date = new Date(dateString);
   return `${date.toLocaleDateString("pt-BR", {
-    timeZone: "America/Sao_Paulo"
+    timeZone: "America/Sao_Paulo",
   })} às ${date.toLocaleTimeString("pt-BR", {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "America/Sao_Paulo"
+    timeZone: "America/Sao_Paulo",
   })}`;
 };
 
 const nextImage = () => {
-  activeIndex.value =
-    (activeIndex.value + 1) % item.value.image_urls.length;
+  activeIndex.value = (activeIndex.value + 1) % item.value.image_urls.length;
 };
 
 const prevImage = () => {
   activeIndex.value =
-    (activeIndex.value - 1 + item.value.image_urls.length) %
-    item.value.image_urls.length;
+    (activeIndex.value - 1 + item.value.image_urls.length) % item.value.image_urls.length;
 };
 
 const handleResize = () => {
@@ -251,7 +252,7 @@ const handleChat = async () => {
     if (!currentUser.value?.id || !item.value?.user_id) {
       console.error("IDs de usuário inválidos:", {
         currentUser: currentUser.value,
-        item: item.value
+        item: item.value,
       });
       return;
     }
@@ -259,11 +260,11 @@ const handleChat = async () => {
     const searchParams = {
       participant_1: currentUser.value.id,
       participant_2: item.value.user_id,
-      item_id: item.value.id
+      item_id: item.value.id,
     };
 
     const searchResponse = await api.get("/chat/chatrooms/", {
-      params: searchParams
+      params: searchParams,
     });
     const chatsEncontrados = searchResponse.data;
 
@@ -275,7 +276,7 @@ const handleChat = async () => {
     const chatData = {
       participant_1: currentUser.value.id,
       participant_2: item.value.user_id,
-      item_id: item.value.id
+      item_id: item.value.id,
     };
 
     const createResponse = await api.post("/chat/chatrooms/", chatData);

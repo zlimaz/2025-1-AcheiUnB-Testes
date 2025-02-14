@@ -13,7 +13,7 @@ from users.views import DeleteUserView, microsoft_callback
 
 
 def vue_app(request):
-    return render(request, "index.html")  
+    return render(request, "index.html")
 
 
 urlpatterns = [
@@ -26,12 +26,8 @@ urlpatterns = [
         name="microsoft_callback",
     ),
     path("", vue_app, name="vue_home"),
-    path(
-        "api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"
-    ), 
-    path(
-        "api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
-    ),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/chat/", include("chat.urls")),
     path("api/", include("users.urls")),
     path("delete-user/<int:user_id>/", DeleteUserView.as_view(), name="delete_user"),

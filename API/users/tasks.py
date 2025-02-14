@@ -51,7 +51,7 @@ def send_welcome_email(user_email, user_name):
 
 @shared_task
 def find_and_notify_matches_task(target_item_id, max_distance=2):
-    from .match import find_and_notify_matches 
+    from .match import find_and_notify_matches
 
     """Task assíncrona para encontrar e notificar matches."""
     try:
@@ -93,6 +93,7 @@ def upload_images_to_cloudinary(object_id, images, object_type="item"):
                 obj.save()
         except Exception as e:
             print(f"Erro ao fazer upload de imagem para o objeto {object_id}: {e}")
+
 
 @shared_task
 def remove_images_from_item(image_ids):

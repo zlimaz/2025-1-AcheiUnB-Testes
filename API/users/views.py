@@ -41,16 +41,14 @@ class UserListView(View):
     def get(self, request, user_id=None):
         if user_id:
             user = get_object_or_404(User, id=user_id)
-            profile = getattr(user, "profile", None) 
-            profile_picture = (
-                profile.profile_picture if profile else None
-            ) 
+            profile = getattr(user, "profile", None)
+            profile_picture = profile.profile_picture if profile else None
 
             user_data = {
                 "id": user.id,
                 "first_name": user.first_name,
                 "email": user.email,
-                "foto": profile_picture, 
+                "foto": profile_picture,
             }
             return JsonResponse(user_data, status=200)
 
@@ -60,9 +58,7 @@ class UserListView(View):
                 "id": user.id,
                 "first_name": user.first_name,
                 "email": user.email,
-                "foto": getattr(
-                    user.profile, "profile_picture", None
-                ), 
+                "foto": getattr(user.profile, "profile_picture", None),
             }
             for user in users
         ]
@@ -147,7 +143,8 @@ class ItemViewSet(ModelViewSet):
         )
         self.schedule_match_task(item)
 
-''' Estrutura de match para implementação futura
+
+""" Estrutura de match para implementação futura
 Match de itens caso o usuário queira ver os possíveis matches pelo site:
 
  class MatchItemViewSet(APIView):
@@ -171,7 +168,7 @@ Match de itens caso o usuário queira ver os possíveis matches pelo site:
              }
              for match in matches
          ]
-         return Response(data, status=200)'''
+         return Response(data, status=200)"""
 
 
 class MyItemsLostView(APIView):
@@ -291,9 +288,7 @@ class UserDetailView(APIView):
 
     def get(self, request):
         user = request.user
-        request.headers.get("Authorization", "").replace(
-            "Bearer ", ""
-        )
+        request.headers.get("Authorization", "").replace("Bearer ", "")
         logger.info(f"Usuário autenticado: {user.username} (ID: {user.id})")
 
         try:
@@ -311,7 +306,7 @@ class UserDetailView(APIView):
             "first_name": user.first_name,
             "last_name": user.last_name,
             "matricula": matricula,
-            "foto": foto_url, 
+            "foto": foto_url,
         }
         return Response(user_data)
 
@@ -414,7 +409,7 @@ def microsoft_callback(request):
                 value=jwt_access,
                 httponly=True,
                 secure=True,
-                samesite="Strict", 
+                samesite="Strict",
                 max_age=3600,
             )
             return response
@@ -448,7 +443,7 @@ class TestUserView(APIView):
         """
         Testa a criação de um usuário completo no banco de dados.
         """
-        data = request.data 
+        data = request.data
 
         try:
             user, created = User.objects.update_or_create(
@@ -457,9 +452,7 @@ class TestUserView(APIView):
                     "username": data.get("username"),
                     "first_name": data.get("first_name"),
                     "last_name": data.get("last_name"),
-                    "password": data.get(
-                        "password", ""
-                    ), 
+                    "password": data.get("password", ""),
                     "last_login": data.get("last_login", datetime.now()),
                     "is_superuser": data.get("is_superuser", False),
                     "is_staff": data.get("is_staff", False),
@@ -506,11 +499,9 @@ def get_user_photo(access_token):
     url = "https://graph.microsoft.com/v1.0/me/photo/$value"
     headers = {"Authorization": f"Bearer {access_token}"}
 
-    response = requests.get(
-        url, headers=headers, stream=True
-    ) 
+    response = requests.get(url, headers=headers, stream=True)
     if response.status_code == 200:
-        return response.content 
+        return response.content
     else:
         raise Exception(
             f"Erro ao buscar a foto do usuário: {response.status_code} - {response.text}"
@@ -525,7 +516,7 @@ class DeleteUserView(View):
     def delete(self, request, user_id):
         try:
             user = User.objects.get(id=user_id)
-            user.delete() 
+            user.delete()
             return JsonResponse(
                 {"message": f"Usuário com ID {user_id} foi deletado com sucesso."},
                 status=200,

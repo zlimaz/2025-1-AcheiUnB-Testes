@@ -37,6 +37,7 @@
     </div>
 
     <div
+      v-if="foundItems.length"
       class="relative flex flex-col items-center w-full max-w-xl mx-auto p-6 rounded-lg lg:ml-10 mt-10 min-h-screen lg:min-h-full bg-azul"
       @click="animateButton()"
     >
@@ -79,15 +80,6 @@ onMounted(async () => {
   const transitionScreen = document.getElementById("transition-screen");
   const mainContent = document.getElementById("main-content");
 
-  const response = await fetchFoundItems({
-    page: 1,
-    search: "",
-    category_name: "",
-    location_name: "",
-  });
-
-  foundItems.value = response.results.slice(0, 4);
-
   setTimeout(() => {
     transitionScreen.classList.add("fade-out");
   }, 500);
@@ -97,6 +89,15 @@ onMounted(async () => {
     mainContent.classList.remove("hidden");
     mainContent.classList.add("fade-in");
   });
+
+  const response = await fetchFoundItems({
+    page: 1,
+    search: "",
+    category_name: "",
+    location_name: "",
+  });
+
+  foundItems.value = response.results.slice(0, 4);
 });
 
 function animateButton() {

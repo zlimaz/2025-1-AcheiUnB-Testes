@@ -6,13 +6,11 @@
       <img
         src="../assets/icons/arrow-left-white.svg"
         alt="Voltar"
-        class="w-[30px] h-[30px] text-white"
+        class="w-[35px] h-[35px] text-white transform transition duration-300 hover:scale-125"
       />
     </router-link>
 
-    <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">
-      Meus Itens
-    </h1>
+    <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">Meus Itens</h1>
 
     <button>
       <router-link to="/about" class="no-underline text-white">
@@ -21,36 +19,40 @@
     </button>
   </div>
 
-    <div class="pb-8 pt-24">
-      <SubMenu />
-    </div>
+  <div class="pb-8 pt-24">
+    <SubMenu />
+  </div>
 
-    <EmptyState v-if="myItemsLost.length === 0" message="perdidos registrados... Você pode adicionar um no" highlightText="AcheiUnB"/>
+  <EmptyState
+    v-if="myItemsLost.length === 0"
+    message="perdidos registrados... Você pode adicionar um no"
+    highlightText="AcheiUnB"
+  />
 
-    <div
-      v-else
-      class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-24"
-    >
-      <ItemCard
-        v-for="item in myItemsLost"
-        :key="item.id"
-        :id="item.id"
-        :name="item.name"
-        :location="item.location_name"
-        :time="formatTime(item.created_at)"
-        :image="item.image_urls[0] || NotAvailableImage"
-        :isMyItem="true"
-        @delete="confirmDelete"
-      />
-    </div>
+  <div
+    v-else
+    class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-24"
+  >
+    <ItemCard
+      v-for="item in myItemsLost"
+      :key="item.id"
+      :id="item.id"
+      :name="item.name"
+      :location="item.location_name"
+      :time="formatTime(item.created_at)"
+      :image="item.image_urls[0] || NotAvailableImage"
+      :isMyItem="true"
+      @delete="confirmDelete"
+    />
+  </div>
 
-    <ButtonAdd />
+  <ButtonAdd />
 
-    <div class="fixed bottom-0 w-full">
-      <MainMenu activeIcon="search" />
-    </div>
+  <div class="fixed bottom-0 w-full">
+    <MainMenu activeIcon="search" />
+  </div>
 
-    <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
+  <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
 </template>
 
 <script setup>
@@ -86,7 +88,7 @@ const fetchItems = async () => {
 const confirmDelete = async (itemId) => {
   try {
     await deleteItem(itemId);
-    myItemsLost.value = myItemsLost.value.filter(item => item.id !== itemId);
+    myItemsLost.value = myItemsLost.value.filter((item) => item.id !== itemId);
   } catch (error) {
     console.error("Erro ao excluir item:", error);
     alertMessage = "Erro ao excluir item.";

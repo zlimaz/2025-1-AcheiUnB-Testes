@@ -59,9 +59,7 @@ AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
 ROOT_URLCONF = "AcheiUnB.urls"
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "users.authentication.CookieJWTAuthentication",
-    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": ("users.authentication.CookieJWTAuthentication",),
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],
@@ -174,7 +172,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "America/Sao_Paulo"
@@ -187,11 +184,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 
-
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "AcheiUnB/static/dist"), 
+    os.path.join(BASE_DIR, "AcheiUnB/static/dist"),
 ]
 
 
@@ -213,7 +209,7 @@ CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/0
 CELERY_BEAT_SCHEDULE = {
     "delete_old_items_and_chats": {
         "task": "users.tasks.delete_old_items_and_chats",
-        "schedule": crontab(hour=3, minute=0), 
+        "schedule": crontab(hour=3, minute=0),
     },
 }
 

@@ -6,13 +6,11 @@
       <img
         src="../assets/icons/arrow-left-white.svg"
         alt="Voltar"
-        class="w-[30px] h-[30px] text-white"
+        class="w-[35px] h-[35px] text-white transform transition duration-300 hover:scale-125"
       />
     </router-link>
 
-    <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">
-      Meus Itens
-    </h1>
+    <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">Meus Itens</h1>
 
     <button>
       <router-link to="/about" class="no-underline text-white">
@@ -25,7 +23,11 @@
     <SubMenu />
   </div>
 
-  <EmptyState v-if="myItemsFound.length === 0" message="achados registrados... Você pode adicionar um no" highlightText="AcheiUnB"/>
+  <EmptyState
+    v-if="myItemsFound.length === 0"
+    message="achados registrados... Você pode adicionar um no"
+    highlightText="AcheiUnB"
+  />
 
   <div
     v-else
@@ -84,7 +86,7 @@ const fetchItems = async () => {
 const confirmDelete = async (itemId) => {
   try {
     await deleteItem(itemId);
-    myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId);
+    myItemsFound.value = myItemsFound.value.filter((item) => item.id !== itemId);
   } catch (error) {
     console.error("Erro ao excluir item:", error);
     alertMessage = "Erro ao excluir item.";
