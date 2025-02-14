@@ -23,6 +23,7 @@ from users.tasks import (
     upload_images_to_cloudinary,
 )
 
+
 def clean_up(self):
     Category.objects.all().delete()
     Location.objects.all().delete()
@@ -31,6 +32,7 @@ def clean_up(self):
     Item.objects.all().delete()
     UserProfile.objects.all().delete()
     ChatRoom.objects.all().delete()
+
 
 class SendMatchNotificationTests(TestCase):
     @patch("users.tasks.send_mail")
@@ -185,7 +187,7 @@ User = get_user_model()
 
 class MatchTestCase(TestCase):
     def clean_up(self):
-    
+
         Category.objects.all().delete()
         Location.objects.all().delete()
         Color.objects.all().delete()
@@ -194,9 +196,8 @@ class MatchTestCase(TestCase):
         User.objects.all().delete()
 
     def setUp(self):
-        self.clean_up() 
+        self.clean_up()
 
-       
         self.user1 = User.objects.create_user(
             username="user1", password="password", email="user1@email.com"
         )
@@ -204,7 +205,6 @@ class MatchTestCase(TestCase):
             username="user2", password="password", email="user2@email.com"
         )
 
-        
         self.category1 = Category.objects.create(name="Eletrônicos", category_id="01")
         self.category2 = Category.objects.create(name="Roupas", category_id="02")
 
@@ -217,7 +217,6 @@ class MatchTestCase(TestCase):
         self.brand1 = Brand.objects.create(name="Samsung", brand_id="01")
         self.brand2 = Brand.objects.create(name="Apple", brand_id="02")
 
-        
         self.item_lost = Item.objects.create(
             user=self.user1,
             name="Notebook Perdido",
@@ -300,6 +299,7 @@ class MatchTestCase(TestCase):
         assert self.item_irrelevante.matches.count() == 0
 
         mock_send_match_notification.assert_not_called()
+
 
 User = get_user_model()
 

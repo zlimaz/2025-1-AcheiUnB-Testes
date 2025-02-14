@@ -17,7 +17,6 @@ class TestCloudinaryImageDeletion(TestCase):
         Item.objects.all().delete()
         ItemImage.objects.all().delete()
 
-        
         self.user = User.objects.create_user(username="testuser", password="password")
 
         self.category = Category.objects.create(name="Acessórios", category_id="01")

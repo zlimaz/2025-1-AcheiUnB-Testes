@@ -26,7 +26,7 @@ class UserListViewTests(TestCase):
         User.objects.all().delete()
 
     def setUp(self):
-        self.clean_up() 
+        self.clean_up()
         self.client = Client()
         self.user1 = User.objects.create(username="user1", email="user1@example.com")
         self.user2 = User.objects.create(username="user2", email="user2@example.com")
@@ -61,7 +61,7 @@ class ItemViewSetTests(APITestCase):
         Item.objects.all().delete()
 
     def setUp(self):
-        self.clean_up() 
+        self.clean_up()
 
         self.user = User.objects.create_user(
             username="testauth", email="test@auth.com", password="123"
@@ -137,7 +137,6 @@ class ItemViewSetTests(APITestCase):
         mock_task.assert_called_once()
 
 
-
 # =====================================================
 # TESTES PARA MyItemsLostView e MyItemsFoundView
 # (rotas: /api/items/lost/my-items/ e /api/items/found/my-items/)
@@ -152,7 +151,7 @@ class MyItemsViewTests(APITestCase):
         Item.objects.all().delete()
 
     def setUp(self):
-        self.clean_up()  
+        self.clean_up()
 
         self.user = User.objects.create_user(
             username="myuser", email="myuser@example.com", password="1234"
@@ -209,6 +208,7 @@ class MyItemsViewTests(APITestCase):
         with patch.object(MyItemsLostView, "permission_classes", [IsAuthenticated]):
             response = self.client.get("/api/items/lost/my-items/")
             assert response.status_code == 401
+
 
 # =====================================================
 # TESTES PARA ItemImageViewSet (rota: /api/items/<item_id>/images/)
@@ -315,7 +315,7 @@ class CategoryViewSetTests(APITestCase):
         Category.objects.all().delete()
 
     def setUp(self):
-        self.clean_up()  
+        self.clean_up()
         self.user = User.objects.create_user("catuser", "cat@example.com", "catpwd")
         self.client.force_authenticate(user=self.user)
         self.category = Category.objects.create(name="Eletrônicos")
@@ -325,7 +325,7 @@ class CategoryViewSetTests(APITestCase):
         assert response.status_code == 200
 
         if isinstance(response.data, list):
-        
+
             assert len(response.data) == 1
         else:
             assert len(response.data["results"]) == 1
@@ -333,7 +333,7 @@ class CategoryViewSetTests(APITestCase):
     def test_create_category(self):
         data = {"name": "Livros"}
         response = self.client.post("/api/categories/", data, format="json")
-        assert response.status_code == 400  
+        assert response.status_code == 400
         assert Category.objects.count() == 1
 
     def test_retrieve_category(self):
@@ -352,7 +352,7 @@ class CategoryViewSetTests(APITestCase):
     def test_delete_category(self):
         response = self.client.delete(f"/api/categories/{self.category.id}/")
         assert response.status_code == 204
-        assert Category.objects.count() == 0 
+        assert Category.objects.count() == 0
 
 
 # =====================================================

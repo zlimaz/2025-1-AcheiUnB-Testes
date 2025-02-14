@@ -222,8 +222,6 @@ class LocationViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = None
 
-    
-
 
 class ColorViewSet(ModelViewSet):
     queryset = Color.objects.all()
@@ -234,8 +232,8 @@ class ColorViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    pagination_class = None
 
+    pagination_class = None
 
 
 class BrandViewSet(ModelViewSet):
@@ -243,7 +241,6 @@ class BrandViewSet(ModelViewSet):
     serializer_class = BrandSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = None
-
 
 
 class ItemImageViewSet(ModelViewSet):
