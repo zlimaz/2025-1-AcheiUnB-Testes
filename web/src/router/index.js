@@ -11,6 +11,7 @@ import ListItem from "../views/ListItem.vue";
 import UserItemsLost from "../views/UserItems-Lost.vue";
 import UserItemsFound from "../views/UserItems-Found.vue";
 import Message from "../views/Message.vue";
+import EditItem from "../views/EditItem.vue";
 
 const routes = [
   {
@@ -49,6 +50,13 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/edit-item/:id",
+    name: "EditItem",
+    component: EditItem,
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/user",
     name: "User",
     component: User,
@@ -70,11 +78,13 @@ const routes = [
     path: "/user-items-lost",
     name: "UserItemsLost",
     component: UserItemsLost,
+    meta: { requiresAuth: true },
   },
   {
     path: "/user-items-found",
     name: "UserItemsFound",
     component: UserItemsFound,
+    meta: { requiresAuth: true },
   },
   {
     path: "/chat/new",
