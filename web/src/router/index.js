@@ -14,6 +14,7 @@ import Message from "../views/Message.vue";
 import SessionExpired from "@/views/Session-Expired.vue";
 import api from "../services/api";
 import Anonimo from "@/views/Anonimo.vue";
+import EditItem from "../views/EditItem.vue";
 
 const routes = [
   {
@@ -49,6 +50,13 @@ const routes = [
     path: "/register-found",
     name: "RegisterFound",
     component: RegisterFound,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/edit-item/:id",
+    name: "EditItem",
+    component: EditItem,
+    props: true,
     meta: { requiresAuth: true },
   },
   {

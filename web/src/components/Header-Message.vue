@@ -11,13 +11,11 @@
       class="w-6 h-6 md:w-8 md:h-8 cursor-pointer"
     />
 
-    <!-- Container do usuário e item com espaçamento adequado -->
     <div class="flex items-center space-x-4 ml-2">
-      <!-- Foto do Usuário -->
       <img
-        :src="userImage || defaultAvatar"
+        :src="userImage"
         alt="Foto do usuário"
-        class="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border-2 border-white"
+        class="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-white"
       />
 
       <!-- Nome do Usuário -->
@@ -26,16 +24,13 @@
       >
         {{ userName || "Usuário" }}
       </span>
-
-      <!-- Imagem do Item -->
       <img
-        :src="itemImage || notAvailableImage"
+        :src="itemImage"
         alt="Imagem do item"
-        class="w-8 h-8 md:w-10 md:h-10 rounded-lg object-cover border-2 border-white"
+        class="w-10 h-10 md:w-12 md:h-12 rounded-lg object-cover border-2 border-white"
       />
     </div>
 
-    <!-- Logo: alinhada à direita em telas menores, centralizada em telas maiores -->
     <div class="ml-auto md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
       <router-link to="/about" class="no-underline text-white">
         <Logo class="pr-4" sizeClass="text-2xl" />
@@ -45,59 +40,82 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted, watchEffect } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import api from "../services/api";
-import Logo from "./Logo.vue"; // Importa a logo branca do projeto
+import Logo from "./Logo.vue";
 import defaultAvatar from "@/assets/images/default-avatar.png";
 import notAvailableImage from "@/assets/images/not-available.png";
 import LeftArrow from "@/assets/icons/arrow-left-white.svg";
 
-const props = defineProps({
-  userId: {
-    type: String,
-    required: true,
-  },
-  itemId: {
-    type: String,
-    required: true,
-  },
-});
-
+const route = useRoute();
 const router = useRouter();
-const userName = ref("");
-const userImage = ref(null);
-const itemImage = ref(null);
+const chatroomId = ref(route.params.chatroomId || route.query.chatroomId);
+const userName = ref("Usuário");
+const userImage = ref(defaultAvatar);
+const itemImage = ref(notAvailableImage);
+const userId = ref(null);
+const itemId = ref(null);
+const currentUser = ref(null);
+
+const fetchCurrentUser = async () => {
+  try {
+    const response = await api.get(`/auth/user/`);
+    currentUser.value = response.data;
+  } catch {}
+};
+
+const fetchChatroomData = async () => {
+  if (!chatroomId.value || !currentUser.value?.id) return;
+
+  try {
+    const response = await api.get(`/chat/chatrooms/${chatroomId.value}/`);
+    const chatroom = response.data;
+
+    userId.value =
+      chatroom.participant_1 === currentUser.value.id
+        ? chatroom.participant_2
+        : chatroom.participant_1;
+
+    itemId.value = chatroom.item_id;
+
+    fetchUserData();
+    fetchItemData();
+  } catch {}
+};
 const isVisible = ref(false);
 
 const fetchUserData = async () => {
-  if (!props.userId) return;
+  if (!userId.value) return;
   try {
-    const response = await api.get(`/users/${props.userId}/`);
+    const response = await api.get(`/users/${userId.value}/`);
     userName.value = response.data.first_name || "Usuário";
-    userImage.value = response.data.foto;
-  } catch (error) {
-    console.error("Erro ao buscar dados do usuário:", error);
-  }
+    userImage.value = response.data.foto || defaultAvatar;
+  } catch {}
 };
 
 const fetchItemData = async () => {
-  if (!props.itemId) return;
+  if (!itemId.value) return;
   try {
-    const response = await api.get(`/items/${props.itemId}`);
+    const response = await api.get(`/items/${itemId.value}`);
     itemImage.value = response.data.image_urls?.[0] || notAvailableImage;
-  } catch (error) {
-    console.error("Erro ao buscar dados do item:", error);
-  }
+  } catch {}
 };
 
 const goBack = () => {
   router.back();
 };
 
-onMounted(async () => {
-  await fetchUserData();
-  await fetchItemData();
+watchEffect(() => {
+  if (!currentUser.value) {
+    fetchCurrentUser();
+  } else {
+    fetchChatroomData();
+  }
+});
+
+onMounted(() => {
+  fetchCurrentUser();
 
   setTimeout(() => {
     isVisible.value = true;

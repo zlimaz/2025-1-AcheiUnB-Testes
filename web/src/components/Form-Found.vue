@@ -204,16 +204,17 @@
         <label
           for="images"
           class="flex bg-azul text-white text-base px-5 py-3 outline-none rounded cursor-pointer font-inter"
-          :class="item.images?.length > 1 ? 'opacity-50 cursor-not-allowed' : ''"
+          :class="previews?.length > 1 ? 'opacity-50 cursor-not-allowed' : ''"
         >
           <img src="../assets/icons/add-item-white.svg" alt="" class="mr-2" />
           Adicionar imagens
           <input
             type="file"
+            ref="fileInput"
             id="images"
             class="hidden"
             @change="onFileChange"
-            :disabled="item.images?.length > 1"
+            :disabled="previews?.length > 1"
           />
         </label>
       </div>
@@ -245,7 +246,7 @@
           @click="save"
           class="inline-block text-center rounded-full bg-laranja px-5 py-3 text-md text-white w-full"
         >
-          Enviar
+        {{ editMode ? 'Salvar Alterações' : 'Enviar' }}
         </button>
       </div>
     </div>
@@ -275,6 +276,7 @@ export default {
       foundTime: "",
       foundDate: "",
       previews: [],
+      imagesToRemove: [],
       submitError: false,
       formSubmitted: false,
       alertMessage: "",
@@ -284,8 +286,42 @@ export default {
       brands: [],
     };
   },
+  props: {
+    editMode: {
+      type: Boolean,
+      default: false
+    },
+    existingItem: {
+      type: Object,
+      default: null
+    }
+  },
   mounted() {
     this.initializeData();
+    
+    if (this.editMode && this.existingItem) {
+      // Preencher dados existentes
+      this.item = Object.assign(new Item(), this.existingItem);
+      
+      this.previews.push(...this.existingItem.image_urls);
+
+      if (this.item.found_lost_date) {
+        try {
+          const date = new Date(this.item.found_lost_date);
+
+          this.item.foundDate = date.getFullYear() + '-' + 
+                          String(date.getMonth() + 1).padStart(2, '0') + '-' + 
+                          String(date.getDate()).padStart(2, '0');
+
+          this.foundTime = String(date.getHours()).padStart(2, '0') + ':' + 
+                          String(date.getMinutes()).padStart(2, '0');
+
+        } catch (error) {
+          console.error("Erro ao processar found_lost_date:", error);
+        }
+        
+      }
+    }
   },
   methods: {
     initializeData() {
@@ -348,10 +384,32 @@ export default {
       }
 
       const formData = form.toFormData();
-      try {
-        await api.post("/items/", formData);
-        this.formSubmitted = true;
 
+      if(this.imagesToRemove.length > 0) {
+        // Envia múltiplos IDs repetindo a chave "remove_images"
+        this.imagesToRemove.forEach(id => formData.append("remove_images", id));
+      }
+
+      try {
+        if (this.editMode) {
+          if (this.item.images?.length > 0) {
+            this.item.images.forEach((image) => {
+              formData.append("images", image);
+            });
+          }
+
+          await api.patch(`/items/${this.item.id}/`, formData, {
+            headers: { "Content-Type": "multipart/form-data" }
+          });
+
+          this.formSubmitted = true;
+          for (let pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+          };
+        } else {
+          await api.post("/items/", formData);
+          this.formSubmitted = true;
+        }
         setTimeout(() => {
           window.location.replace(`http://localhost:8000/#/found`);
         }, 1000);
@@ -394,9 +452,26 @@ export default {
       return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}${sign}${offsetHours}${offsetMinutes}`;
     },
 
-    removeImage(index) {
-      this.previews.splice(index, 1);
-      this.item.images.splice(index, 1);
+    async removeImage(index) {
+      if (this.existingItem && index < (this.existingItem.image_urls?.length || 0)) {
+        this.imagesToRemove.push(this.existingItem.image_ids[index]);
+        if (this.imagesToRemove.length > 0) {
+          // Remove a imagem dos arrays de imagens existentes
+          this.existingItem.image_urls?.splice(index, 1);
+          this.existingItem.image_ids.splice(index, 1);
+        }
+      } else {
+          // Imagem nova (ainda não foi enviada para a API)
+          const newIndex = index - ((this.existingItem?.image_urls?.length) || 0);
+          this.item.images.splice(newIndex, 1);
+      }
+
+        // Atualiza a lista de previews corretamente
+        this.previews.splice(index, 1);
+
+        // Verifica se agora há menos de 2 imagens para reativar o botão de adicionar
+        this.$forceUpdate();
+        this.$refs.fileInput.value = "";
     },
 
     handleSelectChange(event) {
