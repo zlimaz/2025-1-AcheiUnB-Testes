@@ -11,10 +11,8 @@
       />
     </router-link>
 
-    <!-- Título (Agora centralizado corretamente) -->
     <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">Meus Itens</h1>
 
-    <!-- Logo (Clicável para ir para /about) -->
     <button>
       <router-link to="/about" class="no-underline text-white">
         <Logo class="pr-4" sizeClass="text-2xl" />
@@ -77,6 +75,7 @@ const myItemsLost = ref([]);
 const submitError = ref(false);
 const formSubmitted = ref(false);
 const alertMessage = ref("");
+const loading = ref(true);
 
 // Função para buscar os itens perdidos
 const fetchItems = async () => {
@@ -87,6 +86,8 @@ const fetchItems = async () => {
     alertMessage.value = "Erro ao carregar itens perdidos.";
     submitError.value = true;
   }
+
+  loading.value = false;
 };
 
 // Função para confirmar exclusão

@@ -18,31 +18,37 @@
     </button>
 
     <!-- Modal de Confirmação de Exclusão -->
-    <div v-if="showConfirmModal" class="fixed inset-0 flex items-center justify-center">
+    <Teleport to="body">
+      <!-- Garante que o modal será renderizado fora do ItemCard -->
       <div
-        class="bg-azul p-6 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md lg:max-w-lg text-center"
-        @click.stop
+        v-if="showConfirmModal"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
       >
-        <p class="text-white font-inter text-lg">
-          Você realmente deseja excluir este item do AcheiUnB?
-        </p>
+        <div
+          class="bg-azul p-6 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md lg:max-w-lg text-center relative"
+          @click.stop
+        >
+          <p class="text-white font-inter text-lg">
+            Você realmente deseja excluir este item do AcheiUnB?
+          </p>
 
-        <div class="flex flex-col sm:flex-row justify-center mt-4 gap-4">
-          <button
-            class="bg-red-500 text-white font-inter px-4 py-2 rounded-md hover:bg-red-600 transition w-full sm:w-auto"
-            @click="confirmDelete"
-          >
-            Excluir
-          </button>
-          <button
-            class="bg-white font-inter px-4 py-2 rounded-md hover:bg-gray-200 transition w-full sm:w-auto"
-            @click="showConfirmModal = false"
-          >
-            Cancelar
-          </button>
+          <div class="flex flex-col sm:flex-row justify-center mt-4 gap-4">
+            <button
+              class="bg-red-500 text-white font-inter px-4 py-2 rounded-md hover:bg-red-600 transition w-full sm:w-auto"
+              @click="confirmDelete"
+            >
+              Excluir
+            </button>
+            <button
+              class="bg-white font-inter px-4 py-2 rounded-md hover:bg-gray-200 transition w-full sm:w-auto"
+              @click="closeModal"
+            >
+              Cancelar
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </Teleport>
 
     <div class="h-[2px] w-1/4 bg-laranja mt-4"></div>
 
@@ -66,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 const props = defineProps({
@@ -88,11 +94,28 @@ const props = defineProps({
 const emit = defineEmits(["delete"]);
 const router = useRouter();
 const showConfirmModal = ref(false);
+const selectedItemId = ref(null);
 
 const viewItemDetails = () => {
   if (!showConfirmModal.value) {
     router.push({ name: "ListItem", query: { idItem: props.id } });
   }
+};
+
+const openModal = (id) => {
+  selectedItemId.value = id;
+  showConfirmModal.value = true;
+
+  // Bloqueia a rolagem da página quando o modal está aberto
+  document.body.style.overflow = "hidden";
+};
+
+const closeModal = () => {
+  showConfirmModal.value = false;
+  selectedItemId.value = null;
+
+  // Libera a rolagem da página ao fechar o modal
+  document.body.style.overflow = "";
 };
 
 const confirmDelete = () => {

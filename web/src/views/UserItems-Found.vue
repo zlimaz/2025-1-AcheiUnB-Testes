@@ -12,9 +12,7 @@
     </router-link>
 
     <!-- Título (Agora centralizado corretamente) -->
-    <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">
-      Meus Itens
-    </h1>
+    <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">Meus Itens</h1>
 
     <!-- Logo (Clicável para ir para /about) -->
     <button>
@@ -28,9 +26,11 @@
     <SubMenu />
   </div>
 
-  <!-- Se não houver itens, exibir mensagem e imagem -->
-  <EmptyState v-if="myItemsFound.length === 0" message="achados registrados... Você pode adicionar um no" highlightText="AcheiUnB"/>
-
+  <EmptyState
+    v-if="!loading && myItemsFound.length === 0"
+    message="achados registrados... Você pode adicionar um no"
+    highlightText="AcheiUnB"
+  />
   <div
     v-else
     class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-24"
@@ -61,7 +61,6 @@ import { formatTime } from "@/utils/dateUtils";
 import MainMenu from "../components/Main-Menu.vue";
 import SubMenu from "../components/Sub-Menu-UserFound.vue";
 import ItemCard from "@/components/Item-Card.vue";
-import Alert from "@/components/Alert.vue";
 import Logo from "@/components/Logo.vue";
 import NotAvailableImage from "@/assets/images/not-available.png";
 import EmptyState from "@/components/Empty-State-User.vue";
@@ -70,8 +69,8 @@ const myItemsFound = ref([]);
 const submitError = ref(false);
 const formSubmitted = ref(false);
 const alertMessage = ref("");
+const loading = ref(true);
 
-// Função para buscar os itens encontrados
 const fetchItems = async () => {
   try {
     const response = await fetchMyItemsFound();
@@ -80,13 +79,15 @@ const fetchItems = async () => {
     alertMessage.value = "Erro ao carregar itens encontrados.";
     submitError.value = true;
   }
+
+  loading.value = false;
 };
 
 // Função para confirmar exclusão
 const confirmDelete = async (itemId) => {
   try {
     await deleteItem(itemId); // Chama a API para excluir o item
-    myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId); // Remove do estado
+    myItemsFound.value = myItemsFound.value.filter((item) => item.id !== itemId); // Remove do estado
   } catch (error) {
     console.error("Erro ao excluir item:", error);
   }
