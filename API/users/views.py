@@ -277,19 +277,6 @@ class UserValidateView(APIView):
 
     def get(self, request):
         return Response({"message": "Token válido"})
-    
-class LogoutView(APIView):
-    def get(self, request):
-        response = Response({"message": "Logout feito"}, status=200)
-        response.set_cookie(
-            key="access_token",
-            value="",
-            httponly=True,
-            secure=True,
-            samesite="Strict",
-            max_age=0, 
-        )
-        return response
 
 
 class UserDetailView(APIView):
