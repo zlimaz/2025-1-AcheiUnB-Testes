@@ -1,6 +1,7 @@
 <template>
   <div
     class="h-[100px] bg-verde shadow-md rounded-b-xl flex items-center justify-start text-white gap-x-9 p-6"
+    :class="{ visible: isVisible, invisible: !isVisible }"
   >
     <router-link to="/found" class="inline-block">
       <img
@@ -10,11 +11,13 @@
       />
     </router-link>
     <div>
-      <span class="font-inter font-semibold text-2xl">{{ text ?? "Cadastro de item achado" }}</span>
+      <span class="font-inter font-semibold text-lg sm:text-2xl">{{
+        text ?? "Cadastro de item achado"
+      }}</span>
     </div>
     <button class="ml-auto">
       <router-link to="/about" class="no-underline text-white">
-        <Logo class="pr-4" sizeClass="text-2xl" />
+        <Logo class="pr-4" sizeClass="text-xl sm:text-2xl" />
       </router-link>
     </button>
   </div>
@@ -25,13 +28,37 @@ import Logo from "./Logo.vue";
 
 export default {
   name: "FoundHeader",
+  data() {
+    return {
+      isVisible: false,
+    };
+  },
   components: {
     Logo,
   },
   props: {
     text: String,
   },
+  mounted() {
+    setTimeout(() => {
+      this.isVisible = true;
+    }, 1);
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.invisible {
+  opacity: 0;
+  transform: translateY(-45px);
+}
+</style>

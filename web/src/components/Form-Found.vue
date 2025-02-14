@@ -13,6 +13,7 @@
           type="text"
           name="name"
           placeholder="Escreva o nome do item"
+          maxlength="750"
         />
       </div>
 
@@ -192,6 +193,7 @@
           v-model="item.description"
           name="description"
           rows="4"
+          maxlength="750"
           placeholder="Descreva detalhadamente o item"
           class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         ></textarea>

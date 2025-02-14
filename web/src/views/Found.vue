@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen">
-    <div class="fixed w-full top-0 z-10">
+  <div class="min-h-screen pb-32">
+    <div class="fixed w-full top-0 z-30">
       <SearchHeader />
     </div>
 
@@ -8,8 +8,10 @@
       <SubMenu />
     </div>
 
-    <!-- Se não houver itens, exibir mensagem e imagem -->
-    <EmptyState v-if="foundItems.length === 0" message="está sem itens achados... Você pode adicionar um!" />
+    <EmptyState
+      v-if="!loading && foundItems.length === 0"
+      message="está sem itens achados... Você pode adicionar um!"
+    />
 
     <div
       v-else
@@ -26,7 +28,7 @@
       ></ItemCard>
     </div>
 
-    <div class="flex w-full justify-start sm:justify-center">
+    <div v-if="foundItems.length" class="flex w-full justify-start sm:justify-center">
       <div class="bottom-32 ml-24 transform -translate-x-1/2 flex gap-4 z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +36,7 @@
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-10 text-azul hover:text-laranja transition duration-200 cursor-pointer"
+          class="size-10 text-azul hover:text-laranja transition duration-200 cursor-pointer hover:size-12"
           @click="goToPreviousPage"
         >
           <path
@@ -82,12 +84,11 @@ import NotAvailableImage from "@/assets/images/not-available.png";
 import { filtersState } from "@/store/filters";
 import EmptyState from "@/components/Empty-State.vue";
 
-// Estado para os itens achados e controle de paginação
 const foundItems = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
+const loading = ref(true);
 
-// Função para buscar itens achados com base na página
 const fetchItems = async (page = 1) => {
   const { searchQuery, activeCategory, activeLocation } = filtersState;
 
@@ -99,10 +100,10 @@ const fetchItems = async (page = 1) => {
   });
 
   foundItems.value = response.results;
-  totalPages.value = Math.ceil(response.count / 27); // 20 itens por página
+  totalPages.value = Math.ceil(response.count / 27);
+  loading.value = false;
 };
 
-// Navegação de páginas
 const goToPreviousPage = () => {
   if (currentPage.value > 1) {
     currentPage.value -= 1;
@@ -120,8 +121,8 @@ const goToNextPage = () => {
 watch(
   () => [filtersState.searchQuery, filtersState.activeCategory, filtersState.activeLocation],
   () => {
-    currentPage.value = 1; // Reseta para a primeira página ao mudar os filtros
-    fetchItems(); // Atualiza os itens na tela
+    currentPage.value = 1;
+    fetchItems();
   },
 );
 

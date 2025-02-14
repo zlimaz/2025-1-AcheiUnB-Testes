@@ -9,11 +9,8 @@
   </div>
 
   <div class="px-6 py-[120px] flex flex-col items-center gap-6" v-if="item">
-    <!-- Container principal para desktop -->
     <div class="w-full md:flex md:gap-8 md:max-w-4xl">
-      <!-- Container de Imagens (Esquerda) -->
       <div class="w-full max-w-md md:max-w-none md:w-1/2 relative">
-        <!-- Imagem padrão quando não há fotos -->
         <div v-if="!item.image_urls || item.image_urls.length === 0" class="w-full h-64">
           <img
             :src="notAvailableImage"
@@ -89,7 +86,6 @@
       <div class="w-full md:w-1/2 mt-6 md:mt-0">
         <h1 class="text-lg md:text-2xl font-bold break-words">{{ item.name }}</h1>
 
-        <!-- Sempre exibe o local com o rótulo "Achado em:" -->
         <p class="text-sm md:text-base text-gray-500 text-left mt-2">
           Achado em: {{ item.location_name || "Não especificado" }}
         </p>
@@ -138,7 +134,8 @@
       class="bg-laranja text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
       @click="handleChat"
     >
-      É meu item
+      <span v-if="itemStatus === 'found'">É meu item</span>
+      <span v-else>Achei este item</span>
     </button>
 
     <button
@@ -174,9 +171,10 @@ const itemStatus = ref("");
 const currentUser = ref(null);
 const activeIndex = ref(0);
 const isMobile = ref(window.innerWidth < 768);
+
 const alertMessage = ref("");
 const submitError = ref(false);
-// Flag que indica se os dados foram carregados
+
 const isLoaded = ref(false);
 
 // Função para confirmar exclusão
@@ -256,22 +254,17 @@ const handleChat = async () => {
       });
       return;
     }
-    console.log("Item atual (ID):", item.value.id);
-    console.log("Dono do item (user_id):", item.value.user_id);
-    console.log("Usuário atual (ID):", currentUser.value.id);
 
     const searchParams = {
       participant_1: currentUser.value.id,
       participant_2: item.value.user_id,
       item_id: item.value.id
     };
-    console.log("Parâmetros para busca de chat:", searchParams);
 
     const searchResponse = await api.get("/chat/chatrooms/", {
       params: searchParams
     });
     const chatsEncontrados = searchResponse.data;
-    console.log("Chats encontrados:", chatsEncontrados);
 
     if (chatsEncontrados && chatsEncontrados.length > 0) {
       router.push(`/chat/${chatsEncontrados[0].id}?itemId=${item.value.id}`);
@@ -283,10 +276,8 @@ const handleChat = async () => {
       participant_2: item.value.user_id,
       item_id: item.value.id
     };
-    console.log("Dados para criação de chat:", chatData);
 
     const createResponse = await api.post("/chat/chatrooms/", chatData);
-    console.log("Resposta da criação de chat:", createResponse.data);
 
     if (createResponse.data?.id) {
       router.push(`/chat/${createResponse.data.id}?itemId=${item.value.id}`);
@@ -310,3 +301,5 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", handleResize);
 });
 </script>
+
+<style scoped></style>

@@ -1,8 +1,8 @@
 <template>
   <div
     class="h-full bg-azul shadow-md rounded-t-xl flex items-center justify-center text-white gap-x-9 p-8"
+    :class="{ visible: isVisible, invisible: !isVisible }"
   >
-    <!--busca-->
     <router-link to="/found" class="no-underline">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,6 @@
       </svg>
     </router-link>
 
-    <!--user-->
     <router-link to="/user" class="no-underline">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +39,6 @@
       </svg>
     </router-link>
 
-    <!--info-->
     <router-link to="/about" class="no-underline">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +57,6 @@
       </svg>
     </router-link>
 
-    <!--chat-->
     <router-link to="/chats" class="no-underline">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +83,30 @@ export default {
   props: {
     activeIcon: String,
   },
+  data() {
+    return {
+      isVisible: false,
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isVisible = true;
+    }, 1);
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.invisible {
+  opacity: 0;
+  transform: translateY(45px);
+}
+</style>

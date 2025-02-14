@@ -15,24 +15,27 @@
       <Logo />
     </div>
     <span
-      class="font-inter text-azul text-center flex justify-center items-center mx-auto max-w-3xl sm:px-0 px-4 md:max-w-2xl mt-7"
+      class="font-inter text-azul mx-auto max-w-xl sm:px-12 px-12 md:max-w-2xl mt-7 text-center block"
     >
-      Somos um grupo da disciplina Métodos de Desenvolvimento de Software da Universidade de
-      Brasília.<br />
-      Temos como objetivo solucionar um dos problemas da faculdade, que é a falta de ferramentas
-      para organizar itens achados e perdidos pelos estudantes.<br />
-      Com o AcheiUnB você consegue de forma simples e intuitiva procurar pelo seu item perdido ou
-      cadastrar um item que você encontrou.
+      Somos um grupo da disciplina <strong>Métodos de Desenvolvimento de Software</strong> da UnB.
+      <br />
+      Nosso objetivo é resolver um dos desafios enfrentados na faculdade: a falta de uma ferramenta
+      eficiente para organizar itens <strong>achados e perdidos</strong> pelos estudantes.
+      <br /><br />
+      <!-- Adiciona um espaço extra -->
+      <strong>Com o AcheiUnB</strong>, você pode, de forma simples e intuitiva, buscar por um item
+      perdido ou cadastrar algo que encontrou, ajudando a nossa
+      <strong>comunidade acadêmica</strong>.
     </span>
 
-    <div class="flex justify-center mt-6">
-      <a
-        href="https://unb-mds.github.io/2024-2-AcheiUnB/CONTRIBUTING/"
-        target="_blank"
-        class="bg-laranja text-white font-semibold px-8 py-3 text-lg lg:text-xl rounded-full hover:bg-azulEscuro transition hover:text-white duration-300 shadow-md hover:scale-110 transition-transform"
+    <div class="flex justify-center mt-6 px-10">
+      <button
+        class="bg-laranja text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
       >
-        Como Contribuir?
-      </a>
+        <a href="https://unb-mds.github.io/2024-2-AcheiUnB/CONTRIBUTING/" target="_blank">
+          Como Contribuir?
+        </a>
+      </button>
     </div>
 
     <div class="max-w-4xl mx-auto mt-10 p-5 pb-[140px]">

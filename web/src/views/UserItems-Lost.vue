@@ -2,7 +2,6 @@
   <div
     class="fixed w-full top-0 h-[100px] bg-verde shadow-md rounded-b-xl flex items-center justify-between px-6 text-white z-10"
   >
-    <!-- Botão de voltar -->
     <router-link to="/user" class="inline-block">
       <img
         src="../assets/icons/arrow-left-white.svg"
@@ -11,12 +10,10 @@
       />
     </router-link>
 
-    <!-- Título (Agora centralizado corretamente) -->
     <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">
       Meus Itens
     </h1>
 
-    <!-- Logo (Clicável para ir para /about) -->
     <button>
       <router-link to="/about" class="no-underline text-white">
         <Logo class="pr-4" sizeClass="text-2xl" />
@@ -24,15 +21,12 @@
     </button>
   </div>
 
-    <!-- SubMenu -->
     <div class="pb-8 pt-24">
       <SubMenu />
     </div>
 
-    <!-- Se não houver itens, exibir mensagem e imagem -->
     <EmptyState v-if="myItemsLost.length === 0" message="perdidos registrados... Você pode adicionar um no" highlightText="AcheiUnB"/>
 
-    <!-- Lista de Itens -->
     <div
       v-else
       class="grid grid-cols-[repeat(auto-fit,_minmax(180px,_1fr))] sm:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] justify-items-center align-items-center lg:px-3 gap-y-3 pb-24"
@@ -50,10 +44,8 @@
       />
     </div>
 
-    <!-- Botão Adicionar -->
     <ButtonAdd />
 
-    <!-- Main Menu -->
     <div class="fixed bottom-0 w-full">
       <MainMenu activeIcon="search" />
     </div>
@@ -77,8 +69,8 @@ const myItemsLost = ref([]);
 const submitError = ref(false);
 const formSubmitted = ref(false);
 const alertMessage = ref("");
+const loading = ref(true);
 
-// Função para buscar os itens perdidos
 const fetchItems = async () => {
   try {
     const response = await fetchMyItemsLost();
@@ -87,13 +79,14 @@ const fetchItems = async () => {
     alertMessage.value = "Erro ao carregar itens perdidos.";
     submitError.value = true;
   }
+
+  loading.value = false;
 };
 
-// Função para confirmar exclusão
 const confirmDelete = async (itemId) => {
   try {
-    await deleteItem(itemId); // Chama a API para excluir o item
-    myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId); // Remove do estado
+    await deleteItem(itemId);
+    myItemsLost.value = myItemsLost.value.filter(item => item.id !== itemId);
   } catch (error) {
     console.error("Erro ao excluir item:", error);
     alertMessage = "Erro ao excluir item.";
@@ -101,11 +94,10 @@ const confirmDelete = async (itemId) => {
   }
 };
 
-// Função para excluir um item
 const handleDelete = async (itemId) => {
   try {
-    await deleteItem(itemId); // Chama o serviço para deletar o item no backend
-    myItemsLost.value = myItemsLost.value.filter((item) => item.id !== itemId); // Atualiza a lista removendo o item excluído
+    await deleteItem(itemId);
+    myItemsLost.value = myItemsLost.value.filter((item) => item.id !== itemId);
     alertMessage.value = "Item deletado com sucesso.";
     formSubmitted.value = true;
   } catch (error) {
@@ -114,7 +106,6 @@ const handleDelete = async (itemId) => {
   }
 };
 
-// Carrega os itens perdidos ao montar o componente
 onMounted(() => fetchItems());
 </script>
 

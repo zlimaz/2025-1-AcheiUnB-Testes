@@ -6,7 +6,6 @@
       'relative w-auto': !isActive || isMediumOrLarger,
     }"
   >
-    <!-- Botão de filtro -->
     <button
       @click="
         toggleFilters();
@@ -33,7 +32,7 @@
     <input
       v-model="filtersState.searchQuery"
       class="input bg-gray-200 rounded-full px-10 py-2 my-1 border-2 border-transparent focus:outline-none focus:border-laranja placeholder-gray-500 text-gray-700 transition-all duration-300 shadow-md pr-10 w-full z-40"
-      placeholder="Pesquise seu item"
+      :placeholder="animatedPlaceholder"
       type="text"
       @input="setSearchQuery(filtersState.searchQuery)"
       @focus="isActive = true"
@@ -42,11 +41,10 @@
         showFilters = false;
       "
     />
-    <!-- Botão da lupa -->
     <button
       class="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition-colors duration-200 z-50"
       :class="{
-        'pr-8': isActive && !isMediumOrLarger, // Somente para telas pequenas
+        'pr-8': isActive && !isMediumOrLarger,
       }"
       type="submit"
     >
@@ -69,20 +67,17 @@
       </svg>
     </button>
 
-    <!-- Menu de Filtros -->
     <div
       v-if="showFilters"
       class="absolute left-0 bg-gray-200 shadow-lg rounded-xl p-4 z-30"
       :class="{
-        'w-fit mr-8': isActive && !isMediumOrLarger, // Estilo para telas pequenas
-        'w-full': isMediumOrLarger, // Estilo para telas maiores
+        'w-fit mr-8': isActive && !isMediumOrLarger,
+        'w-full': isMediumOrLarger,
       }"
       style="top: calc(50% - 4px)"
     >
-      <!-- Filtros de Categorias -->
       <div class="flex gap-2 flex-wrap mt-4">
         <span class="w-full text-azul text-2xl font-bold">Categoria </span>
-        <!-- Botões de filtros -->
         <button
           v-for="(filter, index) in categories"
           :key="index"
@@ -97,12 +92,9 @@
           {{ filter.label }}
         </button>
       </div>
-      <!-- Linha -->
       <div class="h-[2px] w-full bg-laranja mt-4"></div>
-      <!-- Filtros de Locais -->
       <div class="flex gap-2 flex-wrap mt-4">
         <span class="w-full text-azul text-2xl font-bold">Local </span>
-        <!-- Botões de filtros -->
         <button
           v-for="(filter, index) in locations"
           :key="index"
@@ -143,39 +135,95 @@ export default {
 
   data() {
     return {
+      fullPlaceholder: "Pesquise seu item",
+      animatedPlaceholder: "",
+      typingSpeed: 50,
       showFilters: false,
       isActive: false,
       categories: [
-        { label: "Animais", active: false },
-        { label: "Eletrônicos", active: false },
-        { label: "Mochilas e Bolsas", active: false },
+        { label: "Anel", active: false },
+        { label: "Anotações", active: false },
+        { label: "Apostila", active: false },
+        { label: "Base", active: false },
+        { label: "Batom", active: false },
+        { label: "Blush", active: false },
+        { label: "Blusa", active: false },
+        { label: "Boné", active: false },
+        { label: "Borracha", active: false },
+        { label: "Calculadora", active: false },
+        { label: "Calculadora Científica", active: false },
+        { label: "Caneta", active: false },
+        { label: "Carregador", active: false },
+        { label: "Carregador Portátil", active: false },
+        { label: "Carteira", active: false },
+        { label: "Carteira de Identidade", active: false },
+        { label: "Carteira de Motorista", active: false },
+        { label: "Case Fone", active: false },
+        { label: "Case Notebook", active: false },
+        { label: "Casaco", active: false },
+        { label: "Celular", active: false },
+        { label: "Chapéu", active: false },
         { label: "Chaves", active: false },
-        { label: "Livros e Materiais Acadêmicos", active: false },
-        { label: "Documentos e Cartões", active: false },
-        { label: "Equipamentos Esportivos", active: false },
-        { label: "Roupas e Acessórios", active: false },
-        { label: "Itens Pessoais", active: false },
-        { label: "Outros", active: false },
+        { label: "Chinelo", active: false },
+        { label: "Caderno", active: false },
+        { label: "Colar", active: false },
+        { label: "Estojo", active: false },
+        { label: "Fone de ouvido", active: false },
+        { label: "Gloss", active: false },
+        { label: "Grampeador", active: false },
+        { label: "Guarda-chuva", active: false },
+        { label: "Garrafa de Água", active: false },
+        { label: "Lapiseira", active: false },
+        { label: "Lápis", active: false },
+        { label: "Lápis de olho", active: false },
+        { label: "Livro", active: false },
+        { label: "Mochila", active: false },
+        { label: "Mouse", active: false },
+        { label: "Necessaire", active: false },
+        { label: "Notebook", active: false },
+        { label: "Óculos", active: false },
+        { label: "Passe Estudantil", active: false },
+        { label: "Passe de Ônibus", active: false },
+        { label: "Piercing", active: false },
+        { label: "Pingente", active: false },
+        { label: "Planner", active: false },
+        { label: "Presilha de Cabelo", active: false },
+        { label: "Pulseira", active: false },
+        { label: "Relógio", active: false },
+        { label: "Smartwatch", active: false },
+        { label: "Stylus", active: false },
+        { label: "Suporte Notebook", active: false },
+        { label: "Sombra", active: false },
+        { label: "Tablet", active: false },
+        { label: "Touca", active: false },
+        { label: "Outra", active: false },
       ],
       locations: [
-        { label: "RU", active: false },
-        { label: "Biblioteca", active: false },
-        { label: "UED", active: false },
         { label: "UAC", active: false },
-        { label: "LTDEA", active: false },
-        { label: "Centro Acadêmico", active: false },
+        { label: "UED", active: false },
+        { label: "LDTEA", active: false },
+        { label: "RU", active: false },
+        { label: "Containers", active: false },
+        { label: "Diretório Acadêmico - DA", active: false },
+        { label: "Quadra Poliesportiva", active: false },
+        { label: "Guarita Estacionamento Sul", active: false },
+        { label: "Guarita Estacionamento Norte", active: false },
+        { label: "Outro", active: false },
       ],
     };
   },
   computed: {
     isMediumOrLarger() {
-      return window.innerWidth >= 768; // Breakpoint para telas médias ou maiores
+      return window.innerWidth >= 768;
     },
     searchQueryWithoutAccents() {
       return this.searchQuery
         ? this.searchQuery.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
         : "";
     },
+  },
+  mounted() {
+    this.startTypingEffect();
   },
   methods: {
     toggleActive() {
@@ -204,6 +252,19 @@ export default {
           }
         });
       }
+    },
+
+    startTypingEffect() {
+      let index = 0;
+      this.animatedPlaceholder = "";
+      const interval = setInterval(() => {
+        if (index < this.fullPlaceholder.length) {
+          this.animatedPlaceholder += this.fullPlaceholder[index];
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, this.typingSpeed);
     },
   },
 };
