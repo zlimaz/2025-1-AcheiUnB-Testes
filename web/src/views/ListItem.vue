@@ -137,11 +137,21 @@
       <span v-if="itemStatus === 'found'">É meu item</span>
       <span v-else>Achei este item</span>
     </button>
+
+    <button
+    v-if="currentUser.id == item.user_id"
+      class="bg-red-500 text-white w-full md:w-[70%] lg:w-[40%] font-medium py-4 rounded-full hover:scale-110 transition-transform duration-300 text-center text-lg lg:text-xl"
+      @click="confirmDelete(item.id)"
+    >
+      Excluir meu item
+    </button>
   </div>
 
   <div class="fixed bottom-0 w-full">
     <MainMenu :activeIcon="itemStatus === 'found' ? 'found' : 'lost'" />
   </div>
+
+  <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
 </template>
 
 <script setup>
@@ -151,6 +161,8 @@ import ItemHeader from "../components/Item-Header.vue";
 import MainMenu from "../components/Main-Menu.vue";
 import { useRoute, useRouter } from "vue-router";
 import notAvailableImage from "@/assets/images/not-available.png";
+import Alert from "@/components/Alert.vue";
+import { deleteItem } from "@/services/apiItems";
 
 const route = useRoute();
 const router = useRouter();
@@ -159,7 +171,25 @@ const itemStatus = ref("");
 const currentUser = ref(null);
 const activeIndex = ref(0);
 const isMobile = ref(window.innerWidth < 768);
+
+const alertMessage = ref("");
+const submitError = ref(false);
+
 const isLoaded = ref(false);
+
+// Função para confirmar exclusão
+const confirmDelete = async (itemId) => {
+  console.log(itemStatus.value);
+  console.log(item.value.id);
+  try {
+    await deleteItem(itemId); // Chama a API para excluir o item
+    router.push(`/${itemStatus.value}`)
+  } catch (error) {
+    console.error("Erro ao excluir item:", error);
+    alertMessage.value = "Erro ao excluir item.";
+    submitError.value = true;
+  }
+};
 
 const formatDateTime = (dateString) => {
   const date = new Date(dateString);
@@ -195,7 +225,9 @@ async function fetchItem() {
     isLoaded.value = true;
   } catch (error) {
     console.error("Erro ao carregar item:", error);
-  } 
+    alertMessage.value = "Erro ao carregar item.";
+    submitError.value = true;
+  }
 }
 
 async function fetchCurrentUser() {
@@ -204,7 +236,9 @@ async function fetchCurrentUser() {
     currentUser.value = response.data;
   } catch (error) {
     console.error("Erro ao buscar usuário:", error);
-  } 
+    alertMessage.value = "Erro ao buscar usuário.";
+    submitError.value = true;
+  }
 }
 
 const handleChat = async () => {
@@ -252,7 +286,8 @@ const handleChat = async () => {
     }
   } catch (error) {
     console.error("Erro ao criar/aceder chat:", error.response?.data || error.message);
-    alert("Ocorreu um erro ao iniciar o chat. Por favor, tente novamente.");
+    alertMessage.value = "Erro ao excluir item.";
+    submitError.value = true;
   }
 };
 

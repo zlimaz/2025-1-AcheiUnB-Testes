@@ -61,6 +61,8 @@
     </div>
     
   </div>
+
+  <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
 </template>
 
 <script setup>
@@ -68,6 +70,7 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import api from "../services/api";
 import HeaderMessage from "@/components/Header-Message.vue";
+import Alert from "@/components/Alert.vue";
 
 const route = useRoute();
 const messages = ref([]);
@@ -75,6 +78,8 @@ const messageContent = ref("");
 const currentUser = ref(null);
 const item = ref(null);
 const receiverId = ref(null);
+const alertMessage = ref("");
+const submitError = ref(false);
 
 const chatroomId = ref(route.params.chatroomId || route.query.chatroomId);
 const itemId = ref(route.params.itemId || route.query.itemId);

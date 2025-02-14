@@ -75,12 +75,15 @@
       <MainMenu activeIcon="user" />
     </div>
   </div>
+
+  <Alert v-if="submitError" type="error" :message="alertMessage" @closed="submitError = false" />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import api from "../services/api";
 import MainMenu from "../components/Main-Menu.vue";
+import Alert from "@/components/Alert.vue";
 
 const user = ref({
   foto: "",
@@ -90,6 +93,8 @@ const user = ref({
   username: "",
   matricula: null,
 });
+const alertMessage = ref("");
+const submitError = ref(false);
 
 async function fetchUserData() {
   try {
@@ -102,6 +107,10 @@ async function fetchUserData() {
       username: response.data.username,
       matricula: response.data.matricula,
     };
+  } catch (error) {
+    console.error("Erro ao carregar dados do usuário:", error);
+    alertMessage = "Erro ao carregar dados do usuário.";
+    submitError = true;
   }
 }
 

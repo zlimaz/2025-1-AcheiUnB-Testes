@@ -332,6 +332,8 @@ export default {
             String(date.getMinutes()).padStart(2, "0");
         } catch (error) {
           console.error("Erro ao processar found_lost_date:", error);
+          this.alertMessage = "Erro ao processar data.";
+          this.submitError = true;
         }
       }
     }
@@ -372,6 +374,8 @@ export default {
         this.categories = result.data.results;
       } catch {
         console.log("Erro ao carregar categorias");
+        this.alertMessage = "Erro ao carregar categorias.";
+        this.submitError = true;
       }
     },
 
@@ -381,6 +385,8 @@ export default {
         this.locations = result.data.results;
       } catch {
         console.log("Erro ao carregar locais");
+        this.alertMessage = "Erro ao carregar locais.";
+        this.submitError = true;
       }
     },
 
@@ -390,6 +396,8 @@ export default {
         this.colors = result.data.results;
       } catch {
         console.log("Erro ao carregar cores");
+        this.alertMessage = "Erro ao carregar cores.";
+        this.submitError = true;
       }
     },
 
@@ -399,6 +407,8 @@ export default {
         this.brands = result.data.results;
       } catch {
         console.log("Erro ao carregar marcas");
+        this.alertMessage = "Erro ao carregar marcas.";
+        this.submitError = true;
       }
     },
 
@@ -437,9 +447,6 @@ export default {
           });
 
           this.formSubmitted = true;
-          for (let pair of formData.entries()) {
-            console.log(pair[0], pair[1]);
-          }
         } else {
           await api.post("/items/", formData);
           this.formSubmitted = true;
