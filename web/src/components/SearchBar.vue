@@ -6,7 +6,6 @@
       'relative w-auto': !isActive || isMediumOrLarger,
     }"
   >
-    <!-- Botão de filtro -->
     <button
       @click="
         toggleFilters();
@@ -42,11 +41,10 @@
         showFilters = false;
       "
     />
-    <!-- Botão da lupa -->
     <button
       class="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition-colors duration-200 z-50"
       :class="{
-        'pr-8': isActive && !isMediumOrLarger, // Somente para telas pequenas
+        'pr-8': isActive && !isMediumOrLarger,
       }"
       type="submit"
     >
@@ -69,20 +67,17 @@
       </svg>
     </button>
 
-    <!-- Menu de Filtros -->
     <div
       v-if="showFilters"
       class="absolute left-0 bg-gray-200 shadow-lg rounded-xl p-4 z-30"
       :class="{
-        'w-fit mr-8': isActive && !isMediumOrLarger, // Estilo para telas pequenas
-        'w-full': isMediumOrLarger, // Estilo para telas maiores
+        'w-fit mr-8': isActive && !isMediumOrLarger,
+        'w-full': isMediumOrLarger,
       }"
       style="top: calc(50% - 4px)"
     >
-      <!-- Filtros de Categorias -->
       <div class="flex gap-2 flex-wrap mt-4">
         <span class="w-full text-azul text-2xl font-bold">Categoria </span>
-        <!-- Botões de filtros -->
         <button
           v-for="(filter, index) in categories"
           :key="index"
@@ -97,12 +92,9 @@
           {{ filter.label }}
         </button>
       </div>
-      <!-- Linha -->
       <div class="h-[2px] w-full bg-laranja mt-4"></div>
-      <!-- Filtros de Locais -->
       <div class="flex gap-2 flex-wrap mt-4">
         <span class="w-full text-azul text-2xl font-bold">Local </span>
-        <!-- Botões de filtros -->
         <button
           v-for="(filter, index) in locations"
           :key="index"
@@ -222,7 +214,7 @@ export default {
   },
   computed: {
     isMediumOrLarger() {
-      return window.innerWidth >= 768; // Breakpoint para telas médias ou maiores
+      return window.innerWidth >= 768;
     },
     searchQueryWithoutAccents() {
       return this.searchQuery
@@ -264,7 +256,7 @@ export default {
 
     startTypingEffect() {
       let index = 0;
-      this.animatedPlaceholder = ""; // Garante que começa vazio
+      this.animatedPlaceholder = "";
       const interval = setInterval(() => {
         if (index < this.fullPlaceholder.length) {
           this.animatedPlaceholder += this.fullPlaceholder[index];
@@ -274,17 +266,6 @@ export default {
         }
       }, this.typingSpeed);
     },
-
-    // handleSearch() {
-    //   const query = this.searchQuery;
-
-    //   const activeCategory = this.categories.find((filter) => filter.active);
-    //   const activeLocation = this.locations.find((filter) => filter.active);
-
-    //   console.log("Pesquisa:", query);
-    //   console.log("Categoria selecionada:", activeCategory ? activeCategory.label : "Nenhuma");
-    //   console.log("Local selecionado:", activeLocation ? activeLocation.label : "Nenhum");
-    // },
   },
 };
 </script>

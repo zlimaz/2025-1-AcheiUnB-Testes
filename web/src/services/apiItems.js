@@ -41,7 +41,7 @@ export const fetchFoundItems = async ({
 
 export const fetchMyItemsFound = async () => {
   try {
-    const response = awaiapit(`${API_BASE_URL}/found/my-items/`);
+    const response = await api.get(`${API_BASE_URL}/found/my-items/`);
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar itens encontrados:", error);
@@ -51,17 +51,17 @@ export const fetchMyItemsFound = async () => {
 
 export const fetchMyItemsLost = async () => {
   try {
-    const response = awaiapit(`${API_BASE_URL}/lost/my-items/`);
-    return response.data; // Retorna os dados da resposta
+    const response = await api.get(`${API_BASE_URL}/lost/my-items/`);
+    return response.data; 
   } catch (error) {
     console.error("Erro ao buscar itens encontrados:", error);
-    throw error; // Lança o erro para ser tratado onde a função for chamada
+    throw error;
   }
 };
 
 export const deleteItem = async (itemId) => {
   try {
-    awaiapilete(`${API_BASE_URL}/${itemId}/`);
+    await api.delete(`${API_BASE_URL}/${itemId}/`);
   } catch (error) {
     console.error("Erro ao deletar o item:", error);
     throw error;

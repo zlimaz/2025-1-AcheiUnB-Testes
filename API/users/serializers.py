@@ -43,11 +43,11 @@ class ItemSerializer(serializers.ModelSerializer):
     )
     remove_images = serializers.ListField(
         child=serializers.IntegerField(), write_only=True, required=False
-    )  # IDs das imagens a serem removidas
+    )
     image_urls = serializers.SerializerMethodField(read_only=True)
     image_ids = serializers.SerializerMethodField(read_only=True)
     user_id = serializers.IntegerField(source="user.id", read_only=True)
-    barcode = serializers.CharField(read_only=True)  # Código único do item
+    barcode = serializers.CharField(read_only=True) 
     category_name = serializers.SerializerMethodField()
     location_name = serializers.SerializerMethodField()
     color_name = serializers.SerializerMethodField()
@@ -75,10 +75,10 @@ class ItemSerializer(serializers.ModelSerializer):
             "status",
             "found_lost_date",
             "created_at",
-            "images",  # Para retornar imagens associadas ao item
-            "remove_images",  # Para remover imagens associadas ao item
+            "images",
+            "remove_images",
             "image_urls",
-            "image_ids",  # Para fazer upload de imagens
+            "image_ids", 
         ]
 
     def validate_images(self, value):
@@ -90,7 +90,6 @@ class ItemSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        # Extrai as imagens e remove do payload
         images = validated_data.pop("images", [])
         MAX_IMAGES = 2
 
@@ -99,23 +98,18 @@ class ItemSerializer(serializers.ModelSerializer):
                 f"Você pode adicionar no máximo {MAX_IMAGES} imagens."
             )
 
-        # Cria o item imediatamente
         item = super().create(validated_data)
 
-        # Agenda o upload das imagens como uma task assíncrona
         if images:
             upload_images_to_cloudinary.delay(item.id, [image.file.read() for image in images])
 
         return item
 
     def update(self, instance, validated_data):
-        # Remover imagens existentes
         remove_images = validated_data.pop("remove_images", [])
         if remove_images:
-            # Agendar a remoção de imagens como uma task assíncrona
             remove_images_from_item.delay(remove_images)
 
-        # Adicionar novas imagens
         images = validated_data.pop("images", [])
         MAX_IMAGES = 2
 
@@ -125,12 +119,10 @@ class ItemSerializer(serializers.ModelSerializer):
             )
 
         if images:
-            # Agendar o upload das novas imagens como uma task assíncrona
             upload_images_to_cloudinary.delay(
                 instance.id, [image.file.read() for image in images]
             )
 
-        # Atualizar outros campos
         return super().update(instance, validated_data)
 
     def get_category_name(self, obj):

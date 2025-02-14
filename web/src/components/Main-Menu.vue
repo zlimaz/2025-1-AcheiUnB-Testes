@@ -3,7 +3,6 @@
     class="h-full bg-azul shadow-md rounded-t-xl flex items-center justify-center text-white gap-x-9 p-8"
     :class="{ visible: isVisible, invisible: !isVisible }"
   >
-    <!--busca-->
     <router-link to="/found" class="no-underline">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +21,6 @@
       </svg>
     </router-link>
 
-    <!--user-->
     <router-link to="/user" class="no-underline">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +39,6 @@
       </svg>
     </router-link>
 
-    <!--info-->
     <router-link to="/about" class="no-underline">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +57,6 @@
       </svg>
     </router-link>
 
-    <!--chat-->
     <router-link to="/chats" class="no-underline">
       <svg
         xmlns="http://www.w3.org/2000/svg"

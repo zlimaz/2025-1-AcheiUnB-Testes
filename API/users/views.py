@@ -41,20 +41,19 @@ class UserListView(View):
     def get(self, request, user_id=None):
         if user_id:
             user = get_object_or_404(User, id=user_id)
-            profile = getattr(user, "profile", None)  # Obtém o perfil associado ao usuário
+            profile = getattr(user, "profile", None) 
             profile_picture = (
                 profile.profile_picture if profile else None
-            )  # Obtém a foto do perfil se existir
+            ) 
 
             user_data = {
                 "id": user.id,
                 "first_name": user.first_name,
                 "email": user.email,
-                "foto": profile_picture,  # Agora pegando a foto do UserProfile
+                "foto": profile_picture, 
             }
             return JsonResponse(user_data, status=200)
 
-        # Buscar todos os usuários com suas fotos de perfil
         users = User.objects.all()
         users_data = [
             {
@@ -63,7 +62,7 @@ class UserListView(View):
                 "email": user.email,
                 "foto": getattr(
                     user.profile, "profile_picture", None
-                ),  # Pegando a foto do perfil se existir
+                ), 
             }
             for user in users
         ]
@@ -71,7 +70,6 @@ class UserListView(View):
         return JsonResponse(users_data, safe=False, status=200)
 
 
-# Configurações do MSAL
 CLIENT_ID = os.getenv("MICROSOFT_CLIENT_ID")
 CLIENT_SECRET = os.getenv("MICROSOFT_CLIENT_SECRET")
 AUTHORITY = os.getenv("AUTHORITY")
@@ -118,7 +116,6 @@ class ItemViewSet(ModelViewSet):
                 .prefetch_related("images")
             )
 
-        # Retorna todos os itens caso nenhum endpoint específico seja usado
         return Item.objects.select_related(
             "category", "location", "color", "brand"
         ).prefetch_related("images")
@@ -150,32 +147,31 @@ class ItemViewSet(ModelViewSet):
         )
         self.schedule_match_task(item)
 
+''' Estrutura de match para implementação futura
+Match de itens caso o usuário queira ver os possíveis matches pelo site:
 
-# Match de itens caso o usuário queira ver os possíveis matches pelo site:
+ class MatchItemViewSet(APIView):
+     permission_classes = [IsAuthenticated]
 
-# class MatchItemViewSet(APIView):
-#     permission_classes = [IsAuthenticated]
+     def get(self, request, item_id):
+          retorna possiveis matches
+         try:
+             target_item = Item.objects.get(id=item_id, user=request.user)
+         except Item.DoesNotExist:
+             return Response({"error": "Item não encontrado."}, status=404)
 
-#     def get(self, request, item_id):
-#         # retorna possiveis matches
-#         try:
-#             target_item = Item.objects.get(id=item_id, user=request.user)
-#         except Item.DoesNotExist:
-#             return Response({"error": "Item não encontrado."}, status=404)
-
-#         matches = find_and_notify_matches(target_item)
-#         data = [
-#             {
-#                 "id": match.id,
-#                 "barcode": match.barcode,
-#                 "status": match.status,
-#                 "name": match.name,
-#                 "description": match.description,
-#             }
-#             for match in matches
-#         ]
-
-#         return Response(data, status=200)
+         matches = find_and_notify_matches(target_item)
+         data = [
+             {
+                 "id": match.id,
+                 "barcode": match.barcode,
+                 "status": match.status,
+                 "name": match.name,
+                 "description": match.description,
+             }
+             for match in matches
+         ]
+         return Response(data, status=200)'''
 
 
 class MyItemsLostView(APIView):
@@ -188,10 +184,8 @@ class MyItemsLostView(APIView):
     def get(self, request):
         user = request.user
 
-        # Filtrar itens do usuário por status
         lost_items = Item.objects.filter(user=user, status="lost")
 
-        # Serializar os itens
         serializer = ItemSerializer(lost_items, many=True)
 
         return Response(serializer.data)
@@ -264,7 +258,6 @@ class ItemImageViewSet(ModelViewSet):
                 {"error": f"Você pode adicionar no máximo {MAX_IMAGES} imagens por item."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        # Fazer upload da imagem para o Cloudinary.
         image_file = request.FILES.get("image")
 
         if not image_file:
@@ -300,17 +293,15 @@ class UserDetailView(APIView):
         user = request.user
         request.headers.get("Authorization", "").replace(
             "Bearer ", ""
-        )  # Pegando o token de acesso do usuário autenticado
+        )
         logger.info(f"Usuário autenticado: {user.username} (ID: {user.id})")
 
-        # Buscar foto do usuário no banco de dados (já salva no cloudinary)
         try:
             profile = UserProfile.objects.get(user=user)
             foto_url = profile.profile_picture
         except UserProfile.DoesNotExist:
             foto_url = None
 
-        # Extrai a matrícula do e-mail
         matricula = user.email.split("@")[0] if "@aluno.unb.br" in user.email else None
 
         user_data = {
@@ -320,7 +311,7 @@ class UserDetailView(APIView):
             "first_name": user.first_name,
             "last_name": user.last_name,
             "matricula": matricula,
-            "foto": foto_url,  # URL da foto no Cloudinary
+            "foto": foto_url, 
         }
         return Response(user_data)
 
@@ -362,14 +353,12 @@ def save_or_update_user(user_data, access_token=None):
                 "date_joined": datetime.now(),
             },
         )
-        # Buscar a foto do usuário
         try:
             photo_blob = get_user_photo(access_token) if access_token else None
         except Exception as e:
             photo_blob = None
             logger.error(f"Erro ao buscar a foto do usuário: {e}")
 
-        # Se houver uma foto, faça upload para o Cloudinary
         if photo_blob:
             upload_images_to_cloudinary.delay(user.id, [photo_blob], object_type="user")
 
@@ -385,7 +374,6 @@ def microsoft_login(request):
     app = ConfidentialClientApplication(
         client_id=CLIENT_ID, client_credential=CLIENT_SECRET, authority=AUTHORITY
     )
-    # Gera a URL de autorização
     auth_url = app.get_authorization_request_url(scopes=SCOPES, redirect_uri=REDIRECT_URI)
     return redirect(auth_url)
 
@@ -404,36 +392,30 @@ def microsoft_callback(request):
     )
 
     try:
-        # Troca o código de autorização pelo token de acesso
         token_response = app.acquire_token_by_authorization_code(
             code=authorization_code, scopes=SCOPES, redirect_uri=REDIRECT_URI
         )
         if "access_token" in token_response:
             access_token = token_response["access_token"]
 
-            # Buscar dados do usuário
             user_data = fetch_user_data(access_token)
 
-            # Salvar ou atualizar o usuário no banco de dados
             user, created = save_or_update_user(user_data=user_data, access_token=access_token)
 
-            # Autenticar o usuário
             login(request, user)
 
-            # Gerar JWT local
             refresh = RefreshToken.for_user(user)
             jwt_access = str(refresh.access_token)
             str(refresh)
 
-            # Configurar cookies seguros
             response = HttpResponseRedirect("http://localhost:8000/#/found")
             response.set_cookie(
                 key="access_token",
                 value=jwt_access,
                 httponly=True,
-                secure=True,  # Ative apenas em HTTPS em produção
-                samesite="Strict",  # Para proteger contra CSRF
-                max_age=3600,  # 1 hora
+                secure=True,
+                samesite="Strict", 
+                max_age=3600,
             )
             return response
         else:
@@ -466,7 +448,7 @@ class TestUserView(APIView):
         """
         Testa a criação de um usuário completo no banco de dados.
         """
-        data = request.data  # Dados enviados no corpo da requisição
+        data = request.data 
 
         try:
             user, created = User.objects.update_or_create(
@@ -477,7 +459,7 @@ class TestUserView(APIView):
                     "last_name": data.get("last_name"),
                     "password": data.get(
                         "password", ""
-                    ),  # Salve apenas hashes reais em produção
+                    ), 
                     "last_login": data.get("last_login", datetime.now()),
                     "is_superuser": data.get("is_superuser", False),
                     "is_staff": data.get("is_staff", False),
@@ -526,9 +508,9 @@ def get_user_photo(access_token):
 
     response = requests.get(
         url, headers=headers, stream=True
-    )  # stream=True para trabalhar com blobs
+    ) 
     if response.status_code == 200:
-        return response.content  # Retorna o blob da foto
+        return response.content 
     else:
         raise Exception(
             f"Erro ao buscar a foto do usuário: {response.status_code} - {response.text}"
@@ -543,7 +525,7 @@ class DeleteUserView(View):
     def delete(self, request, user_id):
         try:
             user = User.objects.get(id=user_id)
-            user.delete()  # Deleta o usuário do banco de dados
+            user.delete() 
             return JsonResponse(
                 {"message": f"Usuário com ID {user_id} foi deletado com sucesso."},
                 status=200,
