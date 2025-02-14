@@ -11,6 +11,9 @@ import ListItem from "../views/ListItem.vue";
 import UserItemsLost from "../views/UserItems-Lost.vue";
 import UserItemsFound from "../views/UserItems-Found.vue";
 import Message from "../views/Message.vue";
+import SessionExpired from "@/views/Session-Expired.vue";
+import api from "../services/api";
+import Anonimo from "@/views/Anonimo.vue";
 import EditItem from "../views/EditItem.vue";
 
 const routes = [
@@ -92,22 +95,45 @@ const routes = [
     component: Message,
     meta: { requiresAuth: true },
   },
-  // Rota para chat que aceita chatroomId no path e itemId nos query parameters
   {
-    path: "/chat/:chatroomId",
+    path: "/chat/:chatroomId/:itemId?",
     name: "Chat",
     component: Message,
     meta: { requiresAuth: true },
-    props: route => ({
+    props: (route) => ({
       chatroomId: route.params.chatroomId || route.query.chatroomId,
-      itemId: route.params.itemId || route.query.itemId
+      itemId: route.params.itemId || route.query.itemId,
     }),
+  },
+  {
+    path: "/anonimo",
+    name: "Anonimo",
+    component: Anonimo,
+  },
+  {
+    path: "/session-expired",
+    name: "Expired",
+    component: SessionExpired,
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach(async (to) => {
+  if (to.meta.requiresAuth) {
+    try {
+      await api.get("/auth/validate", {
+        withCredentials: true,
+      });
+      return true;
+    } catch {
+      return { name: "Expired" };
+    }
+  }
+  return true;
 });
 
 export default router;

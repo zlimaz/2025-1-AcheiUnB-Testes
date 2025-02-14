@@ -1,5 +1,9 @@
 <template>
-  <div class="fixed top-0 left-0 w-full bg-verde shadow-md py-3 px-4 flex items-center z-10">
+  <div
+    class="fixed top-0 left-0 w-full bg-verde shadow-md py-3 px-4 flex items-center z-10"
+    :class="{ visible: isVisible, invisible: !isVisible }"
+  >
+    <!-- Botão de Voltar -->
     <img
       @click="goBack"
       :src="LeftArrow"
@@ -13,7 +17,11 @@
         alt="Foto do usuário"
         class="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-white"
       />
-      <span class="text-white font-semibold text-sm md:text-base truncate max-w-[120px] md:max-w-[200px]">
+
+      <!-- Nome do Usuário -->
+      <span
+        class="text-white font-semibold text-sm md:text-base truncate max-w-[120px] md:max-w-[200px]"
+      >
         {{ userName || "Usuário" }}
       </span>
       <img
@@ -75,6 +83,7 @@ const fetchChatroomData = async () => {
     fetchItemData();
   } catch {}
 };
+const isVisible = ref(false);
 
 const fetchUserData = async () => {
   if (!userId.value) return;
@@ -107,5 +116,25 @@ watchEffect(() => {
 
 onMounted(() => {
   fetchCurrentUser();
+
+  setTimeout(() => {
+    isVisible.value = true;
+  }, 1);
 });
 </script>
+
+<style>
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.invisible {
+  opacity: 0;
+  transform: translateY(-45px);
+}
+</style>
