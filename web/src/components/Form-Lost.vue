@@ -170,7 +170,7 @@
       </div>
 
       <!-- Data -->
-      <div class="mb-4 col-span-2">
+      <div class="mb-4 col-span-2 mt-4">
         <label for="lostDate" class="font-inter block text-azul text-sm font-bold mb-2"
           >Data em que foi perdido</label
         >
