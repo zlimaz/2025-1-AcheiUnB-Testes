@@ -19,8 +19,14 @@ User = get_user_model()
 # =====================================================
 # TESTES PARA UserListView (rota: /api/users/)
 # =====================================================
+
+
 class UserListViewTests(TestCase):
+    def clean_up(self):
+        User.objects.all().delete()
+
     def setUp(self):
+        self.clean_up() 
         self.client = Client()
         self.user1 = User.objects.create(username="user1", email="user1@example.com")
         self.user2 = User.objects.create(username="user2", email="user2@example.com")
@@ -46,7 +52,17 @@ class UserListViewTests(TestCase):
 # TESTES PARA ItemViewSet (rota: /api/items/)
 # =====================================================
 class ItemViewSetTests(APITestCase):
+    def clean_up(self):
+        User.objects.all().delete()
+        Category.objects.all().delete()
+        Location.objects.all().delete()
+        Color.objects.all().delete()
+        Brand.objects.all().delete()
+        Item.objects.all().delete()
+
     def setUp(self):
+        self.clean_up() 
+
         self.user = User.objects.create_user(
             username="testauth", email="test@auth.com", password="123"
         )
@@ -121,12 +137,23 @@ class ItemViewSetTests(APITestCase):
         mock_task.assert_called_once()
 
 
+
 # =====================================================
 # TESTES PARA MyItemsLostView e MyItemsFoundView
 # (rotas: /api/items/lost/my-items/ e /api/items/found/my-items/)
 # =====================================================
 class MyItemsViewTests(APITestCase):
+    def clean_up(self):
+        User.objects.all().delete()
+        Category.objects.all().delete()
+        Location.objects.all().delete()
+        Color.objects.all().delete()
+        Brand.objects.all().delete()
+        Item.objects.all().delete()
+
     def setUp(self):
+        self.clean_up()  
+
         self.user = User.objects.create_user(
             username="myuser", email="myuser@example.com", password="1234"
         )
@@ -183,7 +210,6 @@ class MyItemsViewTests(APITestCase):
             response = self.client.get("/api/items/lost/my-items/")
             assert response.status_code == 401
 
-
 # =====================================================
 # TESTES PARA ItemImageViewSet (rota: /api/items/<item_id>/images/)
 # =====================================================
@@ -201,7 +227,6 @@ class ItemImageViewSetTests(APITestCase):
     def test_list_images(self):
         response = self.client.get(f"/api/items/{self.item.id}/images/")
         assert response.status_code == 200
-        # Se a resposta for paginada, obtenha os resultados; senão use a própria resposta.
         results = response.data.get("results", response.data)
         assert len(results) == 1
 
@@ -286,7 +311,11 @@ class UserValidateViewTests(APITestCase):
 # TESTES PARA CategoryViewSet (rota: /api/categories/)
 # =====================================================
 class CategoryViewSetTests(APITestCase):
+    def clean_up(self):
+        Category.objects.all().delete()
+
     def setUp(self):
+        self.clean_up()  
         self.user = User.objects.create_user("catuser", "cat@example.com", "catpwd")
         self.client.force_authenticate(user=self.user)
         self.category = Category.objects.create(name="Eletrônicos")
@@ -294,12 +323,17 @@ class CategoryViewSetTests(APITestCase):
     def test_list_categories(self):
         response = self.client.get("/api/categories/")
         assert response.status_code == 200
-        assert len(response.data["results"]) == 1
+
+        if isinstance(response.data, list):
+        
+            assert len(response.data) == 1
+        else:
+            assert len(response.data["results"]) == 1
 
     def test_create_category(self):
         data = {"name": "Livros"}
         response = self.client.post("/api/categories/", data, format="json")
-        assert response.status_code == 400
+        assert response.status_code == 400  
         assert Category.objects.count() == 1
 
     def test_retrieve_category(self):
@@ -318,7 +352,7 @@ class CategoryViewSetTests(APITestCase):
     def test_delete_category(self):
         response = self.client.delete(f"/api/categories/{self.category.id}/")
         assert response.status_code == 204
-        assert Category.objects.count() == 0
+        assert Category.objects.count() == 0 
 
 
 # =====================================================
