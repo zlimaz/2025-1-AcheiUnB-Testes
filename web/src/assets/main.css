@@ -1,9 +1,0 @@
-/* Configuração global de fontes */
-body {
-  font-family: "Inter", sans-serif;
-}
-
-/* @import "./base.css"; */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

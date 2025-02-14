@@ -52,10 +52,10 @@ export const fetchMyItemsFound = async () => {
 export const fetchMyItemsLost = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/lost/my-items/`);
-    return response.data; // Retorna os dados da resposta
+    return response.data;
   } catch (error) {
     console.error("Erro ao buscar itens encontrados:", error);
-    throw error; // Lança o erro para ser tratado onde a função for chamada
+    throw error;
   }
 };
 

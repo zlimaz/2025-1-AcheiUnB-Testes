@@ -1,6 +1,5 @@
 <template>
   <div class="h-[100px] bg-verde shadow-md rounded-b-xl flex items-center text-white p-4 md:p-6">
-    <!-- Botão de Voltar -->
     <div class="flex items-center w-1/4">
       <img
         @click="goBack"
@@ -10,15 +9,12 @@
       />
     </div>
 
-    <!-- Título Centralizado -->
     <div class="flex-grow flex justify-center">
       <span class="font-inter font-semibold text-lg md:text-2xl text-center break-words">
         {{ title }}
       </span>
     </div>
 
-
-    <!-- Caso usuário atual seja criador do anúncio mostra o botão de editar item -->
     <button
     v-if="userId === itemUserId"
     type="button"
@@ -32,7 +28,6 @@
         />
     </button>
 
-    <!-- Logo à Direita somente caso usuário atual não seja criador do anúncio -->
     <div
      v-else
     class="flex items-center w-1/4 justify-end">
@@ -68,7 +63,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.back(); // Retorna para a página anterior
+      this.$router.back();
     },
 
     editItem() {

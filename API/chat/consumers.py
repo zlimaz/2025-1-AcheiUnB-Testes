@@ -11,7 +11,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_id = self.scope["url_route"]["kwargs"]["room_id"]
         self.room_group_name = f"chat_{self.room_id}"
 
-        # Verifica se o usuário tem acesso à sala
         room = await sync_to_async(ChatRoom.objects.get)(id=self.room_id)
         user = self.scope["user"]
         if user not in {room.participant_1, room.participant_2}:
@@ -28,13 +27,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message_content = data["message"]
         sender = self.scope["user"]
 
-        # Salva a mensagem no banco
         room = await sync_to_async(ChatRoom.objects.get)(id=self.room_id)
         message = await sync_to_async(Message.objects.create)(
             room=room, sender=sender, content=message_content
         )
 
-        # Envia a mensagem para o grupo
         await self.channel_layer.group_send(
             self.room_group_name,
             {

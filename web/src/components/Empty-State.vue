@@ -8,9 +8,9 @@
 </template>
 
 <script setup>
-import box from "@/assets/icons/found-and-lost-box.jpg"; // Caminho para a imagem
+import box from "@/assets/icons/found-and-lost-box.jpg";
 
 defineProps({
-    message: String, // Parâmetro para personalizar a mensagem
+    message: String,
 });
 </script>

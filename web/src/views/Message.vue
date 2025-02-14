@@ -1,8 +1,6 @@
 <template>
-  <!-- Container Principal com posicionamento relativo -->
   <div class="relative flex flex-col h-screen bg-gray-100">
-    
-    <!-- Marca d'água (Watermark) sempre visível e responsiva -->
+
     <div class="flex absolute inset-0 justify-center items-center pointer-events-none z-0">
       <img
         src="@/assets/icons/Favicon.png"
@@ -10,8 +8,7 @@
         class="w-48 md:w-64 lg:w-80 opacity-20"
       />
     </div>
-    
-    <!-- Header com informações do usuário e do item -->
+
     <HeaderMessage
       v-if="receiverId && itemId"
       :itemId="String(itemId)" 
@@ -19,11 +16,9 @@
       class="fixed top-0 left-0 w-full z-20"
     />
 
-    <!-- Área de Mensagens -->
     <div ref="messagesContainer" class="relative flex-1 pt-32 pb-24 px-4 overflow-y-auto z-10">
       <div v-for="message in messages" :key="message.id" class="mb-2 flex">
         
-        <!-- Mensagem do remetente (alinhada à direita) -->
         <div v-if="message.sender === currentUser?.id" class="flex w-full justify-end">
           <div class="bg-laranja text-white p-3 rounded-2xl max-w-[70%] break-words shadow-md">
             <p class="text-sm">{{ message.content }}</p>
@@ -33,7 +28,6 @@
           </div>
         </div>
 
-        <!-- Mensagem do destinatário (alinhada à esquerda) -->
         <div v-else class="flex w-full justify-start">
           <div class="bg-gray-300 text-gray-800 p-3 rounded-2xl max-w-[70%] break-words shadow-md">
             <p class="text-sm">{{ message.content }}</p>
@@ -46,7 +40,6 @@
       </div>
     </div>
     
-    <!-- Área de Input fixa na parte inferior -->
     <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-20">
       <div class="flex">
         <input
@@ -76,7 +69,6 @@ import { useRoute } from "vue-router";
 import api from "../services/api";
 import HeaderMessage from "@/components/Header-Message.vue";
 
-// Variáveis reativas
 const route = useRoute();
 const messages = ref([]);
 const messageContent = ref("");
@@ -84,7 +76,6 @@ const currentUser = ref(null);
 const item = ref(null);
 const receiverId = ref(null);
 
-// IDs do chat e do item (obtidos via params ou query)
 const chatroomId = ref(route.params.chatroomId || route.query.chatroomId);
 const itemId = ref(route.params.itemId || route.query.itemId);
 
@@ -94,14 +85,11 @@ if (!chatroomId.value) {
   console.log("chatroomId:", chatroomId.value);
 }
 
-// Função para enviar mensagem
 const sendMessage = async () => {
-  // Verifica se o chatroomId está definido
   if (!chatroomId.value) {
     console.error("ID do chat não encontrado, não é possível enviar mensagem");
     return;
   }
-  // Verifica se a mensagem não está vazia
   if (!messageContent.value.trim()) {
     console.warn("Mensagem vazia, nada a enviar");
     return;
@@ -113,16 +101,13 @@ const sendMessage = async () => {
       room: chatroomId.value,
       content: messageContent.value
     });
-    // Limpa o input
     messageContent.value = "";
-    // Atualiza as mensagens
     await fetchMessages();
   } catch (error) {
     console.error("Erro ao enviar mensagem:", error.response?.data || error.message);
   }
 };
 
-// Função para buscar mensagens do chat
 const fetchMessages = async () => {
   if (!chatroomId.value) return;
   try {
@@ -135,7 +120,6 @@ const fetchMessages = async () => {
   }
 };
 
-// Função para buscar o usuário atual
 const fetchCurrentUser = async () => {
   try {
     const response = await api.get("/auth/user/");
@@ -145,7 +129,6 @@ const fetchCurrentUser = async () => {
   }
 };
 
-// Função para buscar dados do item
 const fetchItem = async () => {
   if (!itemId.value) return;
   try {
@@ -156,7 +139,6 @@ const fetchItem = async () => {
   }
 };
 
-// Função para buscar o ID do usuário dono do item
 const fetchReceiverId = async () => {
   if (!itemId.value) return;
   try {
@@ -167,7 +149,6 @@ const fetchReceiverId = async () => {
   }
 };
 
-// Função para formatar o horário da mensagem
 const formatTime = (timestamp) => {
   return new Date(timestamp).toLocaleTimeString("pt-BR", {
     hour: "2-digit",
@@ -175,7 +156,6 @@ const formatTime = (timestamp) => {
   });
 };
 
-// Função para buscar dados do chatroom (se necessário)
 const fetchChatroomData = async () => {
   if (!chatroomId.value) return;
   try {
@@ -186,7 +166,7 @@ const fetchChatroomData = async () => {
   }
 };
 
-// Executar funções ao montar o componente
+
 onMounted(async () => {
   await fetchCurrentUser();
   await fetchItem();
@@ -195,3 +175,5 @@ onMounted(async () => {
   await fetchMessages();
 });
 </script>
+
+<style scoped></style>

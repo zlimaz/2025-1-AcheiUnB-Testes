@@ -2,7 +2,6 @@
   <div
     class="fixed w-full top-0 h-[100px] bg-verde shadow-md rounded-b-xl flex items-center justify-between px-6 text-white z-10"
   >
-    <!-- Botão de voltar -->
     <router-link to="/user" class="inline-block">
       <img
         src="../assets/icons/arrow-left-white.svg"
@@ -11,12 +10,10 @@
       />
     </router-link>
 
-    <!-- Título (Agora centralizado corretamente) -->
     <h1 class="text-2xl font-bold absolute left-1/2 transform -translate-x-1/2">
       Meus Itens
     </h1>
 
-    <!-- Logo (Clicável para ir para /about) -->
     <button>
       <router-link to="/about" class="no-underline text-white">
         <Logo class="pr-4" sizeClass="text-2xl" />
@@ -28,7 +25,6 @@
     <SubMenu />
   </div>
 
-  <!-- Se não houver itens, exibir mensagem e imagem -->
   <EmptyState v-if="myItemsFound.length === 0" message="achados registrados... Você pode adicionar um no" highlightText="AcheiUnB"/>
 
   <div
@@ -71,7 +67,6 @@ const submitError = ref(false);
 const formSubmitted = ref(false);
 const alertMessage = ref("");
 
-// Função para buscar os itens encontrados
 const fetchItems = async () => {
   try {
     const response = await fetchMyItemsFound();
@@ -82,21 +77,19 @@ const fetchItems = async () => {
   }
 };
 
-// Função para confirmar exclusão
 const confirmDelete = async (itemId) => {
   try {
-    await deleteItem(itemId); // Chama a API para excluir o item
-    myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId); // Remove do estado
+    await deleteItem(itemId);
+    myItemsFound.value = myItemsFound.value.filter(item => item.id !== itemId);
   } catch (error) {
     console.error("Erro ao excluir item:", error);
   }
 };
 
-// Função para excluir um item
 const handleDelete = async (itemId) => {
   try {
-    await deleteItem(itemId); // Chama o serviço para deletar o item no backend
-    myItemsFound.value = myItemsFound.value.filter((item) => item.id !== itemId); // Atualiza a lista removendo o item excluído
+    await deleteItem(itemId);
+    myItemsFound.value = myItemsFound.value.filter((item) => item.id !== itemId);
     alertMessage.value = "Item deletado com sucesso.";
     formSubmitted.value = true;
   } catch (error) {
@@ -105,7 +98,6 @@ const handleDelete = async (itemId) => {
   }
 };
 
-// Carrega os itens encontrados ao montar o componente
 onMounted(() => fetchItems());
 </script>
 

@@ -8,7 +8,6 @@
       <SubMenu />
     </div>
 
-    <!-- Se não houver itens, exibir mensagem e imagem -->
     <EmptyState v-if="foundItems.length === 0" message="está sem itens achados... Você pode adicionar um!" />
 
     <div
@@ -82,12 +81,10 @@ import NotAvailableImage from "@/assets/images/not-available.png";
 import { filtersState } from "@/store/filters";
 import EmptyState from "@/components/Empty-State.vue";
 
-// Estado para os itens achados e controle de paginação
 const foundItems = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
 
-// Função para buscar itens achados com base na página
 const fetchItems = async (page = 1) => {
   const { searchQuery, activeCategory, activeLocation } = filtersState;
 
@@ -99,10 +96,9 @@ const fetchItems = async (page = 1) => {
   });
 
   foundItems.value = response.results;
-  totalPages.value = Math.ceil(response.count / 27); // 20 itens por página
+  totalPages.value = Math.ceil(response.count / 27);
 };
 
-// Navegação de páginas
 const goToPreviousPage = () => {
   if (currentPage.value > 1) {
     currentPage.value -= 1;
@@ -120,8 +116,8 @@ const goToNextPage = () => {
 watch(
   () => [filtersState.searchQuery, filtersState.activeCategory, filtersState.activeLocation],
   () => {
-    currentPage.value = 1; // Reseta para a primeira página ao mudar os filtros
-    fetchItems(); // Atualiza os itens na tela
+    currentPage.value = 1;
+    fetchItems();
   },
 );
 

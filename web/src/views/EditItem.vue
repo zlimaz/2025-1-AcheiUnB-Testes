@@ -32,7 +32,7 @@
     components: { ItemHeader, FormLost, FormFound },
     props: {
     id: {
-      type: [String, Number], // Pode ser string (valor bruto) ou number (se converter)
+      type: [String, Number],
       required: true
     },
   },
@@ -56,7 +56,7 @@
 
       try {
         const response = await api.get(`/auth/user/`);
-        this.currentUser = response.data;  // Atribuindo o valor de currentUser
+        this.currentUser = response.data;
       } catch (error) {
         console.error("Erro ao buscar usuário:", error);
       }
@@ -88,3 +88,4 @@
     },
   }
   </script>
+  
