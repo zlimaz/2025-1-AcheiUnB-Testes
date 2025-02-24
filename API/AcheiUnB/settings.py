@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "chat",
     "corsheaders",
     "django_celery_beat",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [

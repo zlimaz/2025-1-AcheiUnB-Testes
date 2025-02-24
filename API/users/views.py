@@ -10,6 +10,8 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from msal import ConfidentialClientApplication
 from rest_framework import status
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -38,6 +40,31 @@ class UserListView(View):
     Endpoint para listar todos os usuários e obter um usuário pelo ID.
     """
 
+    @swagger_auto_schema(
+        operation_description="Retorna um usuário pelo ID",
+        responses={
+            200: openapi.Response(
+                "Usuário encontrado",
+                openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "id": openapi.Schema(
+                            type=openapi.TYPE_INTEGER, description="ID do usuário"
+                        ),
+                        "first_name": openapi.Schema(
+                            type=openapi.TYPE_STRING, description="Nome do usuário"
+                        ),
+                        "email": openapi.Schema(
+                            type=openapi.TYPE_STRING, description="E-mail do usuário"
+                        ),
+                        "foto": openapi.Schema(
+                            type=openapi.TYPE_STRING, description="URL da foto do usuário"
+                        ),
+                    },
+                ),
+            )
+        },
+    )
     def get(self, request, user_id=None):
         if user_id:
             user = get_object_or_404(User, id=user_id)
@@ -95,6 +122,21 @@ class ItemViewSet(ModelViewSet):
     search_fields = ["name", "description", "category__name", "location__name"]
 
     ordering_fields = ["created_at", "found_lost_date"]
+
+    @swagger_auto_schema(
+        operation_description="Retorna a lista de itens cadastrados no sistema.",
+        responses={200: openapi.Response("Lista de itens", ItemSerializer(many=True))},
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_description="Cria um novo item.",
+        request_body=ItemSerializer,
+        responses={201: openapi.Response("Item criado com sucesso", ItemSerializer)},
+    )
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
     def get_queryset(self):
 
@@ -178,6 +220,12 @@ class MyItemsLostView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(
+        operation_description="Retorna a lista de itens perdidos pelo usuário autenticado.",
+        responses={
+            200: openapi.Response("Lista de itens perdidos", ItemSerializer(many=True))
+        },
+    )
     def get(self, request):
         user = request.user
 
@@ -193,6 +241,10 @@ class MyItemsFoundView(APIView):
     listar os itens do usuário 'found'
     """
 
+    @swagger_auto_schema(
+        operation_description="Retorna a lista de itens achados pelo usuário autenticado.",
+        responses={200: openapi.Response("Lista de itens achados", ItemSerializer(many=True))},
+    )
     def get(self, request):
         user = request.user
         found_items = Item.objects.filter(user=user, status="found")
@@ -286,6 +338,40 @@ class UserDetailView(APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(
+        operation_description="Retorna os detalhes do usuário autenticado.",
+        responses={
+            200: openapi.Response(
+                "Detalhes do usuário",
+                openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "id": openapi.Schema(
+                            type=openapi.TYPE_INTEGER, description="ID do usuário"
+                        ),
+                        "username": openapi.Schema(
+                            type=openapi.TYPE_STRING, description="Nome de usuário"
+                        ),
+                        "email": openapi.Schema(
+                            type=openapi.TYPE_STRING, description="E-mail do usuário"
+                        ),
+                        "first_name": openapi.Schema(
+                            type=openapi.TYPE_STRING, description="Primeiro nome"
+                        ),
+                        "last_name": openapi.Schema(
+                            type=openapi.TYPE_STRING, description="Último nome"
+                        ),
+                        "matricula": openapi.Schema(
+                            type=openapi.TYPE_STRING, description="Matrícula (se aluno UnB)"
+                        ),
+                        "foto": openapi.Schema(
+                            type=openapi.TYPE_STRING, description="URL da foto do usuário"
+                        ),
+                    },
+                ),
+            )
+        },
+    )
     def get(self, request):
         user = request.user
         request.headers.get("Authorization", "").replace("Bearer ", "")
