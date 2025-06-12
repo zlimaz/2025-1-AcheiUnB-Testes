@@ -8,7 +8,7 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
+  #workflow_dispatch:
     # Permite que o workflow seja disparado manualmente
 jobs:
   test:
@@ -94,7 +94,7 @@ jobs:
   # Novo estágio para varredura de segurança
   security-scan:
     runs-on: ubuntu-latest
-    #needs: test # Garante que o estágio de segurança só roda após os testes
+    needs: test # Garante que o estágio de segurança só roda após os testes
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -139,4 +139,4 @@ jobs:
             bandit_security_report.html
             safety_security_report.html
           retention-days: 5 # Define por quantos dias os artefatos serão mantidos
-          #um simples comentário para ativar um possível actions
+       
