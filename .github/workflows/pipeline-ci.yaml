@@ -8,7 +8,8 @@ on:
   pull_request:
     branches:
       - main
-
+  workflow_dispatch:
+    # Permite que o workflow seja disparado manualmente
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -93,7 +94,7 @@ jobs:
   # Novo estágio para varredura de segurança
   security-scan:
     runs-on: ubuntu-latest
-    needs: test # Garante que o estágio de segurança só roda após os testes
+    #needs: test # Garante que o estágio de segurança só roda após os testes
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
