@@ -2,12 +2,13 @@ name: Tests CI
 
 on:
   push:
-    branches: 
+    branches:
       - main
       - 213-tasktestes-configurar-testes-estáticos-com-linter
   pull_request:
-    branches: 
+    branches:
       - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -25,7 +26,6 @@ jobs:
         image: redis
         ports:
           - 6379:6379
-
 
     env:
       CELERY_BROKER_URL: redis://localhost:6379/0
@@ -55,7 +55,8 @@ jobs:
           pip install --upgrade pip
           pip install -r API/requirements.txt
           pip install coverage
-          
+          pip install black ruff  # Garantir que black e ruff estão instalados
+
       - name: Run migrations
         run: python API/manage.py migrate
 
@@ -65,19 +66,18 @@ jobs:
       - name: Run Ruff (linting)
         run: ruff check API/
 
-
       - name: Post comment on PR if linting fails
-        if: failure()
+        if: failure() && github.event_name == 'pull_request' # Adicionado condição para PRs
         uses: mshick/add-pr-comment@v2
         with:
           message: |
              ❌ **O código não passou na formatação e linting!**
-            
+
              Por favor, corrija os problemas antes de fazer push novamente:
-            
+
              🖊️ **Formatação:** Rode `black .`
              🔍 **Linting:** Rode `ruff check --fix .`
-            
+
              Depois de corrigir, faça `git add .`, `git commit -m "Corrigindo lint"` e `git push`.
 
       - name: Run tests with coverage
@@ -88,3 +88,52 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  # Novo estágio para varredura de segurança
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: test # Garante que o estágio de segurança só roda após os testes
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python for security scan
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10' # Use a mesma versão do Python do estágio de teste
+
+      - name: Install security scanners (Bandit & Safety CLI)
+        run: |
+          pip install --upgrade pip
+          pip install bandit safety
+
+      - name: Install project dependencies for Safety CLI (if not already done)
+        run: |
+          pip install -r API/requirements.txt # Garante que as dependências do projeto estão no ambiente para o Safety CLI
+
+      - name: Run Bandit (SAST)
+        run: |
+          # O Bandit gera o relatório HTML no diretório raiz do workspace
+          bandit -r API/ -f html -o bandit_security_report.html
+          echo "Bandit scan completed. Report generated at bandit_security_report.html"
+        continue-on-error: true # Permite que o workflow continue mesmo se o Bandit encontrar issues e retornar um código de erro
+
+      - name: Run Safety CLI (SCA)
+        env:
+          # É crucial que o Safety CLI possa autenticar.
+          # A chave de API é a forma de autenticação sem interação no navegador.
+          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
+        run: |
+          # A Saída do Safety CLI é redirecionada para um arquivo HTML
+          safety scan -r API/requirements.txt --full-report --output safety_security_report.html --output-format html
+          echo "Safety CLI scan completed. Report generated at safety_security_report.html"
+        continue-on-error: true # Permite que o workflow continue mesmo se o Safety encontrar issues e retornar um código de erro
+
+      - name: Upload Security Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-reports
+          path: |
+            bandit_security_report.html
+            safety_security_report.html
+          retention-days: 5 # Define por quantos dias os artefatos serão mantidos
