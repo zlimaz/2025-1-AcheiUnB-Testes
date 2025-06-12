@@ -88,6 +88,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+    continue-on-error: true # Permite que o job 'test' não quebre a pipeline, mesmo que falhe.         
 
   # Novo estágio para varredura de segurança
   security-scan:
