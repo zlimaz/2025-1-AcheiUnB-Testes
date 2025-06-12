@@ -127,7 +127,7 @@ jobs:
           SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
         run: |
           # A Saída do Safety CLI é redirecionada para um arquivo HTML
-          safety scan -r API/requirements.txt --full-report --output safety_security_report.html --output-format html
+          safety scan -r API/requirements.txt --full-report --output-format html > safety_security_report.html
           echo "Safety CLI scan completed. Report generated at safety_security_report.html"
         continue-on-error: true # Permite que o workflow continue mesmo se o Safety encontrar issues e retornar um código de erro
 
