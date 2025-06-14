@@ -103,12 +103,12 @@ jobs:
         with:
           python-version: '3.10' # Use a mesma versão do Python do estágio de teste
 
-      - name: Install security scanners (Bandit & Safety CLI) # Instala AMBOS os scanners
+      - name: Install security scanners (Bandit & Safety CLI)
         run: |
           pip install --upgrade pip
-          pip install bandit safety # Instala o Safety CLI aqui também
+          pip install bandit safety
 
-      - name: Install project dependencies (for Safety CLI as well)
+      - name: Install project dependencies for Safety CLI (if not already done)
         run: |
           pip install -r API/requirements.txt # Garante que as dependências do projeto estão no ambiente para o Safety CLI
 
@@ -119,10 +119,7 @@ jobs:
           echo "Bandit scan completed. Report generated at bandit_security_report.html"
         continue-on-error: true # Permite que o workflow continue mesmo se o Bandit encontrar issues e retornar um código de erro
 
-      # --- ESTRATÉGIA COM DUPLO PASSO DO SAFETY CLI ---
       - name: Run Safety CLI (SCA) - Authentication and Scan (via Action)
-        # Este passo usa a Action para garantir a autenticação e rodar a varredura.
-        # A saída HTML irá para os logs, mas o ambiente será autenticado.
         uses: pyupio/safety-action@v1
         with:
           api-key: ${{ secrets.SAFETY_API_KEY }} # Passa a API Key diretamente para a Action
@@ -130,19 +127,27 @@ jobs:
         continue-on-error: true # Permite que o workflow continue mesmo que a Action encontre vulnerabilidades
 
       - name: Generate Safety CLI HTML Report File (Post-Authentication)
-        # Este passo roda o comando 'safety scan' novamente, agora que a Action anterior
-        # já cuidou da autenticação e das configurações de ambiente.
-        # Ele deve conseguir gerar o arquivo HTML sem erros de EOF ou autenticação.
         env:
-          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }} # Garante que a chave ainda esteja presente para este passo
+          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
         run: |
           echo "Generating Safety CLI HTML report file..."
-          # O Safety CLI deve agora rodar sem problemas, já que a Action anterior tratou da autenticação.
           safety scan -r API/requirements.txt --full-report --output-format html --ci < /dev/null > safety_security_report.html
           echo "Safety CLI report file generated at safety_security_report.html"
-        continue-on-error: true # Permite que o workflow continue mesmo se este passo falhar (última chance)
+        continue-on-error: true
 
-      # --- FIM DA ESTRATÉGIA COM DUPLO PASSO ---
+      # --- NOVO PASSO DE DEBUG ---
+      - name: Verify Safety HTML Report Content
+        run: |
+          echo "Verifying size and content of safety_security_report.html..."
+          ls -lh safety_security_report.html # Lista o arquivo e seu tamanho
+          cat safety_security_report.html | head -n 20 # Exibe as primeiras 20 linhas do arquivo
+          if [ -s safety_security_report.html ]; then
+            echo "File safety_security_report.html is not empty."
+          else
+            echo "WARNING: File safety_security_report.html is empty or does not exist."
+          fi
+        continue-on-error: true # Continua mesmo que a verificação falhe
+      # --- FIM NOVO PASSO DE DEBUG ---
 
       - name: Upload Security Reports
         uses: actions/upload-artifact@v4
@@ -150,5 +155,5 @@ jobs:
           name: security-reports
           path: |
             bandit_security_report.html
-            safety_security_report.html # Este arquivo agora deverá ser gerado corretamente
+            safety_security_report.html
           retention-days: 5
