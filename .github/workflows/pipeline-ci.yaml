@@ -103,12 +103,12 @@ jobs:
         with:
           python-version: '3.10' # Use a mesma versão do Python do estágio de teste
 
-      - name: Install security scanners (Bandit) # O Safety será instalado pela sua própria Action
+      - name: Install security scanners (Bandit & Safety CLI)
         run: |
           pip install --upgrade pip
-          pip install bandit # Instala apenas o Bandit aqui
+          pip install bandit safety # Instala ambos os scanners diretamente
 
-      - name: Install project dependencies (for Safety CLI as well)
+      - name: Install project dependencies for Safety CLI (if not already done)
         run: |
           pip install -r API/requirements.txt # Garante que as dependências do projeto estão no ambiente para o Safety CLI
 
@@ -119,29 +119,25 @@ jobs:
           echo "Bandit scan completed. Report generated at bandit_security_report.html"
         continue-on-error: true # Permite que o workflow continue mesmo se o Bandit encontrar issues e retornar um código de erro
 
-      # Removidos os passos de debug que não são mais necessários.
+      # Removidos os passos de debug para manter o workflow limpo,
+      # pois já cumpriram sua função de diagnóstico e as soluções foram implementadas.
 
-      # --- SUBSTITUI ESTES PASSOS PELO safety-action ---
-      - name: Run Safety CLI (SCA) using official action
-        uses: pyupio/safety-action@v1 # Usa a Action oficial do Safety CLI
-        with:
-          api-key: ${{ secrets.SAFETY_API_KEY }} # Passa a API Key diretamente para a Action
-          # Argumentos para o safety scan, passados via 'args'.
-          # A Action já deve lidar com a não-interatividade.
-          args: "--full-report --output-format html" # Removido --ci daqui, a Action já deve gerenciar
-          # A Action pyupio/safety-action@v1 por padrão salva o relatório.
-          # O nome do arquivo HTML pode ser 'safety-report.html' ou similar.
-          # Você precisará verificar o nome exato nos logs após a primeira execução desta Action.
-        continue-on-error: true # Permite que o workflow continue mesmo se o Safety encontrar issues e retornar um código de erro
-
-      # Passo opcional para renomear, se a Action não gerar com o nome desejado.
-      # Removi a lógica de 'if -f safety-report.json' pois a Action deve gerar HTML diretamente agora.
-      - name: Rename Safety Report (if necessary)
+      - name: Run Safety CLI (SCA) - Final Version
+        env:
+          # É crucial que o Safety CLI possa autenticar.
+          # A chave de API é a forma de autenticação sem interação no navegador.
+          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }} # Segredo configurado no GitHub Actions
         run: |
-          # A Action 'pyupio/safety-action' com '--output-format html' deve gerar 'safety-report.html'
-          mv safety-report.html safety_security_report.html || true
-        continue-on-error: true
-
+          # ESTE É O COMANDO FINALMENTE CORRIGIDO PARA O SAFETY CLI:
+          # -r API/requirements.txt: Lê as dependências do seu arquivo.
+          # --full-report: Gera um relatório completo.
+          # --output-format html: Formata a saída como HTML.
+          # --ci: ESSENCIAL para rodar em CI (desativa prompts interativos, como o de link de codebase).
+          # < /dev/null: ESSENCIAL para evitar o erro 'EOF when reading a line' (força a não-leitura do stdin).
+          # > safety_security_report.html: Redireciona a saída HTML para o arquivo.
+          safety scan -r API/requirements.txt --full-report --output-format html --ci < /dev/null > safety_security_report.html
+          echo "Safety CLI scan completed. Report generated at safety_security_report.html"
+        continue-on-error: true # Permite que o workflow continue mesmo se o Safety encontrar issues e retornar um código de erro
 
       - name: Upload Security Reports
         uses: actions/upload-artifact@v4
@@ -149,5 +145,5 @@ jobs:
           name: security-reports
           path: |
             bandit_security_report.html
-            safety_security_report.html # Este nome de arquivo deve corresponder ao gerado/renomeado
+            safety_security_report.html
           retention-days: 5
