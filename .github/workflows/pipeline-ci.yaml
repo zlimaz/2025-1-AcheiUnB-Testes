@@ -103,10 +103,10 @@ jobs:
         with:
           python-version: '3.10' # Use a mesma versão do Python do estágio de teste
 
-      - name: Install security scanners (Bandit) # O Safety será instalado pela sua própria Action
+      - name: Install security scanners (Bandit & Safety CLI) # Agora instala AMBOS
         run: |
           pip install --upgrade pip
-          pip install bandit # Instala apenas o Bandit aqui
+          pip install bandit safety # Reinstala o Safety CLI aqui
 
       - name: Install project dependencies (for Safety CLI as well)
         run: |
@@ -119,40 +119,23 @@ jobs:
           echo "Bandit scan completed. Report generated at bandit_security_report.html"
         continue-on-error: true # Permite que o workflow continue mesmo se o Bandit encontrar issues e retornar um código de erro
 
-      # --- REMOVER OS PASSOS DE DEBUG DO SAFETY CLI (NÃO SERÃO NECESSÁRIOS COM A ACTION OFICIAL) ---
-      # Remova os passos "Debug Network Connectivity to Safety Platform" e "Verify Safety CLI Authentication Status"
-      # pois a pyupio/safety-action lida com a autenticação e conectividade internamente de forma mais otimizada.
+      # --- REMOVER TODOS OS PASSOS DE DEBUG DO SAFETY CLI ---
+      # Remove os passos "Debug Network Connectivity to Safety Platform" e
+      # "Verify Safety CLI Authentication Status" pois não são mais necessários
+      # e a autenticação funciona agora.
+      # --- FIM DA REMOÇÃO DOS PASSOS DE DEBUG ---
 
-      # --- NOVO PASSO: RUN SAFETY CLI (SCA) USANDO AÇÃO OFICIAL ---
-      - name: Run Safety CLI (SCA) using official action
-        uses: pyupio/safety-action@v1 # Usa a Action oficial para Safety CLI
-        with:
-          api-key: ${{ secrets.SAFETY_API_KEY }} # Passa a API Key diretamente para a Action
-          # Argumentos para o safety scan, passados via 'args'
-          args: "--full-report --output-format html --ci" # Mantemos --full-report e --output-format html e --ci
-          # A Action pyupio/safety-action por padrão salva o relatório como 'safety-report.json'.
-          # Precisamos configurá-la para HTML e dar o nome desejado.
-          # A documentação da action indica que o --output-format html é suportado.
-          # O nome do arquivo de saída padrão é 'safety-report.json'. Pode ser preciso renomear.
-          # Vamos verificar a saída da Action para confirmar o nome do arquivo HTML.
-        continue-on-error: true # Permite que o workflow continue mesmo se o Safety encontrar issues e retornar um código de erro
-
-      - name: Rename Safety Report (if necessary)
-        # Este passo pode ser necessário se a pyupio/safety-action não gerar o HTML com o nome exato.
-        # Por padrão, safety-action gera 'safety-report.json'. Verifique os logs após a execução.
-        # Se ela gerar 'safety-report.html', esta etapa não é estritamente necessária.
-        # Se ela gerar JSON, você pode precisar converter ou aceitar JSON.
+      - name: Run Safety CLI (SCA) # Volta para a execução direta, que salva o HTML no arquivo
+        env:
+          # É crucial que o Safety CLI possa autenticar.
+          # A chave de API é a forma de autenticação sem interação no navegador.
+          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
         run: |
-          if [ -f safety-report.json ]; then
-              # Se a action gera JSON por padrão, você pode querer converter para HTML
-              # ou aceitar o JSON e mudar o path no upload-artifact
-              echo "Safety Action generated JSON report. Please check its documentation for HTML output filename."
-              # safety-action@v1 does support --output-format html directly in args.
-              # So, it should generate safety-report.html if that is the case.
-          fi
-          # Renomeia se o nome padrão da action for diferente do que você quer upar
-          mv safety-report.html safety_security_report.html || true # Assumindo que a action gera 'safety-report.html'
-        continue-on-error: true # Para não quebrar a pipeline se a renomeação falhar.
+          # A Saída do Safety CLI é redirecionada para um arquivo HTML
+          # Com a chave API funcionando e --ci, esta linha agora deve gerar o arquivo
+          safety scan -r API/requirements.txt --full-report --output-format html --ci > safety_security_report.html
+          echo "Safety CLI scan completed. Report generated at safety_security_report.html"
+        continue-on-error: true # Permite que o workflow continue mesmo se o Safety encontrar issues e retornar um código de erro
 
       - name: Upload Security Reports
         uses: actions/upload-artifact@v4
@@ -160,6 +143,5 @@ jobs:
           name: security-reports
           path: |
             bandit_security_report.html
-            safety_security_report.html # VERIFIQUE O NOME QUE A ACTION safety-action GERA
+            safety_security_report.html # Este arquivo agora será gerado corretamente
           retention-days: 5
-       
