@@ -103,15 +103,13 @@ jobs:
         with:
           python-version: '3.10' # Use a mesma versão do Python do estágio de teste
 
-      - name: Install security scanners (Bandit & Safety CLI) # Agora instala AMBOS
+      - name: Install security scanners (Bandit & Safety CLI)
         run: |
           pip install --upgrade pip
-          pip install bandit safety # Reinstala o Safety CLI aqui
-
-      - name: Install project dependencies (for Safety CLI as well)
+          pip install bandit safety
+      - name: Install project dependencies for Safety CLI (if not already done)
         run: |
           pip install -r API/requirements.txt # Garante que as dependências do projeto estão no ambiente para o Safety CLI
-
       - name: Run Bandit (SAST)
         run: |
           # O Bandit gera o relatório HTML no diretório raiz do workspace
@@ -119,21 +117,14 @@ jobs:
           echo "Bandit scan completed. Report generated at bandit_security_report.html"
         continue-on-error: true # Permite que o workflow continue mesmo se o Bandit encontrar issues e retornar um código de erro
 
-      # --- REMOVER TODOS OS PASSOS DE DEBUG DO SAFETY CLI ---
-      # Remove os passos "Debug Network Connectivity to Safety Platform" e
-      # "Verify Safety CLI Authentication Status" pois não são mais necessários
-      # e a autenticação funciona agora.
-      # --- FIM DA REMOÇÃO DOS PASSOS DE DEBUG ---
-
-      - name: Run Safety CLI (SCA) # Volta para a execução direta, que salva o HTML no arquivo
+      - name: Run Safety CLI (SCA)
         env:
           # É crucial que o Safety CLI possa autenticar.
           # A chave de API é a forma de autenticação sem interação no navegador.
           SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
         run: |
           # A Saída do Safety CLI é redirecionada para um arquivo HTML
-          # Com a chave API funcionando e --ci, esta linha agora deve gerar o arquivo
-          safety scan -r API/requirements.txt --full-report --output-format html --ci > safety_security_report.html
+          safety scan -r API/requirements.txt --full-report --output-format html > safety_security_report.html
           echo "Safety CLI scan completed. Report generated at safety_security_report.html"
         continue-on-error: true # Permite que o workflow continue mesmo se o Safety encontrar issues e retornar um código de erro
 
@@ -143,5 +134,7 @@ jobs:
           name: security-reports
           path: |
             bandit_security_report.html
-            safety_security_report.html # Este arquivo agora será gerado corretamente
-          retention-days: 5
+            safety_security_report.html
+          retention-days: 5 # Define por quantos dias os artefatos serão mantidos
+          #comentário para testar o novoo login
+       
