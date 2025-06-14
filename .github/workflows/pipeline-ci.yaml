@@ -119,7 +119,31 @@ jobs:
           bandit -r API/ -f html -o bandit_security_report.html
           echo "Bandit scan completed. Report generated at bandit_security_report.html"
         continue-on-error: true # Permite que o workflow continue mesmo se o Bandit encontrar issues e retornar um código de erro
+        
+    # --- NOVOS PASSOS DE DEBUG PARA O SAFETY CLI ---
+      - name: Debug Network Connectivity to Safety Platform
+        run: |
+          echo "Attempting to ping Safety Platform API domain..."
+          # Tente um ping para o domínio da Safety Platform.
+          # Você pode precisar ajustar o domínio se for diferente, mas "platform.safetycli.com" é comum.
+          ping -c 3 platform.safetycli.com || echo "Ping failed or domain unreachable. Continuing with curl..."
 
+          echo "Attempting to curl Safety Platform API endpoint..."
+          # Tente um curl para um endpoint conhecido. Use -v para verbose e -I para apenas o cabeçalho.
+          # Adicione --retry 5 --retry-delay 5 para tentar algumas vezes
+          curl -v -I --retry 5 --retry-delay 5 https://api.safetycli.com/ # Ou outro endpoint da API do Safety
+          # Se o curl retornar um código de erro, o step ainda irá falhar, mas com mais detalhes.
+        continue-on-error: true # Permite que o job continue para o Safety CLI scan, mesmo que a conectividade falhe aqui.
+
+      - name: Verify Safety CLI Authentication Status
+        env:
+          SAFETY_API_KEY: ${{ secrets.SAFETY_API_KEY }}
+        run: |
+          echo "Verifying Safety CLI authentication status..."
+          safety auth status # Isso deve mostrar se a chave de API está sendo reconhecida.
+        continue-on-error: true # Permite que o job continue, mesmo se o status falhar.
+      # --- FIM DOS NOVOS PASSOS DE DEBUG ---
+        
       - name: Run Safety CLI (SCA)
         env:
           # É crucial que o Safety CLI possa autenticar.
