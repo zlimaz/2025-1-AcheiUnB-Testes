@@ -1,9 +1,12 @@
+# API/chat/apps.py
+
 from django.apps import AppConfig
 
 
-class UsersConfig(AppConfig):
+class ChatConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "users"
+    name = "API.chat"  # <--- REVERTIDO PARA ESTE NOME
 
     def ready(self):
-        import users.signals
+        # Usar importação relativa para consistência
+        from . import signals

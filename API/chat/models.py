@@ -1,7 +1,8 @@
+# API/chat/models.py (CORREÇÃO)
 from django.contrib.auth.models import User
 from django.db import models
 
-from users.models import Item
+from API.users.models import Item # <--- ALTERE ESTA LINHA AQUI
 
 
 class ChatRoom(models.Model):

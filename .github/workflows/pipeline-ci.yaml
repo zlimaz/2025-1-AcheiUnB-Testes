@@ -135,7 +135,7 @@ jobs:
           echo "Safety CLI report file generated at safety_security_report.html"
         continue-on-error: true
 
-      # --- NOVO PASSO DE DEBUG ---
+      # NOVO PASSO DE DEBUG
       - name: Verify Safety HTML Report Content
         run: |
           echo "Verifying size and content of safety_security_report.html..."
@@ -147,7 +147,6 @@ jobs:
             echo "WARNING: File safety_security_report.html is empty or does not exist."
           fi
         continue-on-error: true # Continua mesmo que a verificação falhe
-      # --- FIM NOVO PASSO DE DEBUG ---
 
       - name: Upload Security Reports
         uses: actions/upload-artifact@v4

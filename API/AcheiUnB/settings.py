@@ -21,7 +21,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 INSTALLED_APPS = [
-    "jazzmin",
+    "jazzmin", # Descomentado
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -29,17 +29,23 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "django_filters",
-    "users",
-    "rest_framework",
-    "rest_framework.authtoken",
-    "AcheiUnB",
-    "django_extensions",
-    "channels",
-    "chat",
-    "corsheaders",
-    "django_celery_beat",
-    "drf_yasg",
+    "django_filters", # Descomentado
+
+    "API.users", 
+
+    "rest_framework", # Descomentado
+    "rest_framework.authtoken", # Descomentado
+
+    "API.AcheiUnB", 
+
+    "django_extensions", # Descomentado
+    "channels", # Descomentado
+
+    "API.chat", # <--- REVERTIDO PARA ESTE NOME
+
+    "corsheaders", # Descomentado
+    "django_celery_beat", # Descomentado
+    "drf_yasg", # Descomentado
 ]
 
 MIDDLEWARE = [
